@@ -177,7 +177,19 @@ $(function() {
 			outPutFlag = true;
 		}
 	});
-
+	var map_sel_flag = true;
+	$('#map_sel').click(function(){
+		if(map_sel_flag){
+			$('.side_bar_add').removeClass('hidden');
+			$('.side_bar_add').addClass('show');
+			map_sel_flag = false;
+		}else{
+			$('.side_bar_add').removeClass('show');
+			$('.side_bar_add').addClass('hidden');
+			map_sel_flag = true;
+		}
+		
+	});
 	
 	$('#delete_input').click(function(){
         
@@ -347,6 +359,8 @@ $(function() {
 		
 		plotcanvas.funDownload(plotcanvas.array,'imgAxis.json');
 	});
+	
+	
 	
 	
 	

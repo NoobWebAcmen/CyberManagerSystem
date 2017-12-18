@@ -169,10 +169,18 @@
                         <a href="#"><span class="badge badge-info pull-right">11</span> 测试13</a>
                     </li>
                     <li>
-                        <a href="../canvas_map/map.php"><span class="badge badge-important pull-right">83</span> 地图编辑器</a>
+                        <a href="javascript:;" id="map_sel"> <i class="icon-chevron-right"></i>编辑器</a>
                     </li>
-                    <li class="active">
-                        <a > 用户关系表</a>
+                    <li>
+                        <a href="../admin/admin_limit.php?rows=10"> 用户关系表</a>
+                    </li>
+                </ul>
+                <ul class="side_bar_add hidden">
+                    <li>
+                        <a href="../canvas_map/map.php">地图编辑器</a>
+                    </li>
+                    <li>
+                        <a href="../canvas_map/bullet.php">炮弹编辑器</a> 
                     </li>
                 </ul>
             </div>

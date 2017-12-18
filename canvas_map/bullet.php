@@ -142,7 +142,9 @@
                                                 <div></div>  
                                                 <span id="btn0"></span>  
                                             </div>  
-                                            <span class="bars_10">10</span>  
+                                            <span class="bars_10">
+                                            <input type="text" class="bars_input" value= "20"/>   
+                                            </span>  
                                         </div>  
                                     </div>  
                                 </div>
@@ -165,6 +167,7 @@
         <script src="../bootstrap/js/bootstrap.min.js"></script>
         <script src="../vendors/easypiechart/jquery.easy-pie-chart.js"></script>
         <script src="../assets/scripts.js"></script>
+        <script src="../canvas_map/cavas_js/canvas_bullet.js"></script>
         
         
     </body>

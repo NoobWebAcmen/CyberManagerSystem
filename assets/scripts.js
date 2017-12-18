@@ -360,7 +360,15 @@ $(function() {
 		plotcanvas.funDownload(plotcanvas.array,'imgAxis.json');
 	});
 	
-	
+	$('.bars_input').keydown(function(e){
+		
+		if(e.keyCode == "13"){
+		$(this).val(this.value);
+		$(this).addClass('test');
+		console.log($('.bars_input'));
+			
+		}
+	});
 	
 	
 	

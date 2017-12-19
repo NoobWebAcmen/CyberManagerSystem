@@ -364,11 +364,59 @@ $(function() {
 		
 		if(e.keyCode == "13"){
 		$(this).val(this.value);
-		$(this).addClass('test');
-		console.log($('.bars_input'));
+		if(scale.btn.style.left){
+			scale.btn.style.left = 0 + 'px';
+			scale.step.style.width = 0 +'px';
+			scale.title.innerHTML = 0;
+		}
+		
 			
 		}
 	});
+	
+	var  bars_num = 0;
+	$('.bars_button').click(function(){
+		
+		bars_num += 1;
+		var liName = document.createElement('li');
+		var labelName = document.createElement('label');
+		var inputName = document.createElement('input');
+		var buttonName = document.createElement('button');
+
+		liName.className = "clear"
+		liName.id = "BulletList" + bars_num ;
+		labelName.className = "bars_info_label fl";
+		labelName.innerHTML = "Bullet" + ' ' + bars_num ;
+		labelName.id = "Bullet" + bars_num;
+		inputName.className = "bars_info_input fl";
+		inputName.setAttribute('type','text');
+		inputName.setAttribute('readonly','readonly');
+		inputName.setAttribute('tag',bars_num-1);
+		inputName.setAttribute('value',scale.title.innerHTML + ' ' + 's');
+		
+		buttonName.className = "bars_info_button fr";
+		buttonName.innerHTML = "X";
+		buttonName.id = "BulletDel" + bars_num;
+		
+		$('.bulletAddUl').append(liName);
+		liName.appendChild(labelName);
+		liName.appendChild(inputName);
+		liName.appendChild(buttonName);
+		dele();
+	});
+	function dele(){
+		var len = $('.bulletAddUl')[0].childElementCount;
+		for(var i = 1; i < 100; ++i){
+			$('#BulletDel'+i).click(function(){
+				var UlName = document.getElementById('bulletAddInfoUl');
+				var index = 
+				bulletInfo.delete(UlName,0);
+			});
+		}
+		
+	}
+	
+	
 	
 	
 	

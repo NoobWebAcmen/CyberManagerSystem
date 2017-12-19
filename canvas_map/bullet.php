@@ -24,8 +24,6 @@
     <?php  
         require_once '../cookies/common.php';
         checkUserValidate();
-        
-
     ?> 
     
     <body>
@@ -145,15 +143,45 @@
                                             <span class="bars_10">
                                             <input type="text" class="bars_input" value= "20"/>   
                                             </span>  
-                                        </div>  
+                                        </div>
+                                        <div>
+                                            <button class="bars_button">Add</button>
+                                        </div> 
+                                        <div id="bulletAddList" >
+                                            <ul class="bulletAddUl clear " id="bulletAddInfoUl">
+                                               <!-- 添加的子弹头显示部分 -->
+                                            </ul>
+                                            <ul class="bulletInfoList clear " id="bullet">
+                                                <li>
+                                                    <label class="bulletInfoListLabel">起始坐标</label>
+                                                    <p>x:</p>
+                                                    <input type="text" class="bulletInfoListInput">
+                                                    <p>y:</p>
+                                                    <input type="text"class="bulletInfoListInput">
+                                                </li>
+                                                <li>
+                                                    <label >方向</label>
+                                                    <input type="text" class="bulletInfoListInput">
+                                                </li>
+                                                <li>
+                                                    <label >力度</label>
+                                                    <input type="text" class="bulletInfoListInput">
+                                                </li>
+                                                <li>
+                                                    <label >是否受重力影响:</label>
+                                                </li>
+                                                <li>
+                                                    <label >是否受阻力影响</label>
+                                                </li>
+                                                <li>
+                                                    <label >是否有跟踪效果</label>
+                                                </li>
+                                            </ul>
+                                        </div> 
                                     </div>  
                                 </div>
                             </div>
-                            <div class="canvas_div pull-left">
-                                <canvas id="canvas_main" width="860px" height="500px"  >
-                                    <span>不支持canvans的浏览器</span>
-                                </canvas>
-                            </div>
+                            
                     </div>
                 </div>
         </div>

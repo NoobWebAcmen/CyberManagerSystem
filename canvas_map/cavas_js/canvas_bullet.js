@@ -1,5 +1,8 @@
 
 /****************************************时间轴原型****************************************************************** */
+
+
+
 function scale(btn, bar, title,value) {  
     
     this.btn = document.getElementById(btn);  
@@ -18,18 +21,18 @@ scale.prototype = {
         _this.btn.onmousedown = function (e) {  
             
             var x = (e || win.event).clientX;  
-            var left = this.offsetLeft;     //块距离左边的距离2
-            var max = _this.bar.offsetWidth - this.offsetWidth;    //this.offsetWidth 10 块的宽度 max为时间轴最长能显示的长度
+            var left = this.offsetLeft;     
+            var max = _this.bar.offsetWidth - this.offsetWidth;    
             
             doc.onmousemove = function (e) {  
 
                 var val = document.getElementsByClassName('bars_input')[0].value;
-                console.log(val);
+                
                 var thisX = (e || win.event).clientX;  
-                var to = Math.min(max, Math.max(-2, left + (thisX - x)));  //拖动后距离左边的值（-2,289）
+                var to = Math.min(max, Math.max(-2, left + (thisX - x)));  
                 
                 _this.btn.style.left = to + 'px';  
-                _this.ondrag(Math.round(Math.max(0, to / max) * val * 10), to);   //修改此数值，可修改步长
+                _this.ondrag(Math.round(Math.max(0, to / max) * val * 10), to);   
                 win.getSelection ? win.getSelection().removeAllRanges() : doc.selection.empty();  
             };  
 
@@ -45,4 +48,38 @@ scale.prototype = {
     }  
    }  
 
-var scale = new scale('btn0', 'bar0', 'title0');  
+   var scale = new scale('btn0', 'bar0', 'title0');  
+
+/********************************************Bullet原型************************************************************ */
+function  bullet(options){
+    this._init(options);
+}
+
+bullet.prototype ={
+    _init : function(options){
+        this.array = options.array;
+        this.id = options.id;
+    },
+
+    delTip : function(){
+        var msg = "确定要删除当前选中的弹头吗？\n\n请确认！"; 
+        if (confirm(msg)==true){ 
+            return true; 
+        }else{ 
+            return false; 
+        } 
+    },
+    delete : function(parentObj,index){
+        if(this.delTip()){
+            console.log(parentObj.children);
+            parentObj.removeChild(parentObj.children[index]);
+        }
+              
+    }
+}
+
+var bulletInfoArray = new Array();
+var bulletInfo = new bullet({
+    id : $('.bars_info_input').tag,
+    array : bulletInfoArray
+});

@@ -218,7 +218,7 @@ Canvas.prototype = {
 
     removeImgInfo : function(obj,index){
         var oUl = document.getElementById('imgInfoList');
-        var oLi = document.getElementById(obj+index);         // ??
+        var oLi = document.getElementById(obj+index);         
         if(oLi){
             oUl.removeChild(oLi);
         }else{

@@ -797,3 +797,73 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
   cursor:pointer;
   background:url(../images/selector.png) no-repeat;
 }  
+.bars_button{
+  background : #f5f5f5;
+  padding : 0;
+  border : 1px solid #c1c1c1;
+  border-radius : 5px;
+  width : 50px;
+  height: 30px;
+}
+.bars_info_label,.bars_info_input{
+  margin-bottom: 0;
+  margin-right: 5px;
+  margin-top: 20px;
+  margin-left:  15px;
+  font-family:Georgia, "Times New Roman", Times, serif;
+  font-size:14px !important;
+  line-height:25px;
+  color:#a0a0a0 !important;
+}
+.bars_info_input{
+  width : 50px ;
+  margin-top : 15px !important;
+  margin-left: 20px;
+  
+}
+#bulletAddList{
+  display: flex;
+  flex-direction: row;
+
+}
+.bulletAddUl,.bulletInfoList{
+  margin : 0;
+  width : 200px;
+  margin-top: 10px;
+  max-height: 330px;
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+  overflow-y: scroll;
+}
+.bars_info_button{
+  margin-top: 20px;
+  border: 0;
+  background: #f5f5f5;
+  font-family:"微软雅黑","宋体";
+  font-size:14px;
+  color:#aaaaaa;
+  
+}
+
+/* ********************************bullet_index.php CSS样式 ***********************************/
+#bullet_index_content{
+  width : 900px;
+  height: 700px;
+  background: rgba(242, 242, 242, 1);
+  margin: 20px auto;
+  padding-top : 100px;
+}
+.bullet_index_btn{
+    margin: 50px 0 0 450px;
+    border: 1px solid #c1c1c1;
+    padding : 15px;
+    line-height: 30px;
+    font-size: 16px;
+    border-radius: 5px;
+    background: #ffffff;
+    color: black;
+    display: inline-block;
+}
+.bullet_index_btn:hover{
+  text-decoration: none;
+}

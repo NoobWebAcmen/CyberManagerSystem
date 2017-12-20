@@ -53,6 +53,7 @@ scale.prototype = {
 /********************************************Bullet原型************************************************************ */
 function  bullet(options){
     this._init(options);
+    this.flag = true;
 }
 
 bullet.prototype ={
@@ -71,11 +72,26 @@ bullet.prototype ={
     },
     delete : function(parentObj,index){
         if(this.delTip()){
-            console.log(parentObj.children);
+            
             parentObj.removeChild(parentObj.children[index]);
         }
               
+    },
+    changeImg : function(obj){
+        
+        if(this.flag){
+            
+            obj.setAttribute('src','../images/page1/u17_selected.png');
+            this.flag = false;
+           
+        }else{
+            
+            obj.setAttribute('src','../images/page1/u17.png');
+            this.flag = true;
+            
+        }
     }
+    
 }
 
 var bulletInfoArray = new Array();

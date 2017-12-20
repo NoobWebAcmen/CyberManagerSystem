@@ -382,7 +382,8 @@ $(function() {
 		var labelName = document.createElement('label');
 		var inputName = document.createElement('input');
 		var buttonName = document.createElement('button');
-
+		var imgName = document.createElement('img');
+		
 		liName.className = "clear"
 		liName.id = "BulletList" + bars_num ;
 		labelName.className = "bars_info_label fl";
@@ -395,13 +396,14 @@ $(function() {
 		inputName.setAttribute('value',scale.title.innerHTML + ' ' + 's');
 		
 		buttonName.className = "bars_info_button fr";
-		buttonName.innerHTML = "X";
+		imgName.setAttribute('src','../images/page1/u99.png');
 		buttonName.id = "BulletDel" + bars_num;
 		
 		$('.bulletAddUl').append(liName);
 		liName.appendChild(labelName);
 		liName.appendChild(inputName);
 		liName.appendChild(buttonName);
+		buttonName.appendChild(imgName);
 		dele();
 	});
 	function dele(){
@@ -409,12 +411,29 @@ $(function() {
 		for(var i = 1; i < 100; ++i){
 			$('#BulletDel'+i).click(function(){
 				var UlName = document.getElementById('bulletAddInfoUl');
-				var index = 
+				
 				bulletInfo.delete(UlName,0);
 			});
 		}
 		
 	}
+	
+	$('#ChariotInfoA').click(function(){
+		$('#ChariotOptions').toggle();
+	});
+
+	
+	$('#bulletOptionInfoA').click(function(){   
+		$(this).toggleClass("changePicMode");
+	});
+
+	$('#bulletOptionA').click(function(){   
+		$(this).toggleClass("changePicMode");
+	});
+	
+	$('#bulletOptionConditionA').click(function(){
+		$(this).toggleClass("changePicMode");
+	});
 	
 	
 	

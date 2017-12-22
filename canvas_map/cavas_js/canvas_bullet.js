@@ -49,6 +49,7 @@ scale.prototype = {
    }  
 
    var scale = new scale('btn0', 'bar0', 'title0');  
+   
 
 /********************************************Bullet原型************************************************************ */
 function  bullet(options){

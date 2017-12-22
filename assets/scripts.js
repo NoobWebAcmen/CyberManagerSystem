@@ -410,7 +410,7 @@ $(function() {
 		var len = $('.bulletAddUl')[0].childElementCount;
 		for(var i = 1; i < 100; ++i){
 			$('#BulletDel'+i).click(function(){
-				var UlName = document.getElementById('bulletAddInfoUl');
+				var UlName = document.getElementById('bulletAddInfoUl1');
 				
 				bulletInfo.delete(UlName,0);
 			});
@@ -419,7 +419,8 @@ $(function() {
 	}
 	
 	$('#ChariotInfoA').click(function(){
-		$('#ChariotOptions').toggle();
+		
+		show($('#ChariotOptions'));
 	});
 
 	
@@ -435,7 +436,92 @@ $(function() {
 		$(this).toggleClass("changePicMode");
 	});
 	
+	$('#pathTrail1').click(function(){
 	
+		show($('#trailOfMove'));
+	});
+	$('#triggerConditon1').click(function(){
+		show($('#triggerConditionMod1'));
+	});
+	$('#triggerResultLi1').click(function(){
+		show($('#triggerResultOption1'));
+	});
+	
+	$('#trailSelect').change(function(){
+		switch (this.value) {
+			case 'trailMove1':
+				show($('#flyControlContent'));
+				break;
+			case 'trailMove2':
+				show($('#rollControl'));
+				break;
+			case 'trailMove3':
+				show($('#jumpControl'));
+				break;
+			case 'trailMove4':
+				show($('#snapControl'));
+				break;
+			default:
+				break;
+		}
+	});
+	$('#triggerSelect').change(function(){
+		switch (this.value) {
+			case 'triggerSel1':
+				show($('#timeInfo'));
+				break;
+			case 'triggerSel2':
+				show($('#distanceInfo'));
+				break;
+			case 'triggerSel3':
+				show($('#pathInfo'));
+				break;
+			case 'triggerSel4':
+				show($('#charitoInfo'));
+				break;
+			default:
+				break;
+		}
+	});
+	$('#triggerResultSel').change(function(){
+		switch (this.value) {
+			case 'triggerResult1':
+				show($('#triggerOfTrail'));
+				break;
+				case 'triggerResult2':
+				show($('#triggerOfEffectOfValue'));
+				break;
+				case 'triggerResult3':
+				show($('#triggerOfAddBuff'));
+				break;
+				case 'triggerResult4':
+				show($('#triggerOfTerrianOfValue'));
+				break;
+				case 'triggerResult5':
+				show($('#triggerOfArtOfValue'));
+				break;
+				case 'triggerResult6':
+				show($('#triggerOfAddBullet'));
+				break;
+				case 'triggerResult7':
+				show($('#triggerOfEnd'));
+				break;
+			default:
+				break;
+		}
+	});
+
+
+	function show(obj){
+		$('.hiddTag').css('display','none');
+		obj.css('display','block');
+		obj.parent().css('display','block');
+		obj.parent().parent().css('display','block');
+		obj.parent().parent().parent().css('display','block');
+		obj.parent().parent().parent().parent().css('display','block');
+		
+		
+	}
 	
 	
 	

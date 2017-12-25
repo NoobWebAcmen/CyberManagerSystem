@@ -418,110 +418,122 @@ $(function() {
 		
 	}
 	
-	$('#ChariotInfoA').click(function(){
-		
-		show($('#ChariotOptions'));
-	});
+	
 
 	
 	$('#bulletOptionInfoA').click(function(){   
 		$(this).toggleClass("changePicMode");
+		$('#bulletOption1').toggle("normal");
 	});
 
 	$('#bulletOptionA').click(function(){   
 		$(this).toggleClass("changePicMode");
+		$('#bulletOptionCondition1').toggle("normal");
 	});
 	
 	$('#bulletOptionConditionA').click(function(){
 		$(this).toggleClass("changePicMode");
+		$('#bulletOptionConditionInfo').toggle();
+	});
+
+	$('#ChariotInfoA').click(function(){
+		
+		bulletInfo.show($('#ChariotOptions'),1);
 	});
 	
-	$('#pathTrail1').click(function(){
-	
-		show($('#trailOfMove'));
-	});
 	$('#triggerConditon1').click(function(){
-		show($('#triggerConditionMod1'));
+		bulletInfo.show($('#triggerConditionMod1'),1);
 	});
-	$('#triggerResultLi1').click(function(){
-		show($('#triggerResultOption1'));
+
+	$('#triggerResultLi0').click(function(){
+		bulletInfo.addLi($(this),'triggerResultLis','triggerResultLi','触发结果');
+
 	});
+	
+	/*************************************点击触发结果，动态添加触发结果框************************************************************** */
+	
+	$('#triggerResultSideList').delegate('li','click',function(){
+		var num =(this.id).replace(/[^0-9]/ig,"");
+		bulletInfo.addTriggerResult(this,num);
+		bulletInfo.getId($('#triggerResultSel'),'option',num,1);
+		bulletInfo.getId($('#triggerResultOptionBottom'),'div',num,2);
+		bulletInfo.getId($('#triggerResultOptionBottom').children().children(),'input',num,3);
+		bulletInfo.getId($('#triggerResultOptionBottom').children().children().children(),'option',num,4);
+		bulletInfo.getId($('#triggerResultOptionTop'),'a',num,5);
+		
+		
+	});
+	
+	$('#addTriggerCondition').click(function(){
+		bulletInfo.addA($(this),null,'addTriggerCondition','触发条件');
+	});
+	$('#bulletOptionConditionInfo').delegate('a','click',function(){
+		
+		if($(this).children().context.id == 'pathTrail1'){
+			
+			$(this).click(function(){
+				
+				bulletInfo.show($('#trailOfMove'),1);
+			});
+		}else{
+			bulletInfo.addTriggerCond(this);
+		}
+		
+	});
+
+	
 	
 	$('#trailSelect').change(function(){
 		switch (this.value) {
 			case 'trailMove1':
-				show($('#flyControlContent'));
+			bulletInfo.show($('#flyControlContent'),2);
 				break;
 			case 'trailMove2':
-				show($('#rollControl'));
+			bulletInfo.show($('#rollControl'),2);
 				break;
 			case 'trailMove3':
-				show($('#jumpControl'));
+			bulletInfo.show($('#jumpControl'),2);
 				break;
 			case 'trailMove4':
-				show($('#snapControl'));
+			bulletInfo.show($('#snapControl'),2);
 				break;
 			default:
 				break;
 		}
 	});
 	$('#triggerSelect').change(function(){
+		
 		switch (this.value) {
 			case 'triggerSel1':
-				show($('#timeInfo'));
+			bulletInfo.show($('#timeInfo'),4);
 				break;
 			case 'triggerSel2':
-				show($('#distanceInfo'));
+			bulletInfo.show($('#distanceInfo'),4);
 				break;
 			case 'triggerSel3':
-				show($('#pathInfo'));
+			bulletInfo.show($('#pathInfo'),4);
 				break;
 			case 'triggerSel4':
-				show($('#charitoInfo'));
+			bulletInfo.show($('#charitoInfo'),4);
 				break;
+			case '01':
+			bulletInfo.show($('#pathInfo'),4);
 			default:
+			
 				break;
 		}
 	});
 	$('#triggerResultSel').change(function(){
-		switch (this.value) {
-			case 'triggerResult1':
-				show($('#triggerOfTrail'));
-				break;
-				case 'triggerResult2':
-				show($('#triggerOfEffectOfValue'));
-				break;
-				case 'triggerResult3':
-				show($('#triggerOfAddBuff'));
-				break;
-				case 'triggerResult4':
-				show($('#triggerOfTerrianOfValue'));
-				break;
-				case 'triggerResult5':
-				show($('#triggerOfArtOfValue'));
-				break;
-				case 'triggerResult6':
-				show($('#triggerOfAddBullet'));
-				break;
-				case 'triggerResult7':
-				show($('#triggerOfEnd'));
-				break;
-			default:
-				break;
+		console.log(this[0]);
+		var len = $('#triggerResultSideList')[0].childElementCount;
+		for(var i = 1 ;i < len; ++i){
+			bulletInfo.switchResultSel(this.value,i);
 		}
 	});
-
-
-	function show(obj){
-		$('.hiddTag').css('display','none');
-		obj.css('display','block');
-		obj.parent().css('display','block');
-		obj.parent().parent().css('display','block');
-		obj.parent().parent().parent().css('display','block');
-		obj.parent().parent().parent().parent().css('display','block');
-		
-		
-	}
+	
+	
+	
+	
 	
 	
 	

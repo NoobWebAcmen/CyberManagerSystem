@@ -861,7 +861,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
   text-decoration: none;
 }
 /* ********************************bullet.php CSS样式 ***********************************/
-#powderSideBar{
+.powederSideBarClass{
   width: 211px;
   height: 1000px;
   border: 2px solid #c1c1c1;
@@ -875,7 +875,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
 .navbar-fixed-top{
   margin-bottom: 0px;
 }
-#powderIdInfo{
+.powderIdInfoClass{
   margin-left: 30px;
   display: flex;
   flex-direction: row;
@@ -886,21 +886,21 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
   line-height: 30px;
   font-weight: bold;
 }
-#ChariotInfo{
+.ChariotInfoClass{
   margin-left: 30px;
 }
-#bulletOptionInfo{
+.bulletOptionInfoClass{
   
   display: flex;
   flex-direction: row;
   margin-top: 5px;
 }
-#bulletOptionInfo>p{
+.bulletOptionInfoClass>p{
   margin: 0px;
   margin-left:8px;
   margin-top : 2px;
 }
-#bulletOptionInfo>a{
+.bulletOptionInfoClass>a{
   margin-left: 12px;
 }
 #bulletBottomBtn{
@@ -918,7 +918,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
   margin: 10px 40px;
 }
 
-#ChariotOptions{
+.ChariotOptionsClass{
   border: 2px solid #c1c1c1;
 
   margin-left: 40px;
@@ -928,7 +928,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
   padding-left: 60px;
   /* display: none; */
 }
-#ChariotOptions>h1{
+.ChariotOptionsClass>h1{
   font-size: 18px;
 }
 
@@ -957,7 +957,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
   display: flex;
   flex-direction: column;
   margin-top: 32px;
-  margin-left: 22px;
+  margin-left: 42px;
   
 }
 a:hover{
@@ -971,15 +971,16 @@ a:hover{
   margin-top: 8px;
 }
 .showPicMode{
-  background: url('../images/page1/u17.png') left no-repeat;
-}
-.changePicMode{
   
   background: url('../images/page1/u17_selected.png') left no-repeat;
  
 }
+.changePicMode{
+  background: url('../images/page1/u17.png') left no-repeat;
+}
+
 /* **************************************运动轨迹CSS效果**************************************************************** */
-#trailOfMove{
+.trailOfMoveClass{
   border: 2px solid #c1c1c1;
   margin-left:20px;
   padding: 40px;
@@ -991,16 +992,16 @@ a:hover{
 .hidd{
   display: none;
 }
-#flyControlContent,#rollControl,#jumpControl{
+.flyControlContentClass,.rollControlClass,.jumpControlClass{
   border: 2px solid #c1c1c1;
   padding : 30px;
   border-radius: 5px;
   margin-top: 15px;
-  /* display: none; */
+  
   width : 560px;
   height: 360px;
 }
-#flyControlContent{
+.flyControlContentClass{
   display: block;
 }
 .flyControlDiv,.rollControlList,.jumpControlList{
@@ -1026,6 +1027,20 @@ a:hover{
 .flyBeginInp,.rollInp,.jumpInp{
   margin: 5px 0 0 10px;
 }
+.flyBeginInpAxies{
+  width: 70px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+.flyBeginLab{
+  margin-top: 5px;
+  margin-right: 10px;
+  margin-left: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 30px;
+  height: 30px;
+}
 #flyControlBottom{
   position: absolute;
   bottom: 100px;
@@ -1045,10 +1060,10 @@ a:hover{
 .row-fluid{
   position: relative;
 }
-#triggerConditionMod1{
+.triggerConditionModClass{
   position: absolute;left: 270px;top:20px;
 }
-#triggerConditons1,#triggerConditionResult{
+.triggerConditonsClass,.triggerConditionResultClass{
   border: 2px solid #c1c1c1;
   border-radius: 5px;
   width : 700px;
@@ -1057,11 +1072,11 @@ a:hover{
   
 
 }
-#triggerConditons1{
+.triggerConditonsClass{
   height: 158px;
   position: relative;
 }
-#triggerConditionResult{
+.triggerConditionResultClass{
   height: 658px;
 }
 
@@ -1113,23 +1128,22 @@ a:hover{
   margin-left: 6px;
   margin-right: 16px;
 }
-#triggerResultSideList{
+.triggerResultSideListClass{
   margin-left: 30px;
   border: 1px solid #c1c1c1;
   margin-top: 10px;
+  border-radius: 5px;
   
 }
-#triggerResultSideList>li{
+.triggerResultSideListClass>li{
   border-bottom: 1px solid #c1c1c1;
   line-height: 30px;
   font-size: 14px;
   padding : 3px 20px;
   
 }
-#triggerResultOption1{
-  display: block;
-}
-#triggerResultOption1{
+
+.triggerResultOptionClass{
   margin-left : 30px;
   border: 2px solid #c1c1c1;
   border-radius: 5px;
@@ -1138,7 +1152,7 @@ a:hover{
   height : 500px;
   margin-bottom: 100px;
 }
-#triggerResultOptionTop{
+.triggerResultOptionTopClass{
   display: flex;
   flex-direction: row;
 }
@@ -1148,15 +1162,13 @@ a:hover{
 .triggerResultA{
   margin :18px 0 0 0px;
 }
-#triggerResultOptionBottom{
+.triggerResultOptionBottomClass{
   border: 2px solid #c1c1c1;
   border-radius: 5px;
   margin:  20px 30px 0 ;
   height: 350px;
 }
-/* #triggerOfNothing,#triggerOfTrail,#triggerOfEffectOfValue,#triggerOfAddBuff,#triggerOfTerrianOfValue,#triggerOfArtOfValue,#triggerOfAddBullet,#triggerOfEnd{
-  display: none;
-} */
+
 
 .triggerResultOptionP{
   line-height: 100px;

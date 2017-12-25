@@ -130,15 +130,15 @@
                 <!--/span-->
                 <div class="span9 map_width" id="content">
                     <div class="row-fluid clear">
-                           <div id="powderSideBar" class="fl">
-                                <div id="powderIdInfo" >
+                           <div id="powderSideBar" class="fl powederSideBarClass">
+                                <div id="powderIdInfo" class="powderIdInfoClass">
                                     <p class="powderP">炮弹ID</p>
-                                    <p class="powderP">000001</p>
+                                    <p class="powderP" id="powderIdOfP">000001</p>
                                 </div>
-                                <div id="ChariotInfo">
+                                <div id="ChariotInfo" class="ChariotInfoClass">
                                     <a href="javascript:;" id="ChariotInfoA">战车发射周期</a>
                                 </div>
-                                <div id="bulletOptionInfo">
+                                <div id="bulletOptionInfo" class="bulletOptionInfoClass">
                                     <a href="javascript:;" id="bulletOptionInfoA" class="showPicMode"></a>
                                     <p>弹头生命周期</p>
                                 </div>
@@ -150,14 +150,15 @@
 
                                     <div id="bulletOptionCondition1" class="bulletCondtion clear">
                                         <a href="javascript:;" id="bulletOptionConditionA" class="showPicMode fl"></a>
-                                        <p class="bulletNames fl">轨迹阶段1</p>
+                                        <p class="bulletNames fl" id="bulletNamesOfP">轨迹阶段1</p>
                                         
                                         <div id="bulletOptionConditionInfo" class="bulletCondtionInfo">
                                             <a href="javascript:;" id="pathTrail1">运动轨迹</a>
                                             <a href="javascript:;" id="triggerConditon1">触发条件1</a>
                                             <a href="javascript:;" id="triggerConditon2">触发条件2</a>
-                                            <a href="javascript:;" id="addTriggerCondition">+ 添加条件</a>
                                             <!-- 在此处添加触发条件 -->
+                                            <a href="javascript:;" id="addTriggerCondition">+ 添加条件</a>
+                                            
                                         </div>
                                     </div>
 
@@ -178,7 +179,7 @@
                                     <button>返回主页</button>
                                 </div>
                            </div>
-                            <div id="ChariotOptions" class="fl hiddTag hidd">
+                            <div id="ChariotOptions" class="fl parentHiddTag hidd ChariotOptionsClass">
                                 <h1>战车发射周期</h1>
                                 <div class ="bulletControlBar clear ">
                                     <div class="grade_warp">  
@@ -208,17 +209,20 @@
                                 </div>
                             </div>
                             <!-- 运动轨迹模块 -->
-                            <div id="trailOfMove" class="fl hiddTag hidd ">
+                            <div id="trailOfMove" class="fl parentHiddTag hidd trailOfMoveClass">
                                 <div id="trailSel">
                                     <select  id="trailSelect">
-                                        <option value="0">请选择运动轨迹</option>
+                                        <!-- <option value="0">请选择运动轨迹</option> -->
                                         <option value="trailMove1" >飞行</option>
                                         <option value="trailMove2" >滚动</option>
                                         <option value="trailMove3" >弹跳</option>
                                         <option value="trailMove4" >粘着</option>
                                     </select>
                                 </div>
-                                <div id="flyControlContent" class="hiddTag hidd">
+
+                                <form method="post" action="">                      <!-- 表单提交1 -->
+                                    
+                                <div id="flyControlContent" class="hiddTag hidd flyControlContentClass">
                                     <!-- 飞行控制 -->
                                     <div class="flyControlDiv">
                                         <p class="flyControlP">起始点</p>
@@ -227,7 +231,10 @@
                                             <option value="beginSel2">坐标</option>
                                             <option value="beginSel3">偏移坐标</option>
                                         </select>
-                                        <input type="text" id="flyContorlBeginInp" class="flyBeginInp"/>
+                                        <label for="" class="flyBeginLab">x: </label>
+                                        <input type="text" id="flyContorlBeginInpX" class="flyBeginInpAxies"/>
+                                        <label for="" class="flyBeginLab">y: </label>
+                                        <input type="text" id="flyContorlBeginInpY" class="flyBeginInpAxies"/>
                                     </div>
                                     <div class="flyControlDiv">
                                         <p class="flyControlP">方向</p>
@@ -268,7 +275,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div id="rollControl" class="hiddTag hidd">
+                                <div id="rollControl" class="hiddTag hidd rollControlClass">
                                     <!-- 滚动控制 -->
                                     <div class="rollControlList">
                                         <p class="rollControlP">距离</p>
@@ -279,7 +286,7 @@
                                         <input type="text" id="rollControlInp" class="rollInp"/>
                                     </div>
                                 </div>
-                                <div id="jumpControl" class="hiddTag hidd">
+                                <div id="jumpControl" class="hiddTag hidd jumpControlClass">
                                     <!-- 弹跳控制 -->
                                     <div class="jumpControlList">
                                         <p class="jumpControlP">弹力度</p>
@@ -290,10 +297,13 @@
                                         <input type="text" id="jumpControlInp" class="jumpInp"/>
                                     </div>
                                 </div>
-                                <div id="snapControl" class="hiddTag hidd">
+                                <div id="snapControl" class="hiddTag hidd snapControlClass">
                                     <!-- 黏着 -->
                                     <p class="triggerResultOptionP">无</p>
                                 </div>
+
+                                </form>
+                                
                                 <div id="flyControlBottom">
                                         <button class="flyControlBtn">保存</button>
                                         <button class="flyControlBtn">重填</button>
@@ -301,10 +311,10 @@
                                     
                             </div>
                                 <!-- 触发条件 -->
-                            <div id="triggerConditionMod1" class="clear hiddTag hidd">
-                                    <div id="triggerConditons1" class="clear"> 
+                            <div id="triggerConditionMod1" class="clear parentHiddTag hidd triggerConditionModClass">
+                                    <div id="triggerConditons1" class="clear triggerConditonsClass"> 
                                         <div class="triggerSel triggerTop fl">
-                                            <p class="triggerConditonP fl">触发条件1</p><!-- 此处文字根据点击触发条件模块改变-->
+                                            <p class="triggerConditonP fl" id="triggerConditonsP">触发条件1</p><!-- 此处文字根据点击触发条件模块改变-->
                                             <select name="" id="triggerSelect" class="triggerSelection">
                                                 <option value="01">------请选择条件-------</option>
                                                 <option value="triggerSel1">时间</option>
@@ -313,40 +323,45 @@
                                                 <option value="triggerSel4">接触(战车)</option>
                                             </select>
                                         </div>
-                                        <div class="triggerShowInfo hiddTag clear"id="timeInfo">
-                                            <p class="triggerP fl">时长</p>
-                                            <input type="text" class="triggerInp fr"/>
-                                        </div>
-                                        <div class="triggerShowInfo hiddTag clear" id="distanceInfo">
-                                            <p class="triggerP fl">行进距离</p>
-                                            <input type="text" class="triggerInp fr"/>
-                                        </div>
-                                        <div class="triggerShowInfo hiddTag" id="pathInfo">
+
+                                        <form action="" method="post" class="parentHiddTag">    <!-- 表单验证2 -->
                                            
-                                        </div>
-                                        <div class="triggerShowInfo  hiddTag clear" id="charitoInfo">
-                                            <input type="checkbox" id="charitoCheck1" class="chk fl" /> 
-                                            <label for="charitoCheck1" class="fl labelLeft"></label> <p class="charitoLabel_p fl">敌方战车</p>
-                                            <input type="checkbox" id="charitoCheck2" class="chk fl" /> 
-                                            <label for="charitoCheck2" class="fl"></label> <p class="charitoLabel_p fl">友方战车</p>
-                                        </div>
-    
+                                            <div class="triggerShowInfo brotherHiddTagTop clear"id="timeInfo">
+                                                <p class="triggerP fl">时长</p>
+                                                <input type="text" class="triggerInp fr"/>
+                                            </div>
+                                            <div class="triggerShowInfo brotherHiddTagTop clear" id="distanceInfo">
+                                                <p class="triggerP fl">行进距离</p>
+                                                <input type="text" class="triggerInp fr"/>
+                                            </div>
+                                            <div class="triggerShowInfo brotherHiddTagTop" id="pathInfo">
+                                            
+                                            </div>
+                                            <div class="triggerShowInfo  brotherHiddTagTop clear" id="charitoInfo">
+                                                <input type="checkbox" id="charitoCheck1" class="chk fl" /> 
+                                                <label for="charitoCheck1" class="fl labelLeft"></label> <p class="charitoLabel_p fl">敌方战车</p>
+                                                <input type="checkbox" id="charitoCheck2" class="chk fl" /> 
+                                                <label for="charitoCheck2" class="fl"></label> <p class="charitoLabel_p fl">友方战车</p>
+                                            </div>
+
+                                        </form>
+
                                     </div>
 
-                                    <div id="triggerConditionResult" class="clear ">
+                                    <div id="triggerConditionResult" class="clear triggerConditionResultClass">
                                         <p class="triggerConditonP triggerConditionPExtra">触发结果</p>
                                         <div id="triggerResultSideBar" class="fl">
-                                            <ul id="triggerResultSideList">
+                                            <ul id="triggerResultSideList" class="triggerResultSideListClass">
                                                 <li id="triggerResultLi1" class="triggerResultLis">触发结果1</li>
                                                 <li id="triggerResultLi2" class="triggerResultLis">触发结果2</li>
                                                 <li id="triggerResultLi3" class="triggerResultLis">触发结果3</li>
                                                 <li id="triggerResultLi4" class="triggerResultLis">触发结果4</li>
-                                                <li id="triggerResultLi5" class="triggerResultLis">[添加]</li>
+                                                <li id="triggerResultLi0" class="triggerResultLis">[添加]</li>
                                             </ul>
                                         </div>
-                                        <div id="triggerResultOption1" class="fl hiddTag hidd">
-                                            <div id="triggerResultOptionTop">
-                                                <p class="triggerConditonP triggerConditionPExtra">触发结果1</p> <!-- 触发结果名字与侧边栏文字相同-->
+                                        <div id="triggerResultOption1" class="fl brotherHiddTag hidd triggerResultOptionClass">
+                                            <div id="triggerResultOptionTop" class="triggerResultOptionTopClass">
+                                                <p class="triggerConditonP triggerConditionPExtra" id="triggerConditonP1"></p> <!-- 触发结果名字与侧边栏文字相同-->
                                                 <select class="triggerResultSelect" id="triggerResultSel">
                                                     <option value="0">----请选择触发结果----</option>
                                                     <option value="triggerResult1">运动轨迹</option>
@@ -359,114 +374,115 @@
                                                 </select>
                                                 <a href="javascript:;" id="triggerResult1" class="triggerResultA"><img src="../images/page1/u99.png" alt=""></a>
                                             </div>
-                                            <div id="triggerResultOptionBottom" class="hiddTag hidd">
-                                                <!-- <div id="triggerOfNothing">
-                                                    <p class="triggerResultOptionP">无</p>
-                                                </div> -->
-                                                <div id="triggerOfTrail" class="hiddTag hidd">
-                                                    <p class="triggerResultOptionP">已成功添加"轨迹阶段2"</p><!--轨迹阶段名符合更改-->
-                                                </div>
-                                                <div id="triggerOfEffectOfValue" class="hiddTag hidd">
-                                                    <div id="effectOfValue1" class="effectOfValue">
-                                                        <p class="triggerOfP">影响范围</p>
-                                                        <input type="text" class="triggerOfInp">
+                                            <form action="" method="post">
+                                                <div id="triggerResultOptionBottom" class="brotherHiddTag hidd triggerResultOptionBottomClass">
+                                                    <div id="triggerOfTrail" class="brotherHiddTag hidd">
+                                                        <p class="triggerResultOptionP">已成功添加"轨迹阶段2"</p><!--轨迹阶段名符合更改-->
                                                     </div>
-                                                    <div id="effectOfValue2" class="effectOfValue">
-                                                        <p class="triggerOfP">影响对象</p>
-                                                        <input type="checkbox" id="charitoCheck3" class="chk" /> 
-                                                        <label for="charitoCheck3" class="effectOfValue_label"></label> <p class="effectOfValue_p">敌方战车</p>
-                                                        <input type="checkbox" id="charitoCheck4" class="chk" /> 
-                                                        <label for="charitoCheck4" class="effectOfValue_label"></label> <p class="effectOfValue_p">友方战车</p>
-                                                    </div>
-                                                    <div id="effectOfValue3" class="effectOfValue">
-                                                        <p class="triggerOfP">值类型</p>  
-                                                        <select name="" id="" class="effectOfValue_sel">
-                                                            <option value="triggerValue1">HP</option>
-                                                            <option value="triggerValue2">护盾</option>
-                                                            <option value="triggerValue3">电量</option>
-                                                        </select>
-                                                    </div>
-                                                    <div id="effectOfValue4" class="effectOfValue">
-                                                        <p class="triggerOfP ">值</p>
-                                                        <input type="text" class="triggerOfInp triggerOfInpExtra"/>
-                                                    </div>
-                                                    <div id="effectOfValue5" class="effectOfValue">
-                                                        <p class="triggerOfP">伤害属性</p>  
-                                                        <select name="" id="" class="effectOfValue_sel  effectOfValue_selExtra">
-                                                            <option value="triggerHurt1">动能</option>
-                                                            <option value="triggerHurt2">热能</option>
-                                                            <option value="triggerHurt3">电磁</option>
-                                                            <option value="triggerHurt3">腐蚀</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div id="triggerOfAddBuff" class="hiddTag hidd">
-                                                    <div id="addBuffOfValue1" class="effectOfValue">
-                                                        <p class="triggerOfP">影响范围</p>
-                                                        <input type="text" class="triggerOfInp">
-                                                    </div>
-                                                    <div id="addBuffOfValue2" class="effectOfValue">
-                                                        <p class="triggerOfP">影响对象</p>
-                                                        <input type="checkbox" id="charitoCheck5" class="chk" /> 
-                                                        <label for="charitoCheck5" class="effectOfValue_label"></label> <p class="effectOfValue_p">敌方战车</p>
-                                                        <input type="checkbox" id="charitoCheck6" class="chk" /> 
-                                                        <label for="charitoCheck6" class="effectOfValue_label"></label> <p class="effectOfValue_p">友方战车</p>
-                                                    </div>
-                                                    <div id="addBuffOfValue3" class="effectOfValue">
-                                                        <p class="triggerOfP">BUFF ID</p>
-                                                        <input type="text" class="triggerOfInp">
-                                                    </div>
-                                                </div>
-                                                <div id="triggerOfTerrianOfValue" class="hiddTag hidd">
-                                                    <div id="terrianOfValue1" class="effectOfValue">
-                                                        <p class="triggerOfP">破坏范围</p>
-                                                        <input type="text" class="triggerOfInp">
-                                                    </div>
-                                                    <div id="terrianOfValue2" class="effectOfValue">
-                                                        <p class="triggerOfP">边缘类型</p>
-                                                        <select class="effectOfValue_sel  effectOfValue_selExtra">
-                                                            <option value="">---请选择破坏地图类型---</option>
-                                                            <!-- 后面添加破坏类型 -->
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div id="triggerOfArtOfValue" class="hiddTag hidd">
-                                                    <div id="ArtOfValue1" class="effectOfValue">
-                                                        <p class="triggerOfP">美术资源</p>
-                                                        <input type="text" class="triggerOfInp">
-                                                    </div>
-                                                </div>
-                                                <div id="triggerOfAddBullet" class="hiddTag hidd">
-                                                    <!-- <div class ="bulletControlBar clear ">
-                                                        <div class="grade_warp">  
-                                                            <div class="User_ratings User_grade">  
-                                                                <div class="ratings_bars">  
-                                                                    <span id="title1">0</span>  
-                                                                    <span class="bars_11">0</span>  
-                                                                    <div class="scale" id="bar1">  
-                                                                        <div></div>  
-                                                                        <span id="btn1"></span>  
-                                                                    </div>  
-                                                                    <span class="bars_10">
-                                                                    <input type="text" class="bars_input" value= "20"/>   
-                                                                    </span>  
-                                                                </div>
-                                                                <div>
-                                                                    <button class="bars_button">Add</button>
-                                                                </div> 
-                                                                <div id="bulletAddList1" >
-                                                                    <ul class="bulletAddUl clear " id="bulletAddInfoUl1">
-                                                                    
-                                                                    </ul>
-                                                                </div> 
-                                                            </div>  
+                                                    <div id="triggerOfEffectOfValue" class="brotherHiddTag hidd">
+                                                        <div id="effectOfValue1" class="effectOfValue">
+                                                            <p class="triggerOfP">影响范围</p>
+                                                            <input type="text" class="triggerOfInp" id="triggerOfInp1">
                                                         </div>
-                                                    </div> -->
+                                                        <div id="effectOfValue2" class="effectOfValue">
+                                                            <p class="triggerOfP">影响对象</p>
+                                                            <input type="checkbox" id="charitoCheck3" class="chk" /> 
+                                                            <label for="charitoCheck3" class="effectOfValue_label"></label> <p class="effectOfValue_p">敌方战车</p>
+                                                            <input type="checkbox" id="charitoCheck4" class="chk" /> 
+                                                            <label for="charitoCheck4" class="effectOfValue_label"></label> <p class="effectOfValue_p">友方战车</p>
+                                                        </div>
+                                                        <div id="effectOfValue3" class="effectOfValue">
+                                                            <p class="triggerOfP">值类型</p>  
+                                                            <select name="" id="effectOfValueSel1" class="effectOfValue_sel">
+                                                                <option value="triggerValue1">HP</option>
+                                                                <option value="triggerValue2">护盾</option>
+                                                                <option value="triggerValue3">电量</option>
+                                                            </select>
+                                                        </div>
+                                                        <div id="effectOfValue4" class="effectOfValue">
+                                                            <p class="triggerOfP ">值</p>
+                                                            <input type="text" class="triggerOfInp triggerOfInpExtra" id="triggerOfInp2"/>
+                                                        </div>
+                                                        <div id="effectOfValue5" class="effectOfValue">
+                                                            <p class="triggerOfP">伤害属性</p>  
+                                                            <select name="" id="effectOfValueSel2" class="effectOfValue_sel  effectOfValue_selExtra">
+                                                                <option value="triggerHurt1">动能</option>
+                                                                <option value="triggerHurt2">热能</option>
+                                                                <option value="triggerHurt3">电磁</option>
+                                                                <option value="triggerHurt3">腐蚀</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div id="triggerOfAddBuff" class="brotherHiddTag hidd">
+                                                        <div id="addBuffOfValue1" class="effectOfValue">
+                                                            <p class="triggerOfP">影响范围</p>
+                                                            <input type="text" class="triggerOfInp" id="triggerOfInp3">
+                                                        </div>
+                                                        <div id="addBuffOfValue2" class="effectOfValue">
+                                                            <p class="triggerOfP">影响对象</p>
+                                                            <input type="checkbox" id="charitoCheck5" class="chk" /> 
+                                                            <label for="charitoCheck5" class="effectOfValue_label"></label> <p class="effectOfValue_p">敌方战车</p>
+                                                            <input type="checkbox" id="charitoCheck6" class="chk" /> 
+                                                            <label for="charitoCheck6" class="effectOfValue_label"></label> <p class="effectOfValue_p">友方战车</p>
+                                                        </div>
+                                                        <div id="addBuffOfValue3" class="effectOfValue">
+                                                            <p class="triggerOfP">BUFF ID</p>
+                                                            <input type="text" class="triggerOfInp" id="triggerOfInp4">
+                                                        </div>
+                                                    </div>
+                                                    <div id="triggerOfTerrianOfValue" class="brotherHiddTag hidd">
+                                                        <div id="terrianOfValue1" class="effectOfValue">
+                                                            <p class="triggerOfP">破坏范围</p>
+                                                            <input type="text" class="triggerOfInp" id="triggerOfInp5">
+                                                        </div>
+                                                        <div id="terrianOfValue2" class="effectOfValue">
+                                                            <p class="triggerOfP">边缘类型</p>
+                                                            <select class="effectOfValue_sel  effectOfValue_selExtra">
+                                                                <option value="">---请选择破坏地图类型---</option>
+                                                                <!-- 后面添加破坏类型 -->
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div id="triggerOfArtOfValue" class="brotherHiddTag hidd">
+                                                        <div id="ArtOfValue1" class="effectOfValue">
+                                                            <p class="triggerOfP">美术资源</p>
+                                                            <input type="text" class="triggerOfInp" id="triggerOfInp6">
+                                                        </div>
+                                                    </div>
+                                                    <div id="triggerOfAddBullet" class="brotherHiddTag hidd">
+                                                        <!-- <div class ="bulletControlBar clear ">
+                                                            <div class="grade_warp">  
+                                                                <div class="User_ratings User_grade">  
+                                                                    <div class="ratings_bars">  
+                                                                        <span id="title1">0</span>  
+                                                                        <span class="bars_11">0</span>  
+                                                                        <div class="scale" id="bar1">  
+                                                                            <div></div>  
+                                                                            <span id="btn1"></span>  
+                                                                        </div>  
+                                                                        <span class="bars_10">
+                                                                        <input type="text" class="bars_input" value= "20"/>   
+                                                                        </span>  
+                                                                    </div>
+                                                                    <div>
+                                                                        <button class="bars_button">Add</button>
+                                                                    </div> 
+                                                                    <div id="bulletAddList1" >
+                                                                        <ul class="bulletAddUl clear " id="bulletAddInfoUl1">
+                                                                        
+                                                                        </ul>
+                                                                    </div> 
+                                                                </div>  
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                    <div id="triggerOfEnd" class="brotherHiddTag hidd">
+                                                        <p class="triggerResultOptionP">结束</p>
+                                                    </div>
+
+                                                
                                                 </div>
-                                                <div id="triggerOfEnd" class="hiddTag hidd">
-                                                    <p class="triggerResultOptionP">结束</p>
-                                                </div>
-                                            </div>
+                                            </form>
                                              <div id="triggerResultBtn">
                                                 <button class="triggerResultOfBtn">保存</button>
                                                 <button class="triggerResultOfBtn">重设</button>
@@ -488,7 +504,7 @@
         <script src="../vendors/easypiechart/jquery.easy-pie-chart.js"></script>
         <script src="../assets/scripts.js"></script>
         <script src="../canvas_map/cavas_js/canvas_bullet.js"></script>
-        
+        <script src="../canvas_map/cavas_js/add_Info.js"></script>
         
     </body>
 </html>

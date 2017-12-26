@@ -360,6 +360,10 @@ $(function() {
 		plotcanvas.funDownload(plotcanvas.array,'imgAxis.json');
 	});
 	
+
+
+
+
 	$('.bars_input').keydown(function(e){
 		
 		if(e.keyCode == "13"){
@@ -374,53 +378,25 @@ $(function() {
 		}
 	});
 	
-	var  bars_num = 0;
-	$('.bars_button').click(function(){
-		
+	var  bars_num = 1;
+	$('#bars_button1').click(function(){
 		bars_num += 1;
-		var liName = document.createElement('li');
-		var labelName = document.createElement('label');
-		var inputName = document.createElement('input');
-		var buttonName = document.createElement('button');
-		var imgName = document.createElement('img');
-		
-		liName.className = "clear"
-		liName.id = "BulletList" + bars_num ;
-		labelName.className = "bars_info_label fl";
-		labelName.innerHTML = "Bullet" + ' ' + bars_num ;
-		labelName.id = "Bullet" + bars_num;
-		inputName.className = "bars_info_input fl";
-		inputName.setAttribute('type','text');
-		inputName.setAttribute('readonly','readonly');
-		inputName.setAttribute('tag',bars_num-1);
-		inputName.setAttribute('value',scale.title.innerHTML + ' ' + 's');
-		
-		buttonName.className = "bars_info_button fr";
-		imgName.setAttribute('src','../images/page1/u99.png');
-		buttonName.id = "BulletDel" + bars_num;
-		
-		$('.bulletAddUl').append(liName);
-		liName.appendChild(labelName);
-		liName.appendChild(inputName);
-		liName.appendChild(buttonName);
-		buttonName.appendChild(imgName);
-		dele();
+		bulletInfo.addBulletList(bars_num,$('#bulletAddInfoUl'));
+		bulletInfo.addBullet(bars_num);
 	});
-	function dele(){
-		var len = $('.bulletAddUl')[0].childElementCount;
-		for(var i = 1; i < 100; ++i){
-			$('#BulletDel'+i).click(function(){
-				var UlName = document.getElementById('bulletAddInfoUl1');
-				
-				bulletInfo.delete(UlName,0);
-			});
-		}
+	$('#bars_button2').click(function(){
+		bars_num += 1;
+		bulletInfo.addBulletList(bars_num,$('#bulletAddInfoUl1'));
+		bulletInfo.addBullet(bars_num);
 		
-	}
-	
-	
-
-	
+	});
+	$('#bulletAddInfoUl').delegate('a','click',function(){                   
+		
+		bulletInfo.deleteLi(this);
+	});
+	$('#bulletAddList1').delegate('a','click',function(){
+		bulletInfo.deleteLi(this);
+	});
 	$('#bulletOptionInfoA').click(function(){   
 		$(this).toggleClass("changePicMode");
 		$('#bulletOption1').toggle("normal");
@@ -428,14 +404,18 @@ $(function() {
 
 	$('#bulletOptionA').click(function(){   
 		$(this).toggleClass("changePicMode");
-		$('#bulletOptionCondition1').toggle("normal");
+		$('#bulletOption1').children('div').toggle("normal");
 	});
 	
 	$('#bulletOptionConditionA').click(function(){
+		
 		$(this).toggleClass("changePicMode");
 		$('#bulletOptionConditionInfo').toggle();
+		
 	});
-
+	
+	
+	
 	$('#ChariotInfoA').click(function(){
 		
 		bulletInfo.show($('#ChariotOptions'),1);
@@ -460,12 +440,28 @@ $(function() {
 		bulletInfo.getId($('#triggerResultOptionBottom').children().children(),'input',num,3);
 		bulletInfo.getId($('#triggerResultOptionBottom').children().children().children(),'option',num,4);
 		bulletInfo.getId($('#triggerResultOptionTop'),'a',num,5);
-		
+		var name = arguments["0"].currentTarget;
+		bulletInfo. deleteConditon(name,$('#triggerResultOptionTop'),$('#triggerResultOptionTop')[0].children[0], $('#triggerResultOption1')[0]);
 		
 	});
+	$('#bulletOptionCondition1').delegate('a','click',function(){
+		var idName = arguments["0"].currentTarget.id ;
+		var name = arguments["0"].currentTarget;
+		
+		if(idName != 'pathTrail1' && idName != 'addTriggerCondition'){
+			var num =(this.id).replace(/[^0-9]/ig,"");
+			
+			 bulletInfo.getId($('#triggerConditons1'),'a',num,5);
+			 bulletInfo.deleteConditon(name, $('#triggerConditons1'),$('#triggerConditonsP')[0], $('#triggerConditons1')[0].parentNode);
+		}
+	});
 	
+
+
+
 	$('#addTriggerCondition').click(function(){
-		bulletInfo.addA($(this),null,'addTriggerCondition','触发条件');
+		
+		bulletInfo.addA($(this),undefined,'addTriggerCondition','触发条件');
 	});
 	$('#bulletOptionConditionInfo').delegate('a','click',function(){
 		
@@ -480,7 +476,7 @@ $(function() {
 		}
 		
 	});
-
+	
 	
 	
 	$('#trailSelect').change(function(){
@@ -524,7 +520,7 @@ $(function() {
 		}
 	});
 	$('#triggerResultSel').change(function(){
-		console.log(this[0]);
+		
 		var len = $('#triggerResultSideList')[0].childElementCount;
 		for(var i = 1 ;i < len; ++i){
 			bulletInfo.switchResultSel(this.value,i);

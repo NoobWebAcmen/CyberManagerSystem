@@ -3,6 +3,7 @@ var bottomDivOrigin = $('#triggerResultOptionBottom').children('div').map((index
 var bottomInpOrigin = $('#triggerResultOptionBottom').children().children().children('input').map((index, dom) => $(dom).attr('id'));
 var bottomOptOrigin = $('#triggerResultOptionBottom').children().children().children().children('option').map((index, dom) => $(dom).attr('value'));
 var bottomAOrigin = $('#triggerResultOptionTop').children('a').map((index, dom) => $(dom).attr('id'));
+
 /****************************************时间轴原型****************************************************************** */
 
 
@@ -80,10 +81,21 @@ bullet.prototype ={
             return false; 
         } 
     },
-    delete : function(parentObj,index){
+    deleteLi : function(obj){
         if(this.Tip(1)){
             
-            parentObj.removeChild(parentObj.children[index]);
+            
+            var targetHtml = $(obj).parent().children('label')[0].innerHTML.replace(/\s/g,""); 
+            var targetNum  = $(obj).parent().children('label')[0].innerHTML.replace(/[^0-9]/ig,'');
+           
+            var aimHtml = $('#bulletOption' + targetNum).children('p')[0].innerHTML.replace(/\s/g,"");
+            
+            if(targetHtml == aimHtml){
+                
+                 $('#bulletOption' + targetNum).remove();
+                 $(obj).parent().remove();
+            }
+        
         }
               
     },
@@ -131,7 +143,10 @@ bullet.prototype ={
         var num = obj.parent().children().length - 1;
         if(num < 11){
             var elm_a = document.createElement('a');
-            elm_a.className = className ;
+            if(className != undefined){
+                elm_a.className = className ;
+            }
+            elm_a.href = 'javascript:;'
             elm_a.id = idName + num;
             elm_a.innerHTML = htmlName + num ;
             obj.before(elm_a);
@@ -186,7 +201,7 @@ bullet.prototype ={
                 
                 obj.children(childName)[z].id = _oA;
             }
-            console.log(obj.children(childName));
+           
         }
             
          
@@ -196,7 +211,7 @@ bullet.prototype ={
         switch (obj) {
 			case 'triggerResult1_' + num:
 			this.show($('#triggerOfTrail' + num),3);
-			
+			this.addTrail(num+1,$('#bulletOption1'));
 				break;
 			case 'triggerResult2_' + num:
 			this.show($('#triggerOfEffectOfValue' + num),3);
@@ -219,7 +234,126 @@ bullet.prototype ={
 			default:
 				break;
 		}
+    },
+    addTrail : function(num,parentObj){
+        
+        var elm_div = document.createElement('div');
+            var elm_a = document.createElement('a');
+            var elm_p = document.createElement('p');
+                elm_p.innerHTML = "轨迹阶段" + num ;
+            var elm_bullet = document.createElement('div');
+                var elm_bullet_a1 = document.createElement('a');
+                var elm_bullet_a2 = document.createElement('a');
+                var elm_bullet_a3 = document.createElement('a');
+                var elm_bullet_a4 = document.createElement('a');
+                elm_bullet_a1.innerHTML = '运动阶段';
+                elm_bullet_a2.innerHTML = '触发条件1';
+                elm_bullet_a3.innerHTML = '触发条件2';
+                elm_bullet_a4.innerHTML = ' + 添加条件';
+        elm_div.setAttribute('id','bulletOptionCondition');
+        elm_div.setAttribute('class','bulletCondtion clear');
+        elm_a.setAttribute('href','javascript:;');
+        elm_bullet.setAttribute('id','bulletOptionConditionInfo' + num);
+        elm_bullet.setAttribute('class','bulletCondtionInfo');
+        elm_bullet_a1.setAttribute('href','javascript:;');
+        elm_bullet_a2.setAttribute('href','javascript:;');
+        elm_bullet_a3.setAttribute('href','javascript:;');
+        elm_bullet_a4.setAttribute('href','javascript:;');
+        elm_a.setAttribute('id','bulletOptionConditionA' + num);
+        elm_a.setAttribute('class','showPicMode fl');
+        elm_p.setAttribute('class','bulletNames fl');
+        elm_p.setAttribute('id','bulletNamesOfP');
+        elm_bullet_a1.setAttribute('id','pathTrail1');
+        elm_bullet_a2.setAttribute('id','triggerConditon1');
+        elm_bullet_a3.setAttribute('id','triggerConditon2');
+        elm_bullet_a4.setAttribute('id','addTriggerCondition');
+
+
+        parentObj.append(elm_div);
+        elm_div.appendChild(elm_a);
+        elm_div.appendChild(elm_p);
+        elm_div.appendChild(elm_bullet);
+        elm_bullet.appendChild(elm_bullet_a1);
+        elm_bullet.appendChild(elm_bullet_a2);
+        elm_bullet.appendChild(elm_bullet_a3);
+        elm_bullet.appendChild(elm_bullet_a4);
+        bulletInfo.addACliCK(elm_a.id,elm_bullet.id);
+        
+    },
+    addBulletList : function(bars_num,parentObj){
+        
+		var liName = document.createElement('li');
+		var labelName = document.createElement('label');
+		var inputName = document.createElement('input');
+		var aName = document.createElement('a');
+		var imgName = document.createElement('img');
+		
+		liName.className = "clear"
+		liName.id = "BulletList" + bars_num ;
+		labelName.className = "bars_info_label fl";
+		labelName.innerHTML = "弹头" + ' ' + bars_num ;
+		labelName.id = "Bullet" + bars_num;
+		inputName.className = "bars_info_input fl";
+		inputName.setAttribute('type','text');
+		inputName.setAttribute('readonly','readonly');
+		inputName.setAttribute('tag',bars_num-1);
+		inputName.setAttribute('value',scale.title.innerHTML + ' ' + 's');
+		
+		aName.className = "bars_info_button fr";
+		imgName.setAttribute('src','../images/page1/u99.png');
+		aName.id = "BulletDel" + bars_num;
+		
+		parentObj.append(liName);
+		liName.appendChild(labelName);
+		liName.appendChild(inputName);
+		liName.appendChild(aName);
+		aName.appendChild(imgName);
+    },
+    addBullet : function(num){
+        var elm_div = document.createElement('div');
+            var elm_a = document.createElement('a');
+            var elm_p = document.createElement('p');
+                elm_p.innerHTML = '弹头' + ' ' + num;
+        elm_div.setAttribute('id','bulletOption' + num);
+        elm_div.setAttribute('class','bulletName clear');
+        elm_a.setAttribute('href','javascript:;');
+        elm_a.setAttribute('id','bulletOptionA' + num);
+        elm_a.setAttribute('class','showPicMode fl');
+        elm_p.setAttribute('id','bulletName' + num);
+        elm_p.setAttribute('class','bulletNames fl');
+        
+        $('#powderSideBar').append(elm_div);
+        elm_div.appendChild(elm_a);
+        elm_div.appendChild(elm_p);
+         this.addTrail(1,$(elm_div));
+        // elm_div.appendChild();
+    },
+    /**
+     * 此函数用于点击删除按钮，删除ul中的li，同时隐藏触发条件的块
+     * @param id 鼠标点击的li块的对象
+     * @param objA 实现删除的a标签
+     * @param targetName li的innerhtml对应的p的innerhtml
+     * @param delName 需要删除的块
+     */
+    deleteConditon : function(id,objA,targetName,delName){
+        objA.delegate('a','click',function(){
+            if(id.innerHTML == targetName.innerHTML){
+                if(id.parentNode){
+                    id.parentNode.removeChild(id);
+                    delName.style.display = 'none';
+                }
+            }
+		});
+    },
+    addACliCK : function(aId,divId){
+        $("#"+aId).click(function(){
+            
+            $(this).toggleClass("changePicMode");
+            
+            $('#'+divId).toggle();
+        });
     }
+    
 
     
     

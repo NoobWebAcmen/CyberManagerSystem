@@ -835,7 +835,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
   font-family:"微软雅黑","宋体";
   font-size:14px;
   color:#aaaaaa;
-  
+  cursor: pointer;
 }
 
 /* ********************************bullet_index.php CSS样式 ***********************************/
@@ -1012,7 +1012,7 @@ a:hover{
   font-size: 18px;
   font-weight: bold;
   line-height: 30px;
-  margin-right: 22px;
+  
   margin-bottom: 20px;
 }
 .flyControlSel{
@@ -1032,6 +1032,13 @@ a:hover{
   margin-right: 10px;
   margin-top: 5px;
 }
+.bars_buttonExt{
+margin-left: 40px;
+margin-top: 40px;
+width : 80px;
+padding: 5px 20px;
+border-radius: 5px;
+}
 .flyBeginLab{
   margin-top: 5px;
   margin-right: 10px;
@@ -1044,7 +1051,7 @@ a:hover{
 #flyControlBottom{
   position: absolute;
   bottom: 100px;
-  left: 260px;
+  left: 240px;
 }
 .flyControlBtn{
   margin-right: 40px;
@@ -1122,7 +1129,12 @@ a:hover{
 }
 
 
-
+.triggerResultAEx{
+  margin-top: 28px !important;
+  margin-right: 160px !important;
+  width: 22px;
+  height: 22px;
+}
 .charitoLabel_p{
   margin-top: 5px;
   margin-left: 6px;
@@ -1149,8 +1161,8 @@ a:hover{
   border-radius: 5px;
   margin-top : 10px;
   width : 500px;
-  height : 500px;
-  margin-bottom: 100px;
+  height : 550px !important;
+  margin-bottom: 0px;
 }
 .triggerResultOptionTopClass{
   display: flex;
@@ -1166,7 +1178,7 @@ a:hover{
   border: 2px solid #c1c1c1;
   border-radius: 5px;
   margin:  20px 30px 0 ;
-  height: 350px;
+  height: 400px;
 }
 
 

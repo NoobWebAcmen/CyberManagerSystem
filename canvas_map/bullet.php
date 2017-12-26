@@ -6,7 +6,7 @@
     <head>
     <!-- <meta charset="UTF-8"> -->
         <title>CyberManagerV1.0</title>
-        
+
         <!-- Bootstrap -->
         <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
@@ -161,16 +161,11 @@
                                             
                                         </div>
                                     </div>
-
-                                    <div>
                                         <!-- 此处添加轨迹阶段2或更多 -->
-                                    </div>
-
                                 </div>
 
-                                <div>
                                     <!-- 此处添加弹头2或更多 -->
-                                </div>
+                               
                         <!-- 动态添加div块段结束 -->
 
                                 <div id="bulletBottomBtn">
@@ -196,7 +191,7 @@
                                                 </span>  
                                             </div>
                                             <div>
-                                                <button class="bars_button">Add</button>
+                                                <button class="bars_button" id="bars_button1">Add</button>
                                             </div> 
                                             <div id="bulletAddList" >
                                                 <ul class="bulletAddUl clear " id="bulletAddInfoUl">
@@ -243,7 +238,11 @@
                                             <option value="vendor2">坐标</option>
                                             <option value="vendor3">偏移坐标</option>
                                         </select>
-                                        <input type="text" id="flyContorlVendorInp"class="flyBeginInp"/>
+                                        <label for="" class="flyBeginLab">x: </label>
+                                        <input type="text" id="flyContorlVendorInpX" class="flyBeginInpAxies"/>
+                                        <label for="" class="flyBeginLab">y: </label>
+                                        <input type="text" id="flyContorlVendorInpY" class="flyBeginInpAxies"/>
+                                        
                                     </div>
                                     <div class="flyControlDiv">
                                         <p class="flyControlP">力度</p>
@@ -251,7 +250,11 @@
                                             <option value="strength1">延续</option>
                                             <option value="strength2">坐标</option>
                                         </select>
-                                        <input type="text" id="flyContorlStrenthInp" class="flyBeginInp"/>
+                                        <label for="" class="flyBeginLab">x: </label>
+                                        <input type="text" id="flyContorlStrenthInpX" class="flyBeginInpAxies"/>
+                                        <label for="" class="flyBeginLab">y: </label>
+                                        <input type="text" id="flyContorlStrenthInpY" class="flyBeginInpAxies"/>
+                                        
                                     </div>
                                     <div class="flyControlDiv">
                                         <p class="flyControlP">重力影响</p>
@@ -323,7 +326,7 @@
                                                 <option value="triggerSel4">接触(战车)</option>
                                             </select>
                                         </div>
-
+                                        <a href="javascript:;" id="triggerCondition1" class="triggerResultA fr triggerResultAEx"><img src="../images/page1/u99.png" alt=""></a>
                                         <form action="" method="post" class="parentHiddTag">    <!-- 表单验证2 -->
                                            
                                             <div class="triggerShowInfo brotherHiddTagTop clear"id="timeInfo">
@@ -359,6 +362,7 @@
                                                 <li id="triggerResultLi0" class="triggerResultLis">[添加]</li>
                                             </ul>
                                         </div>
+                                        
                                         <div id="triggerResultOption1" class="fl brotherHiddTag hidd triggerResultOptionClass">
                                             <div id="triggerResultOptionTop" class="triggerResultOptionTopClass">
                                                 <p class="triggerConditonP triggerConditionPExtra" id="triggerConditonP1"></p> <!-- 触发结果名字与侧边栏文字相同-->
@@ -450,37 +454,17 @@
                                                         </div>
                                                     </div>
                                                     <div id="triggerOfAddBullet" class="brotherHiddTag hidd">
-                                                        <!-- <div class ="bulletControlBar clear ">
-                                                            <div class="grade_warp">  
-                                                                <div class="User_ratings User_grade">  
-                                                                    <div class="ratings_bars">  
-                                                                        <span id="title1">0</span>  
-                                                                        <span class="bars_11">0</span>  
-                                                                        <div class="scale" id="bar1">  
-                                                                            <div></div>  
-                                                                            <span id="btn1"></span>  
-                                                                        </div>  
-                                                                        <span class="bars_10">
-                                                                        <input type="text" class="bars_input" value= "20"/>   
-                                                                        </span>  
-                                                                    </div>
-                                                                    <div>
-                                                                        <button class="bars_button">Add</button>
-                                                                    </div> 
-                                                                    <div id="bulletAddList1" >
-                                                                        <ul class="bulletAddUl clear " id="bulletAddInfoUl1">
-                                                                        
-                                                                        </ul>
-                                                                    </div> 
-                                                                </div>  
-                                                            </div>
-                                                        </div> -->
+                                                        <input class="bars_buttonExt" id="bars_button2" type="button" value="ADD"/>
+                                                        <div id="bulletAddList1" >
+                                                            <ul class="bulletAddUl clear " id="bulletAddInfoUl1">
+                                                                <!-- 添加的子弹头显示部分 -->
+                                                            </ul>
+                                                        </div> 
                                                     </div>
                                                     <div id="triggerOfEnd" class="brotherHiddTag hidd">
                                                         <p class="triggerResultOptionP">结束</p>
                                                     </div>
 
-                                                
                                                 </div>
                                             </form>
                                              <div id="triggerResultBtn">
@@ -504,7 +488,7 @@
         <script src="../vendors/easypiechart/jquery.easy-pie-chart.js"></script>
         <script src="../assets/scripts.js"></script>
         <script src="../canvas_map/cavas_js/canvas_bullet.js"></script>
-        <script src="../canvas_map/cavas_js/add_Info.js"></script>
+        
         
     </body>
 </html>

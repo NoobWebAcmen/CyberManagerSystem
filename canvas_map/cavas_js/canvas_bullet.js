@@ -59,15 +59,19 @@ scale.prototype = {
 /********************************************Bullet原型************************************************************ */
 function  bullet(options){
     this._init(options);
-    this.flag = true;
+    
 }
 
 bullet.prototype ={
     _init : function(options){
-        this.array = options.array;
-        this.id = options.id;
+        this.bullets = options.bullets;
+        this.options = options;
+        
     },
 
+    /**
+     * 用于提示是否删除
+     */
     Tip : function(flag){
         if(flag = 1){
             var msg = "确定要删除当前选中的弹头吗？\n\n请确认！"; 
@@ -81,6 +85,10 @@ bullet.prototype ={
             return false; 
         } 
     },
+    /**
+     * 用于删除添加的弹头的信息，同时删除弹头的数据
+     * @param obj 点击的垃圾桶的id
+     */
     deleteLi : function(obj){
         if(this.Tip(1)){
             
@@ -94,10 +102,25 @@ bullet.prototype ={
                 
                  $('#bulletOption' + targetNum).remove();
                  $(obj).parent().remove();
+                 this.deleteBullet(targetNum-1);
+                 
             }
         
         }
               
+    },
+    /**
+     * 用于删除弹头的数据,且同时保留以前弹头的tag值，数组长度不变
+     * @param num 需要删除的哪一个tag值
+     */
+    deleteBullet : function(num){
+        if(num < 0){
+            return ;
+        }else{
+            delete this.bullets[num];
+        }
+        
+        
     },
     /**
      * 此函数用于切换各个块，互不影响
@@ -139,6 +162,11 @@ bullet.prototype ={
         }
         
     },
+    /**
+     * 添加条件按钮触发的添加条件
+     * @param obj 在哪里添加
+     * @param className 添加的class
+     */
     addA : function(obj,className,idName,htmlName){
         var num = obj.parent().children().length - 1;
         if(num < 11){
@@ -171,6 +199,9 @@ bullet.prototype ={
         bulletInfo.show($('#triggerConditionMod1'),1);
         $('#triggerConditonsP').html($(obj).text());
     },
+    /**
+     * 获取id值，并为id值添加独有标签
+     */
     getId : function(obj,childName,num,flag){
        if(flag == 1){
             for(var i = 0;i < ORIGIN.length ; ++i){  
@@ -206,6 +237,9 @@ bullet.prototype ={
             
          
     },
+    /**
+     * 判断触发结果的下拉菜单，完成隐藏菜单，及具体的事件
+     */
     switchResultSel : function(obj,num){
         
         switch (obj) {
@@ -235,6 +269,31 @@ bullet.prototype ={
 				break;
 		}
     },
+    /**
+     * 判断运动轨迹的下拉菜单
+     */
+    switchTrailSel : function(obj){
+        switch (obj) {
+            case 'trailMove1':
+            this.show($('#flyControlContent'),2);
+            
+                break;
+            case 'trailMove2':
+            this.show($('#rollControl'),2);
+                break;
+            case 'trailMove3':
+            this.show($('#jumpControl'),2);
+                break;
+            case 'trailMove4':
+            this.show($('#snapControl'),2);
+                break;
+            default:
+                break;
+        }
+    },
+    /**
+     * 动态添加轨迹阶段
+     */
     addTrail : function(num,parentObj){
         
         var elm_div = document.createElement('div');
@@ -277,9 +336,13 @@ bullet.prototype ={
         elm_bullet.appendChild(elm_bullet_a2);
         elm_bullet.appendChild(elm_bullet_a3);
         elm_bullet.appendChild(elm_bullet_a4);
-        bulletInfo.addACliCK(elm_a.id,elm_bullet.id);
+        this.addACliCK(elm_a.id,elm_bullet.id);
+        this.addTrialClick(elm_bullet.id);
         
     },
+    /**
+     * 点击ADD，动态添加子弹头的ul列表
+     */
     addBulletList : function(bars_num,parentObj){
         
 		var liName = document.createElement('li');
@@ -309,6 +372,9 @@ bullet.prototype ={
 		liName.appendChild(aName);
 		aName.appendChild(imgName);
     },
+    /**
+     * 动态添加左侧弹头列表
+     */
     addBullet : function(num){
         var elm_div = document.createElement('div');
             var elm_a = document.createElement('a');
@@ -326,7 +392,7 @@ bullet.prototype ={
         elm_div.appendChild(elm_a);
         elm_div.appendChild(elm_p);
          this.addTrail(1,$(elm_div));
-        // elm_div.appendChild();
+        
     },
     /**
      * 此函数用于点击删除按钮，删除ul中的li，同时隐藏触发条件的块
@@ -352,8 +418,96 @@ bullet.prototype ={
             
             $('#'+divId).toggle();
         });
+    },
+    /**
+     * 给轨迹阶段动态添加点击事件
+     */
+    addTrialClick : function(obj){
+        var _this = this;
+        $('#' + obj).delegate('a','click',function(){ 
+           
+            var idName = arguments["0"].currentTarget.id ;
+            var name = arguments["0"].currentTarget;
+            
+            if($(this).children().context.id == 'pathTrail1'){
+                
+                $(this).click(function(){
+                    
+                    bulletInfo.show($('#trailOfMove'),1);
+                });   
+            }else{
+                bulletInfo.addTriggerCond(this);
+            }
+            if(idName != 'pathTrail1' && idName != 'addTriggerCondition'){
+                var num =(this.id).replace(/[^0-9]/ig,"");
+                _this.getId($('#triggerConditons1'),'a',num,5);
+                _this.deleteConditon(name, $('#triggerConditons1'),$('#triggerConditonsP')[0], $('#triggerConditons1')[0].parentNode);
+            }
+            
+            
+        });
+    },
+    /**
+     * 此函数用于判断运动轨迹下拉菜单框的事件
+     * @param text 下拉菜单选项的名字
+     */
+    switchFlySel : function(text){
+        switch (text) {
+            case '飞行':
+            this.bullets[0].cycles[0].motionMode = 1;
+            break;
+            case '滚动':
+            this.bullets[0].cycles[0].motionMode = 2;
+            break;
+            case '弹跳':
+            this.bullets[0].cycles[0].motionMode = 3;
+            break;
+            case '粘着':
+            this.bullets[0].cycles[0].motionMode = 4;
+            break;
+            default:
+                break;
+        }
+    },
+    /**
+     * 用于判断飞行模式下下拉菜单框事件
+     * 
+     */
+    switchFlyContSel : function (obj) {
+        var _this = this;
+        obj.change(function(){
+            switch (this.value) {
+                case 'beginSel2':
+                _this.bullets[0].cycles[0].isOffsetCor = true;
+                    break;
+                case 'vendor2':
+                _this.bullets[0].cycles[0].isOffsetRotation = true;
+                    break;
+                case 'strength2':
+                _this.bullets[0].cycles[0].isOffsetSpeed = true;
+                    break;
+                case 'notGravity':
+                _this.bullets[0].cycles[0].flyMode = 2;
+                default:
+                    break;
+            }
+            console.log(_this.bullets[0]);
+        });
+    },
+    /**
+     * 获取飞行菜单下的所有输入值的框
+     * 
+     */
+    getFlyValue : function(){
+        this.bullets[0].cycles[0].x = parseFloat($('#flyContorlBeginInpX').val());
+        this.bullets[0].cycles[0].y = parseFloat($('#flyContorlBeginInpY').val());
+        this.bullets[0].cycles[0].rotation = parseFloat($('#flyContorlVendorInpX').val());
+        this.bullets[0].cycles[0].speed = parseFloat($('#flyContorlStrengthInpX').val());
+        this.bullets[0].cycles[0].obstructionForce = parseFloat($('#flyContorlResisInpX').val());
+        this.bullets[0].cycles[0].elasticForce = parseFloat($('#jumpControlInp').val());
+        $('#elasticControlInp')[0].value = parseFloat($('#flyContorlResisInpX').val());
+        console.log(this.bullets[0]);
     }
-    
 
     
     
@@ -361,6 +515,104 @@ bullet.prototype ={
 
 var bulletInfoArray = new Array();
 var bulletInfo = new bullet({
-    id : $('.bars_info_input').tag,
-    array : bulletInfoArray
+    id : 000002,
+    launchDuration: 5.9,
+    bullets : [
+        {
+            image : 'explosion_1.png',
+            launchTime : 0,
+            speed : 10,
+            width : 201,
+            height : 160,
+            mass : 1,
+            rotationMoment : 1,
+            launched : false,
+            cycles : [
+                {
+                    isOffsetCor: false,
+                    isOffsetSpeed : false,
+                    isOffsetRotation : false,
+                    x : 500,
+                    y : 200,
+                    rotation : 10,
+                    speed : 10,
+                    motionMode : 1,
+                    flyMode : 1,
+                    rotateMode : 3,    //???
+                    obstructionForce : 1.0, 
+                    elasticForce : 1.2,
+                    triggers : [
+                        {
+                            triggerMode : 4,
+                            triggerParams : 1,
+                            effects : [
+                                {
+                                    effectMode : 2,
+                                    effectParams : null
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    Rotation : 10,
+                    Scale : 1,
+                    Speed : 0,
+                    motionMode : 1,
+                    flyMode : 1,
+                    rotateMode : 3,
+                    obstructionForce : 0.9,
+                    triggers : [
+                    {
+                        triggerMode : 1,
+                        triggerParams : null,
+                        effects : [
+                            {
+                                effectMode : 2,
+                                effectParams : null
+                            }
+                        ]
+                    },
+                    {
+                        triggerMode : 2,
+                        triggerParams : null,
+                        effects : [
+                            {
+                                effectMode : 2,
+                                effectParams : null
+                            }
+                        ]
+                    }
+                    ]
+                },
+                {
+                    motionMode : 3,
+                    triggers : [
+                        {
+                            triggerMode : 5,
+                            triggerParams : 2,
+                            effects : [
+                                {
+                                    effectMode : 1,
+                                    effectParams : null
+                                }
+                            ]
+                        },
+                        {
+                            triggerMode : 4,
+                            triggerParams : 3,
+                            effects : [
+                                {
+                                    effectMode : 1,
+                                    effectParams : null
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+       
+        
+    ]
 });

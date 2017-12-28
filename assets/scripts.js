@@ -379,11 +379,7 @@ $(function() {
 	});
 	
 	var  bars_num = 1;
-	$('#bars_button1').click(function(){
-		bars_num += 1;
-		bulletInfo.addBulletList(bars_num,$('#bulletAddInfoUl'));
-		bulletInfo.addBullet(bars_num);
-	});
+	
 	$('#bars_button2').click(function(){
 		bars_num += 1;
 		bulletInfo.addBulletList(bars_num,$('#bulletAddInfoUl1'));
@@ -423,6 +419,7 @@ $(function() {
 	
 	$('#triggerConditon1').click(function(){
 		bulletInfo.show($('#triggerConditionMod1'),1);
+		console.log(bulletInfo);
 	});
 
 	$('#triggerResultLi0').click(function(){
@@ -453,7 +450,8 @@ $(function() {
 			
 			 bulletInfo.getId($('#triggerConditons1'),'a',num,5);
 			 bulletInfo.deleteConditon(name, $('#triggerConditons1'),$('#triggerConditonsP')[0], $('#triggerConditons1')[0].parentNode);
-		}
+			
+			}
 	});
 	
 
@@ -479,24 +477,8 @@ $(function() {
 	
 	
 	
-	$('#trailSelect').change(function(){
-		switch (this.value) {
-			case 'trailMove1':
-			bulletInfo.show($('#flyControlContent'),2);
-				break;
-			case 'trailMove2':
-			bulletInfo.show($('#rollControl'),2);
-				break;
-			case 'trailMove3':
-			bulletInfo.show($('#jumpControl'),2);
-				break;
-			case 'trailMove4':
-			bulletInfo.show($('#snapControl'),2);
-				break;
-			default:
-				break;
-		}
-	});
+	
+	
 	$('#triggerSelect').change(function(){
 		
 		switch (this.value) {
@@ -526,7 +508,6 @@ $(function() {
 			bulletInfo.switchResultSel(this.value,i);
 		}
 	});
-	
 	
 	
 	

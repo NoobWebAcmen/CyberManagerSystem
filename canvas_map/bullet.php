@@ -187,7 +187,7 @@
                                                     <span id="btn0"></span>  
                                                 </div>  
                                                 <span class="bars_10">
-                                                <input type="text" class="bars_input" value= "20"/>   
+                                                <input type="text" class="bars_input" value= "20" id="barsInp1"/>   
                                                 </span>  
                                             </div>
                                             <div>
@@ -222,9 +222,8 @@
                                     <div class="flyControlDiv">
                                         <p class="flyControlP">起始点</p>
                                         <select class="flyControlSel specialSel1">
-                                            <option value="beginSel1">延续</option>
-                                            <option value="beginSel2">坐标</option>
-                                            <option value="beginSel3">偏移坐标</option>
+                                            <option value="beginSel1">偏移坐标</option>
+                                            <option value="beginSel2">绝对坐标</option>
                                         </select>
                                         <label for="" class="flyBeginLab">x: </label>
                                         <input type="text" id="flyContorlBeginInpX" class="flyBeginInpAxies"/>
@@ -232,43 +231,34 @@
                                         <input type="text" id="flyContorlBeginInpY" class="flyBeginInpAxies"/>
                                     </div>
                                     <div class="flyControlDiv">
-                                        <p class="flyControlP">方向</p>
+                                        <p class="flyControlP">角度</p>
                                         <select class="flyControlSel specialSel">
-                                            <option value="vendor1">延续</option>
-                                            <option value="vendor2">坐标</option>
-                                            <option value="vendor3">偏移坐标</option>
+                                            <option value="vendor1">偏移方向</option>
+                                            <option value="vendor2">绝对方向</option>
+                                            
                                         </select>
-                                        <label for="" class="flyBeginLab">x: </label>
-                                        <input type="text" id="flyContorlVendorInpX" class="flyBeginInpAxies"/>
-                                        <label for="" class="flyBeginLab">y: </label>
-                                        <input type="text" id="flyContorlVendorInpY" class="flyBeginInpAxies"/>
+                                        <input type="text" id="flyContorlVendorInpX" class="flyBeginAxies"/>
+
+                                    </div>
+                                    <div class="flyControlDiv">
+                                        <p class="flyControlP">速度</p>
+                                        <select class="flyControlSel specialSel">
+                                            <option value="strength1">偏移速度</option>
+                                            <option value="strength2">绝对速度</option>
+                                        </select>
+                                        <input type="text" id="flyContorlStrengthInpX" class="flyBeginAxies"/>
                                         
                                     </div>
                                     <div class="flyControlDiv">
-                                        <p class="flyControlP">力度</p>
-                                        <select class="flyControlSel specialSel">
-                                            <option value="strength1">延续</option>
-                                            <option value="strength2">坐标</option>
-                                        </select>
-                                        <label for="" class="flyBeginLab">x: </label>
-                                        <input type="text" id="flyContorlStrenthInpX" class="flyBeginInpAxies"/>
-                                        <label for="" class="flyBeginLab">y: </label>
-                                        <input type="text" id="flyContorlStrenthInpY" class="flyBeginInpAxies"/>
-                                        
-                                    </div>
-                                    <div class="flyControlDiv">
-                                        <p class="flyControlP">重力影响</p>
+                                        <p class="flyControlP">飞行模式</p>
                                         <select class="flyControlSel">
-                                            <option value="isGravity">是</option>
-                                            <option value="notGravity">否</option>
+                                            <option value="isGravity">抛物线</option>
+                                            <option value="notGravity">直线</option>
                                         </select>
                                     </div>
                                     <div class="flyControlDiv">
                                         <p class="flyControlP">阻力影响</p>
-                                        <select class="flyControlSel">
-                                            <option value="isResistance">是</option>
-                                            <option value="notResistance">否</option>
-                                        </select>
+                                        <input type="text" id="flyContorlResisInpX" class="flyBeginAxies"/>
                                     </div>
                                     <div class="flyControlDiv">
                                         <p class="flyControlP">跟踪效果</p>
@@ -296,8 +286,8 @@
                                         <input type="text" id="jumpControlInp" class="jumpInp"/>
                                     </div>
                                     <div class="jumpControlList">
-                                        <p class="jumpControlP">受重力度</p>
-                                        <input type="text" id="jumpControlInp" class="jumpInp"/>
+                                        <p class="jumpControlP">阻力值</p>
+                                        <input type="text" id="elasticControlInp" class="jumpInp" readOnly="readOnly"/>
                                     </div>
                                 </div>
                                 <div id="snapControl" class="hiddTag hidd snapControlClass">
@@ -488,6 +478,7 @@
         <script src="../vendors/easypiechart/jquery.easy-pie-chart.js"></script>
         <script src="../assets/scripts.js"></script>
         <script src="../canvas_map/cavas_js/canvas_bullet.js"></script>
+        <script src="../canvas_map/cavas_js/getVal.js"></script>
         
         
     </body>

@@ -1001,6 +1001,10 @@ a:hover{
   width : 560px;
   height: 360px;
 }
+.flyBeginAxies{
+  margin-left: 5px;
+  margin-top: 5px;
+}
 .flyControlContentClass{
   display: block;
 }

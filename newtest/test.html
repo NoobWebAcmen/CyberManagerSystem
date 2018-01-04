@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>test</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../vendors/jquery-1.9.1.min.js"></script>
+</head>
+<script>
+$(document).ready(function() {
+$(".control").click(function(event){
+     $("#box").slideToggle();
+    event.stopPropagation();
+});
+$(document).click(function(){
+     $("#box").slideUp();
+})
+$('#box').click(function(){
+     return false;
+});
+});
+
+</script>
+<body>
+
+<div id="box" style="background-color:red;border:2px solid #666;height:300px;width:300px;">其他内容</div>
+<div><input class="control" type="button" value="我是按钮么"/></div>
+</body>
+</html>

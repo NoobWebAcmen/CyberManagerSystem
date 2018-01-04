@@ -145,19 +145,19 @@
                             <!-- 动态添加div块段 -->
 
                                 <div id="bulletOption1" class="bulletName clear">
-                                    <a href="javascript:;" id="bulletOptionA" class="showPicMode fl"></a>
+                                    <a href="javascript:;" id="bulletOptionA1" class="showPicMode fl"></a>
                                     <p id="bulletName1" class="bulletNames fl">弹头1</p>
 
-                                    <div id="bulletOptionCondition1" class="bulletCondtion clear">
-                                        <a href="javascript:;" id="bulletOptionConditionA" class="showPicMode fl"></a>
-                                        <p class="bulletNames fl" id="bulletNamesOfP">轨迹阶段1</p>
+                                    <div id="bulletOptionCondition_1_1" class="bulletCondtion clear">
+                                        <a href="javascript:;" id="bulletOptionConditionA_1_1" class="showPicMode fl"></a>
+                                        <p class="bulletNames fl" id="bulletNamesOfP_1_1">轨迹阶段1</p>
                                         
-                                        <div id="bulletOptionConditionInfo" class="bulletCondtionInfo">
-                                            <a href="javascript:;" id="pathTrail1">运动轨迹</a>
-                                            <a href="javascript:;" id="triggerConditon1">触发条件1</a>
-                                            <a href="javascript:;" id="triggerConditon2">触发条件2</a>
+                                        <div id="bulletOptionConditionInfo_1_1" class="bulletCondtionInfo">
+                                            <a href="javascript:;" id="pathTrail1_1_1">运动轨迹</a>
+                                            <a href="javascript:;" id="triggerConditon1_1_1">触发条件1</a>
+                                            <a href="javascript:;" id="triggerConditon2_1_1">触发条件2</a>
                                             <!-- 在此处添加触发条件 -->
-                                            <a href="javascript:;" id="addTriggerCondition">+ 添加条件</a>
+                                            <a href="javascript:;" id="addTriggerCondition_1_1">+ 添加条件</a>
                                             
                                         </div>
                                     </div>
@@ -204,9 +204,9 @@
                                 </div>
                             </div>
                             <!-- 运动轨迹模块 -->
-                            <div id="trailOfMove" class="fl parentHiddTag hidd trailOfMoveClass">
+                            <div id="trailOfMove_1_1" class="fl parentHiddTag hidd trailOfMoveClass">
                                 <div id="trailSel">
-                                    <select  id="trailSelect">
+                                    <select  id="trailSelect_1_1">
                                         <!-- <option value="0">请选择运动轨迹</option> -->
                                         <option value="trailMove1" >飞行</option>
                                         <option value="trailMove2" >滚动</option>
@@ -217,89 +217,89 @@
 
                                 <form method="post" action="">                      <!-- 表单提交1 -->
                                     
-                                <div id="flyControlContent" class="hiddTag hidd flyControlContentClass">
+                                <div id="flyControlContent_1_1" class="hiddTag hidd flyControlContentClass">
                                     <!-- 飞行控制 -->
-                                    <div class="flyControlDiv">
+                                    <div class="flyControlDiv" id="flyDiv1_1_1">
                                         <p class="flyControlP">起始点</p>
-                                        <select class="flyControlSel specialSel1">
+                                        <select class="flyControlSel specialSel1" id="flyBegin_1_1">
                                             <option value="beginSel1">偏移坐标</option>
                                             <option value="beginSel2">绝对坐标</option>
                                         </select>
                                         <label for="" class="flyBeginLab">x: </label>
-                                        <input type="text" id="flyContorlBeginInpX" class="flyBeginInpAxies"/>
+                                        <input type="text" id="flyContorlBeginInpX_1_1" class="flyBeginInpAxies"/>
                                         <label for="" class="flyBeginLab">y: </label>
-                                        <input type="text" id="flyContorlBeginInpY" class="flyBeginInpAxies"/>
+                                        <input type="text" id="flyContorlBeginInpY_1_1" class="flyBeginInpAxies"/>
                                     </div>
-                                    <div class="flyControlDiv">
+                                    <div class="flyControlDiv" id="flyDiv2_1_1">
                                         <p class="flyControlP">角度</p>
-                                        <select class="flyControlSel specialSel">
+                                        <select class="flyControlSel specialSel" id="flyVen_1_1">
                                             <option value="vendor1">偏移方向</option>
                                             <option value="vendor2">绝对方向</option>
                                             
                                         </select>
-                                        <input type="text" id="flyContorlVendorInpX" class="flyBeginAxies"/>
+                                        <input type="text" id="flyContorlVendorInpX_1_1" class="flyBeginAxies"/>
 
                                     </div>
-                                    <div class="flyControlDiv">
+                                    <div class="flyControlDiv" id="flyDiv3_1_1">
                                         <p class="flyControlP">速度</p>
-                                        <select class="flyControlSel specialSel">
+                                        <select class="flyControlSel specialSel" id="flySpeed_1_1">
                                             <option value="strength1">偏移速度</option>
                                             <option value="strength2">绝对速度</option>
                                         </select>
                                         <input type="text" id="flyContorlStrengthInpX" class="flyBeginAxies"/>
                                         
                                     </div>
-                                    <div class="flyControlDiv">
+                                    <div class="flyControlDiv" id="flyDiv4_1_1">
                                         <p class="flyControlP">飞行模式</p>
-                                        <select class="flyControlSel">
+                                        <select class="flyControlSel" id="flyMode_1_1">
                                             <option value="isGravity">抛物线</option>
                                             <option value="notGravity">直线</option>
                                         </select>
                                     </div>
-                                    <div class="flyControlDiv">
+                                    <div class="flyControlDiv" id="flyDiv5_1_1">
                                         <p class="flyControlP">阻力影响</p>
-                                        <input type="text" id="flyContorlResisInpX" class="flyBeginAxies"/>
+                                        <input type="text" id="flyContorlResisInpX_1_1" class="flyBeginAxies"/>
                                     </div>
-                                    <div class="flyControlDiv">
+                                    <div class="flyControlDiv" id="flyDiv6_1_1">
                                         <p class="flyControlP">跟踪效果</p>
-                                        <select class="flyControlSel">
+                                        <select class="flyControlSel" id="flyTrack_1_1">
                                             <option value="isTrack">是</option>
                                             <option value="notTrack">否</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div id="rollControl" class="hiddTag hidd rollControlClass">
+                                <div id="rollControl_1_1" class="hiddTag hidd rollControlClass">
                                     <!-- 滚动控制 -->
-                                    <div class="rollControlList">
+                                    <div class="rollControlList" id="rollDiv1_1_1">
                                         <p class="rollControlP">距离</p>
-                                        <input type="text" id="rollControlInp" class="rollInp"/>
+                                        <input type="text" id="rollControlInp1_1_1" class="rollInp"/>
                                     </div>
-                                    <div class="rollControlList">
+                                    <div class="rollControlList" id="rollDiv2_1_1">
                                         <p class="rollControlP">速度</p>
-                                        <input type="text" id="rollControlInp" class="rollInp"/>
+                                        <input type="text" id="rollControlInp2_1_1" class="rollInp"/>
                                     </div>
                                 </div>
-                                <div id="jumpControl" class="hiddTag hidd jumpControlClass">
+                                <div id="jumpControl_1_1" class="hiddTag hidd jumpControlClass">
                                     <!-- 弹跳控制 -->
-                                    <div class="jumpControlList">
+                                    <div class="jumpControlList" id="jumpDiv3_1_1">
                                         <p class="jumpControlP">弹力度</p>
-                                        <input type="text" id="jumpControlInp" class="jumpInp"/>
+                                        <input type="text" id="jumpControlInp_1_1" class="jumpInp"/>
                                     </div>
-                                    <div class="jumpControlList">
+                                    <div class="jumpControlList" id="jumpDiv4_1_1">
                                         <p class="jumpControlP">阻力值</p>
-                                        <input type="text" id="elasticControlInp" class="jumpInp" readOnly="readOnly"/>
+                                        <input type="text" id="elasticControlInp_1_1" class="jumpInp" readOnly="readOnly"/>
                                     </div>
                                 </div>
-                                <div id="snapControl" class="hiddTag hidd snapControlClass">
+                                <div id="snapControl_1_1" class="hiddTag hidd snapControlClass">
                                     <!-- 黏着 -->
                                     <p class="triggerResultOptionP">无</p>
                                 </div>
 
                                 </form>
                                 
-                                <div id="flyControlBottom">
-                                        <button class="flyControlBtn">保存</button>
-                                        <button class="flyControlBtn">重填</button>
+                                <div id="flyControlBottom_1_1">
+                                        <button class="flyControlBtn" id="saveFlyBtn_1_1">保存</button>
+                                        <button class="flyControlBtn" id="resetFlyBtn_1_1">重填</button>
                                 </div>
                                     
                             </div>
@@ -479,7 +479,7 @@
         <script src="../assets/scripts.js"></script>
         <script src="../canvas_map/cavas_js/canvas_bullet.js"></script>
         <script src="../canvas_map/cavas_js/getVal.js"></script>
-        
+        <script src="../common/baseTools.js"></script>
         
     </body>
 </html>

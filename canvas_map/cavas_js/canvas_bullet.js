@@ -57,15 +57,15 @@ scale.prototype = {
    
 
 /********************************************Bullet原型************************************************************ */
-function  bullet(options){
+function  Bullet(options){
     this._init(options);
-    
+    this.flag = true;
 }
 
-bullet.prototype ={
+Bullet.prototype ={
     _init : function(options){
-        this.bullets = options.bullets;
-        this.options = options;
+        this.bulletsData = options.bullets;
+        this.bulletObject = options;
         
     },
 
@@ -117,7 +117,7 @@ bullet.prototype ={
         if(num < 0){
             return ;
         }else{
-            delete this.bullets[num];
+            delete this.bulletsData[num];
         }
         
         
@@ -167,7 +167,7 @@ bullet.prototype ={
      * @param obj 在哪里添加
      * @param className 添加的class
      */
-    addA : function(obj,className,idName,htmlName){
+    addA : function(obj,className,idName,htmlName,bulletNum,trailNum){
         var num = obj.parent().children().length - 1;
         if(num < 11){
             var elm_a = document.createElement('a');
@@ -175,7 +175,7 @@ bullet.prototype ={
                 elm_a.className = className ;
             }
             elm_a.href = 'javascript:;'
-            elm_a.id = idName + num;
+            elm_a.id = idName +num+'_' +bulletNum + '_'+trailNum;
             elm_a.innerHTML = htmlName + num ;
             obj.before(elm_a);
         }else{
@@ -195,9 +195,17 @@ bullet.prototype ={
        
     },
     addTriggerCond : function(obj){
+        console.log(obj);
         $('#triggerConditionMod1').append($('#triggerConditionMod1').children('div'));
         bulletInfo.show($('#triggerConditionMod1'),1);
         $('#triggerConditonsP').html($(obj).text());
+    },
+    addTrailOfMove : function(obj,bulletNum,trailNum){
+
+        $(obj).parent().append($(obj).clone().attr("id", 'trailOfMove' + '_' + bulletNum + '_' + trailNum));
+        
+    
+        
     },
     /**
      * 获取id值，并为id值添加独有标签
@@ -272,20 +280,20 @@ bullet.prototype ={
     /**
      * 判断运动轨迹的下拉菜单
      */
-    switchTrailSel : function(obj){
+    switchTrailSel : function(obj,bulletNum,trailNum){
         switch (obj) {
             case 'trailMove1':
-            this.show($('#flyControlContent'),2);
+            this.show($('#flyControlContent'+'_'+bulletNum +'_'+trailNum),2);
             
                 break;
             case 'trailMove2':
-            this.show($('#rollControl'),2);
+            this.show($('#rollControl'+'_'+bulletNum +'_'+trailNum),2);
                 break;
             case 'trailMove3':
-            this.show($('#jumpControl'),2);
+            this.show($('#jumpControl'+'_'+bulletNum +'_'+trailNum),2);
                 break;
             case 'trailMove4':
-            this.show($('#snapControl'),2);
+            this.show($('#snapControl'+'_'+bulletNum +'_'+trailNum),2);
                 break;
             default:
                 break;
@@ -293,8 +301,10 @@ bullet.prototype ={
     },
     /**
      * 动态添加轨迹阶段
+     * @param num 控制弹头数的数字
+     * @param trailNum 控制轨迹阶段的数字
      */
-    addTrail : function(num,parentObj){
+    addTrail : function(num,parentObj,trailNum){
         
         var elm_div = document.createElement('div');
             var elm_a = document.createElement('a');
@@ -309,23 +319,23 @@ bullet.prototype ={
                 elm_bullet_a2.innerHTML = '触发条件1';
                 elm_bullet_a3.innerHTML = '触发条件2';
                 elm_bullet_a4.innerHTML = ' + 添加条件';
-        elm_div.setAttribute('id','bulletOptionCondition');
+        elm_div.setAttribute('id','bulletOptionCondition' + '_' + num+'_'+trailNum);
         elm_div.setAttribute('class','bulletCondtion clear');
         elm_a.setAttribute('href','javascript:;');
-        elm_bullet.setAttribute('id','bulletOptionConditionInfo' + num);
+        elm_bullet.setAttribute('id','bulletOptionConditionInfo'+ '_' + num+'_'+trailNum);
         elm_bullet.setAttribute('class','bulletCondtionInfo');
         elm_bullet_a1.setAttribute('href','javascript:;');
         elm_bullet_a2.setAttribute('href','javascript:;');
         elm_bullet_a3.setAttribute('href','javascript:;');
         elm_bullet_a4.setAttribute('href','javascript:;');
-        elm_a.setAttribute('id','bulletOptionConditionA' + num);
+        elm_a.setAttribute('id','bulletOptionConditionA' + '_' + num+'_'+trailNum);
         elm_a.setAttribute('class','showPicMode fl');
         elm_p.setAttribute('class','bulletNames fl');
-        elm_p.setAttribute('id','bulletNamesOfP');
-        elm_bullet_a1.setAttribute('id','pathTrail1');
-        elm_bullet_a2.setAttribute('id','triggerConditon1');
-        elm_bullet_a3.setAttribute('id','triggerConditon2');
-        elm_bullet_a4.setAttribute('id','addTriggerCondition');
+        elm_p.setAttribute('id','bulletNamesOfP' + '_' + num +'_'+trailNum);
+        elm_bullet_a1.setAttribute('id','pathTrail1'+'_'+num+'_'+trailNum);
+        elm_bullet_a2.setAttribute('id','triggerConditon1'+'_'+num+'_'+trailNum);
+        elm_bullet_a3.setAttribute('id','triggerConditon2'+'_'+num+'_'+trailNum);
+        elm_bullet_a4.setAttribute('id','addTriggerCondition'+'_'+num+'_'+trailNum);
 
 
         parentObj.append(elm_div);
@@ -337,7 +347,7 @@ bullet.prototype ={
         elm_bullet.appendChild(elm_bullet_a3);
         elm_bullet.appendChild(elm_bullet_a4);
         this.addACliCK(elm_a.id,elm_bullet.id);
-        this.addTrialClick(elm_bullet.id);
+        this.addTrialClick(elm_bullet.id,num,trailNum);   //轨迹阶段事件
         
     },
     /**
@@ -391,8 +401,11 @@ bullet.prototype ={
         $('#powderSideBar').append(elm_div);
         elm_div.appendChild(elm_a);
         elm_div.appendChild(elm_p);
-         this.addTrail(1,$(elm_div));
-        
+        this.addTrail(num,$(elm_div),1);
+        $('#bulletOptionA'+ num).click(function(){   
+            $(this).toggleClass("changePicMode");
+            $('#bulletOption'+num).children('div').toggle("normal");
+        });
     },
     /**
      * 此函数用于点击删除按钮，删除ul中的li，同时隐藏触发条件的块
@@ -411,6 +424,9 @@ bullet.prototype ={
             }
 		});
     },
+    /**
+     * 给轨迹阶段前的a标签添加下拉隐藏事件
+     */
     addACliCK : function(aId,divId){
         $("#"+aId).click(function(){
             
@@ -422,23 +438,56 @@ bullet.prototype ={
     /**
      * 给轨迹阶段动态添加点击事件
      */
-    addTrialClick : function(obj){
+    addTrialClick : function(obj,bulletNum,trailNum){
         var _this = this;
+            $('#pathTrail1'+'_'+bulletNum+'_'+trailNum).one('click',function(){
+                
+                _this.addTrailOfMove($('#trailOfMove_1_1'),bulletNum,trailNum);
+
+                _this.changeSaveBtn($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
+                
+                _this.saveBtnClick(bulletNum,trailNum);
+
+                _this.changeFlySelId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
+
+                _this.changeFlyTrailId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
+                
+               
+                
+            }); 
         $('#' + obj).delegate('a','click',function(){ 
            
             var idName = arguments["0"].currentTarget.id ;
             var name = arguments["0"].currentTarget;
-            
-            if($(this).children().context.id == 'pathTrail1'){
+            var addId = 'addTriggerCondition' +'_' + bulletNum + '_' + trailNum;
+            var thisId = $(this).children().context.id;
+            var preNum = bulletNum -1;
+            var nexNum = trailNum -1;
+            if(thisId == 'pathTrail1'+'_'+bulletNum+'_'+trailNum){
                 
-                $(this).click(function(){
-                    
-                    bulletInfo.show($('#trailOfMove'),1);
-                });   
+                _this.show($('#trailOfMove' + '_'+bulletNum+'_'+trailNum),1);
+                $('#trailSelect'+'_' + bulletNum + '_' + trailNum).change(function(){
+                    bulletInfo.switchTrailSel(this.value,bulletNum,trailNum);
+                });
+                var text = $('#trailSelect'+'_'+bulletNum+'_'+trailNum + ' option:selected').text();
+                
+                
+                _this.changeFlyModId($('#flyControlContent'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
+                _this.changeFlyModId($('#rollControl'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
+                _this.changeFlyModId($('#jumpControl'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
+                _this.switchFlySel(text,preNum,nexNum);
+               
             }else{
-                bulletInfo.addTriggerCond(this);
+                _this.addTriggerCond(this);
             }
-            if(idName != 'pathTrail1' && idName != 'addTriggerCondition'){
+            if(thisId == addId){
+                $(this).click(function(){
+                   _this.addA($(this),undefined,'triggerConditon','触发条件',bulletNum,trailNum);
+                  
+                });
+            }
+
+            if(idName != 'pathTrail1'+'_'+bulletNum+'_'+trailNum && idName != 'addTriggerCondition'+'_'+bulletNum+'_'+trailNum){
                 var num =(this.id).replace(/[^0-9]/ig,"");
                 _this.getId($('#triggerConditons1'),'a',num,5);
                 _this.deleteConditon(name, $('#triggerConditons1'),$('#triggerConditonsP')[0], $('#triggerConditons1')[0].parentNode);
@@ -447,23 +496,100 @@ bullet.prototype ={
             
         });
     },
+    changeFlyModId : function(obj,bulletNum,trailNum){
+        var len = $(obj).children().length;
+        for(var i=0;i<len;++i){
+            var str = obj.children().eq(i).attr('id');
+            var str2 = str.slice(0,-4);
+            var str1 = obj.children().eq(i).attr('id',str2+ '_' +bulletNum + '_' + trailNum);
+            
+            for(var j =0;j<str1.children().length;j++){
+                var str3 = str1.children().eq(j).attr('id');
+                if(str3){
+                    var str4 = str3.slice(0,-4);
+                    var str5 = str1.children().eq(j).attr('id',str4+ '_' +bulletNum + '_' + trailNum);                 
+                }
+
+            }
+            
+        }
+       
+  
+        
+    },
+    changeFlySelId : function(obj,bulletNum,trailNum){
+        
+        for(var i = 0;i<4;++i){
+            var str = $(obj.children()[1]).children()[i].id;
+           
+            $(obj.children()[1]).children()[i].id = str.replace(/[^a-zA-Z]/g,'');
+            $(obj.children()[1]).children()[i].id += '_'+bulletNum+'_'+trailNum;
+        }
+        
+    },
+    changeSaveBtn : function(obj,bulletNum,trailNum){
+        
+        obj[0].children['2'].id = obj[0].children['2'].id.replace(/[^a-z]/ig,'');
+        obj[0].children['2'].id = obj[0].children['2'].id +'_' +bulletNum + '_' +trailNum;
+        $(obj[0].children['2']).children('button')[0].id = $(obj[0].children['2']).children('button')[0].id.replace(/[^a-z]/ig,'');
+        $(obj[0].children['2']).children('button')[0].id+='_' +bulletNum + '_' +trailNum;
+        $(obj[0].children['2']).children('button')[1].id = $(obj[0].children['2']).children('button')[1].id.replace(/[^a-z]/ig,'');
+        $(obj[0].children['2']).children('button')[1].id+='_' +bulletNum + '_' +trailNum;
+        
+    },
+    changeFlyTrailId : function(obj,bulletNum,trailNum){
+        
+        
+        var selId = obj.children().children('select').map((index, dom) => $(dom).attr('id'))[0].substr(0,11);
+        selId += '_' +bulletNum + '_' +trailNum; 
+        obj[0].children[0].children[0].id = selId;
+        
+    },
+    saveBtnClick : function(bulletNum,trailNum){
+        var _this = this;
+        $('#saveFlyBtn'+'_'+bulletNum+'_'+trailNum).click(function(){
+            
+            preNum = $(this).attr('id').replace(/[^0-9]/g,'').substr(0,1) - 1;
+            
+            nexNum = $(this).attr('id').replace(/[^0-9]/g,'').substr(1,1) -1;
+            
+            if(this.innerHTML =='保存'){
+                
+                var text = $('#trailSelect'+'_'+bulletNum+'_'+trailNum + ' option:selected').text();
+                 _this.switchFlySel(text,preNum,nexNum);
+                _this.getFlyValue(preNum,nexNum);   
+                
+            }else if(this.innerHTML == '重填'){
+                alert("功能还在开发中");
+            }
+        });
+    },
+    triggerFlyControl : function(preNum,nexNum){
+        var bulletNum = preNum + 1;
+        var trailNum = nexNum + 1;
+        this.switchFlyContSel($('#flyBegin'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
+        this.switchFlyContSel($('#flyVen'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
+        this.switchFlyContSel($('#flySpeed'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
+        this.switchFlyContSel($('#flyMode'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
+    },
     /**
      * 此函数用于判断运动轨迹下拉菜单框的事件
      * @param text 下拉菜单选项的名字
      */
-    switchFlySel : function(text){
+    switchFlySel : function(text,preNum,nexNum){
         switch (text) {
             case '飞行':
-            this.bullets[0].cycles[0].motionMode = 1;
+            this.bulletsData[preNum].cycles[nexNum].motionMode = 1;
+            this.triggerFlyControl(preNum,nexNum);
             break;
             case '滚动':
-            this.bullets[0].cycles[0].motionMode = 2;
+            this.bulletsData[preNum].cycles[nexNum].motionMode = 2;
             break;
             case '弹跳':
-            this.bullets[0].cycles[0].motionMode = 3;
+            this.bulletsData[preNum].cycles[nexNum].motionMode = 3;
             break;
             case '粘着':
-            this.bullets[0].cycles[0].motionMode = 4;
+            this.bulletsData[preNum].cycles[nexNum].motionMode = 4;
             break;
             default:
                 break;
@@ -473,40 +599,60 @@ bullet.prototype ={
      * 用于判断飞行模式下下拉菜单框事件
      * 
      */
-    switchFlyContSel : function (obj) {
+    switchFlyContSel : function (obj,preNum,nexNum) {
         var _this = this;
+        
         obj.change(function(){
+            
             switch (this.value) {
                 case 'beginSel2':
-                _this.bullets[0].cycles[0].isOffsetCor = true;
+                _this.bulletsData[preNum].cycles[nexNum].isOffsetCor = true;
+                    break;
+                case 'beginSel1':
+                _this.bulletsData[preNum].cycles[nexNum].isOffsetCor = false;
+                    break;
+                case 'vendor1':
+                _this.bulletsData[preNum].cycles[nexNum].isOffsetRotation = false;
                     break;
                 case 'vendor2':
-                _this.bullets[0].cycles[0].isOffsetRotation = true;
+                _this.bulletsData[preNum].cycles[nexNum].isOffsetRotation = true;
+                    break;
+                case 'strength1':
+                _this.bulletsData[preNum].cycles[nexNum].isOffsetSpeed = false;
                     break;
                 case 'strength2':
-                _this.bullets[0].cycles[0].isOffsetSpeed = true;
+                _this.bulletsData[preNum].cycles[nexNum].isOffsetSpeed = true;
                     break;
+                case 'isGravity':
+                _this.bulletsData[preNum].cycles[nexNum].flyMode = 1;
+                break;
                 case 'notGravity':
-                _this.bullets[0].cycles[0].flyMode = 2;
+                _this.bulletsData[preNum].cycles[nexNum].flyMode = 2;
+                break;
                 default:
+                
                     break;
             }
-            console.log(_this.bullets[0]);
         });
     },
     /**
      * 获取飞行菜单下的所有输入值的框
      * 
      */
-    getFlyValue : function(){
-        this.bullets[0].cycles[0].x = parseFloat($('#flyContorlBeginInpX').val());
-        this.bullets[0].cycles[0].y = parseFloat($('#flyContorlBeginInpY').val());
-        this.bullets[0].cycles[0].rotation = parseFloat($('#flyContorlVendorInpX').val());
-        this.bullets[0].cycles[0].speed = parseFloat($('#flyContorlStrengthInpX').val());
-        this.bullets[0].cycles[0].obstructionForce = parseFloat($('#flyContorlResisInpX').val());
-        this.bullets[0].cycles[0].elasticForce = parseFloat($('#jumpControlInp').val());
-        $('#elasticControlInp')[0].value = parseFloat($('#flyContorlResisInpX').val());
-        console.log(this.bullets[0]);
+    getFlyValue : function(bulletNum,trailNum){
+        var bullets = bulletNum + 1;
+        var trails = trailNum + 1;
+        this.bulletsData[bulletNum].cycles[trailNum].x = parseFloat($('#flyContorlBeginInpX'+'_'+bullets+'_'+trails).val());
+        this.bulletsData[bulletNum].cycles[trailNum].y = parseFloat($('#flyContorlBeginInpY'+'_'+bullets+'_'+trails).val());
+        this.bulletsData[bulletNum].cycles[trailNum].rotation = parseFloat($('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).val());
+        this.bulletsData[bulletNum].cycles[trailNum].speed = parseFloat($('#flyContorlStrength'+'_'+bullets+'_'+trails).val());
+        this.bulletsData[bulletNum].cycles[trailNum].obstructionForce = parseFloat($('#flyContorlResisInpX'+'_'+bullets+'_'+trails).val());
+        this.bulletsData[bulletNum].cycles[trailNum].elasticForce = parseFloat($('#jumpControlInp'+'_'+bullets+'_'+trails).val());
+        var inpx = $('#elasticControlInp'+'_'+bullets+'_'+trails)[0].value;
+        $('#elasticControlInp'+'_'+bullets+'_'+trails)[0].value = parseFloat($('#flyContorlResisInpX'+'_'+bullets+'_'+trails).val());
+        
+        
+        console.log(this.bulletsData);
     }
 
     
@@ -514,7 +660,7 @@ bullet.prototype ={
 }
 
 var bulletInfoArray = new Array();
-var bulletInfo = new bullet({
+var bulletInfo = new Bullet({
     id : 000002,
     launchDuration: 5.9,
     bullets : [
@@ -616,3 +762,4 @@ var bulletInfo = new bullet({
         
     ]
 });
+

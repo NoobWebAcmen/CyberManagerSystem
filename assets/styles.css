@@ -1227,11 +1227,10 @@ border-radius: 5px;
   justify-content: center;
 }
 .triggerResultOfBtn{
-  margin-right: 20px;
-  margin-top: 20px;
   padding: 5px 22px;
   background: #ffffff;
   border-radius: 5px;
+  margin : 20px -60px 0 120px;
 }
 .showDiv{
   display: block;

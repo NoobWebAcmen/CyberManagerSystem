@@ -6,35 +6,40 @@ $('#bars_button1').click(function(){
     
     bulletInfo.addBulletList(bars_num,$('#bulletAddInfoUl'));
     bulletInfo.addBullet(bars_num);
-    bulletInfo.options.launchDuration = parseFloat($('#barsInp1')[0].value);
-    bulletInfo.options.id = parseInt($('#powderIdOfP').html()); //id 看是不是需要字符串
+    bulletInfo.bulletObject.launchDuration = parseFloat($('#barsInp1')[0].value);
+    bulletInfo.bulletObject.id = parseInt($('#powderIdOfP').html()); //id 看是不是需要字符串
 
     time.push(parseFloat($('#title0')[0].innerHTML));
     var num = bars_num -2;
     
-    bulletInfo.bullets.push(Object.assign({},bulletInfo.bullets[0]));
+    bulletInfo.bulletsData.push(deepClone(bulletInfo.bulletsData[0]));
 
-    if( bulletInfo.bullets[bars_num-1]){
-        bulletInfo.bullets[bars_num-1].launchTime = time[num];
+    if( bulletInfo.bulletsData[bars_num-1]){
+        bulletInfo.bulletsData[bars_num-1].launchTime = time[num];
     }
-    
+    // console.log($('.flyControlDiv').parent()[0]);
+    // bulletInfo.changeFlyModId($('.flyControlDiv').parent()[0],bars_num,1);
+    // bulletInfo.changeFlyModId($('.rollControlList').parent()[0],bars_num,1);
+    // bulletInfo.changeFlyModId($('.jumpControlList').parent()[0],bars_num,1);
+        
     
 });
 
-$('.flyControlBtn').click(function(){
+$('#saveFlyBtn_1_1').click(function(){
+   
+    
+    var idStr = $(this).attr('id');
+    idStr = idStr.replace(/[^0-9]/g,'').substr(0,1);
     
     if(this.innerHTML =='保存'){
-        var text = $('#trailSelect option:selected').text();
-        bulletInfo.switchFlySel(text);
-        bulletInfo.switchFlyContSel($('.flyControlSel')); 
-        bulletInfo.getFlyValue();   
-        // console.log(bulletInfo.bullets);
+         bulletInfo.getFlyValue(0,0);   
+         
     }else if(this.innerHTML == '重填'){
         alert("功能还在开发中");
     }
 });
 
-$('#trailSelect').change(function(){
+$('#trailSelect_1_1').change(function(){
 
-    bulletInfo.switchTrailSel(this.value);
+    bulletInfo.switchTrailSel(this.value,1,1);
 });

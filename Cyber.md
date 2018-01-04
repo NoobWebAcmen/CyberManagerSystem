@@ -54,3 +54,43 @@ var obj = { a: 1 };
 var copy = Object.assign({}, obj);
 console.log(copy); // { a: 1 }
 ```
+
+
+·2017/12/28
+
+clone()克隆并追加一个 p 元素：
+
+```
+$("button").click(function(){
+  $("body").append($("p").clone());
+});
+```
+
+可以克隆任意一个div块
+
+
+
+## 定义和用法
+
+one() 方法为被选元素附加一个或多个事件处理程序，并规定当事件发生时运行的函数。
+
+当使用 one() 方法时，每个元素只能运行一次事件处理器函数。
+
+### 语法
+
+```
+$(selector).one(event,data,function)
+```
+
+
+·2018/1/2
+
+​	bulletInfo.bulletsData.bullets[0].cycles[0].triggers = [];
+
+​    bulletInfo.bulletsData.bullets[0].cycles[0].triggers.push(deepClone(triggerVal[0]));
+
+​    bulletInfo.bulletsData.bullets[0].cycles[0].triggers.push(deepClone(triggerVal[1]));
+
+1.如果是一个对象想要使用push方法，那就在push之前先把这个对象初始化成数组
+
+2.如果想要push到数组的对应的地方，则push多次

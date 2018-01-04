@@ -395,22 +395,20 @@ $(function() {
 	});
 	$('#bulletOptionInfoA').click(function(){   
 		$(this).toggleClass("changePicMode");
-		$('#bulletOption1').toggle("normal");
+		$('.bulletName').toggle("normal");
 	});
 
-	$('#bulletOptionA').click(function(){   
+	$('#bulletOptionA1').click(function(){   
 		$(this).toggleClass("changePicMode");
 		$('#bulletOption1').children('div').toggle("normal");
 	});
 	
-	$('#bulletOptionConditionA').click(function(){
+	$('#bulletOptionConditionA_1_1').click(function(){
 		
 		$(this).toggleClass("changePicMode");
-		$('#bulletOptionConditionInfo').toggle();
+		$('#bulletOptionConditionInfo_1_1').toggle();
 		
 	});
-	
-	
 	
 	$('#ChariotInfoA').click(function(){
 		
@@ -441,11 +439,11 @@ $(function() {
 		bulletInfo. deleteConditon(name,$('#triggerResultOptionTop'),$('#triggerResultOptionTop')[0].children[0], $('#triggerResultOption1')[0]);
 		
 	});
-	$('#bulletOptionCondition1').delegate('a','click',function(){
+	$('#bulletOptionCondition_1_1').delegate('a','click',function(){
 		var idName = arguments["0"].currentTarget.id ;
 		var name = arguments["0"].currentTarget;
 		
-		if(idName != 'pathTrail1' && idName != 'addTriggerCondition'){
+		if(idName != 'pathTrail1_1_1' && idName != 'addTriggerCondition_1_1'){
 			var num =(this.id).replace(/[^0-9]/ig,"");
 			
 			 bulletInfo.getId($('#triggerConditons1'),'a',num,5);
@@ -457,17 +455,21 @@ $(function() {
 
 
 
-	$('#addTriggerCondition').click(function(){
+	$('#addTriggerCondition_1_1').click(function(){
 		
-		bulletInfo.addA($(this),undefined,'addTriggerCondition','触发条件');
+		bulletInfo.addA($(this),undefined,'triggerConditon','触发条件',1,1);
 	});
-	$('#bulletOptionConditionInfo').delegate('a','click',function(){
+	$('#bulletOptionConditionInfo_1_1').delegate('a','click',function(){
 		
-		if($(this).children().context.id == 'pathTrail1'){
+		if($(this).children().context.id == 'pathTrail1_1_1'){
 			
 			$(this).click(function(){
 				
-				bulletInfo.show($('#trailOfMove'),1);
+				bulletInfo.show($('#trailOfMove_1_1'),1);
+				var text = $('#trailSelect_1_1 option:selected').text();
+				bulletInfo.switchFlySel(text,0,0);
+				
+    
 			});
 		}else{
 			bulletInfo.addTriggerCond(this);

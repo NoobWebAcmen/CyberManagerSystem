@@ -143,9 +143,9 @@
                                 <p>弹头生命周期</p>
                             </div>
                             <div id="bulletBottomBtn">
-                                    <button>预览</button>
-                                    <button>导出数据</button>
-                                    <button>返回主页</button>
+                                    <button id="view">预览</button>
+                                    <button id="downloadData">导出数据</button>
+                                    <button id="home">返回主页</button>
                             </div>
                         </div>
                         <div id="ChariotOptions" class="fl parentHiddTag hidd ChariotOptionsClass">

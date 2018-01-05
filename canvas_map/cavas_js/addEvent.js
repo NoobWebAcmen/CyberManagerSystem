@@ -63,6 +63,7 @@ function addTrialClick (obj,bulletNum,trailNum){
         var preNum = bulletNum -1;
         var nexNum = trailNum -1;
         show($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),1);
+        findWhoSel(bulletNum,trailNum);
         $('#trailSelect'+'_' + bulletNum + '_' + trailNum).change(function(){
              switchTrailSel(this.value,bulletNum,trailNum);
         });
@@ -77,28 +78,36 @@ function addTrialClick (obj,bulletNum,trailNum){
         
         var thisId = $(this).context.id;
         var thisVal = this.getAttribute('resval');
+        var num = thisId.slice(0,-4).replace(/[^0-9]/g,'');
+        var str = $('#triggerConditionMod'+'_'+num+'_'+bulletNum+'_'+trailNum);
 
         if(thisId != 'pathTrail1'+'_'+bulletNum+'_'+trailNum && thisId != 'addTriggerCondition'+'_'+bulletNum+'_'+trailNum){
             if(thisId == 'triggerConditon_1_1_1'){
+                //触发条件1点击事件
                 show($('#triggerConditionMod_1_1_1'),1);
                 addTriggerClick($('#triggerConditionMod_1_1_1'),1,1,1);
             }else{
                 
-                var num = thisId.slice(0,-4).replace(/[^0-9]/g,'');
-                var str = $('#triggerConditionMod'+'_'+num+'_'+bulletNum+'_'+trailNum);
+                
                 if($('#triggerConditionMod'+'_'+num+'_'+bulletNum+'_'+trailNum).length ){
                     show($('#triggerConditionMod'+'_'+num+'_'+bulletNum+'_'+trailNum),1);
                 }else{
+                    //触发条件2-10点击事件
                     addTriggerMod($('#triggerConditionMod_1_1_1'),bulletNum,trailNum,num);
                     changeTriggerCondition($('#triggerConditionMod'+'_'+num+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum,num);
-                    changetriggerP($('#triggerConditonsP'+'_'+num+'_'+bulletNum+'_'+trailNum),this.innerHTML);
+                    changetriggerP($('#triggerConditonsP'+'_'+num+'_'+bulletNum+'_'+trailNum),this.innerHTML,num,bulletNum,trailNum);
                     addTriggerClick($('#triggerConditionMod'+'_'+num+'_'+bulletNum+'_'+trailNum),num,bulletNum,trailNum);
                     show($('#triggerConditionMod'+'_'+num+'_'+bulletNum+'_'+trailNum),1);
                 }
             }
         }else if(thisId == 'addTriggerCondition'+'_'+bulletNum+'_'+trailNum){
-            var childLen = $('#bulletOptionConditionInfo'+'_'+bulletNum+'_'+trailNum)["0"].childNodes.length - 1;
-            addTriggerList($('#addTriggerCondition'+'_'+bulletNum+'_'+trailNum),childLen,'triggerConditon','触发条件',bulletNum,trailNum);
+            //添加事件点击事件
+            
+            var len = parseInt($('#bulletOptionConditionInfo'+'_'+bulletNum+'_'+trailNum)
+            .children('a').eq($('#bulletOptionConditionInfo'+'_'+bulletNum+'_'+trailNum)["0"]
+            .childNodes.length-2).attr('id').slice(0,-4).replace(/[^0-9]/g,'')) + 1;
+            addTriggerList($('#addTriggerCondition'+'_'+bulletNum+'_'+trailNum),len,'triggerConditon','触发条件',bulletNum,trailNum);
+           
         }
     });
 }
@@ -163,34 +172,38 @@ function addTriggerBottomClick(obj,num,bulletNum,trailNum){
 
     
     $('#triggerResultLi1'+'_'+num+'_'+bulletNum+'_'+trailNum).one('click',function(){
-        changetriggerP($('#triggerConditonP_1'+'_'+num+'_'+bulletNum+'_'+trailNum),this.innerHTML);
+        changetriggerP($('#triggerConditonP_1'+'_'+num+'_'+bulletNum+'_'+trailNum),this.innerHTML,num,bulletNum,trailNum);
         switchResultSel($('#triggerResultSel_1'+'_'+num+'_'+bulletNum+'_'+trailNum),num,bulletNum,trailNum,1);
         changeTriggerResult($('#triggerResultOption_1'+'_'+num+'_'+bulletNum+'_'+trailNum),num,bulletNum,trailNum,1);
     });
  
     $('#triggerResultSideList'+'_'+num+'_'+bulletNum+'_'+trailNum).delegate('li','click',function(){
         if(this.getAttribute('id') == 'triggerResultLi0'+'_'+ num + '_' + bulletNum + '_' + trailNum){
-            var liLen = $(this).parent()["0"].children.length;
-           
+            var liLen = $(this).parent().children('li').length-2;
+            var len = parseInt($(this).parent().children('li').eq(liLen).attr('id').slice(0,-6).replace(/[^0-9]/g,'')) +1;
+           console.log(len);
             //添加事件
-            addTriggerResult(this,num,bulletNum,trailNum,liLen,'triggerResultLi','触发结果');
+            addTriggerResult(this,num,bulletNum,trailNum,len,'triggerResultLi','触发结果');
 
             
         }else{
             
             var resultNum = this.getAttribute('id').slice(0,-6).replace(/[^0-9]/g,'');
+            
             var str = $('#triggerResultOption'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum);
              if($('#triggerResultOption'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum).length){
-                $('#triggerResultSel'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum)["0"]["0"].selected = true ;
                 show($('#triggerResultOption'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                
+                show($('#triggerResultOptionBottom'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
+                findWhoSelected(num,bulletNum,trailNum,resultNum);
              }else{
                 addTriggerResultMod($('#triggerResultOption_1_1_1_1'),num,bulletNum,trailNum,resultNum);
                 changeTriggerResult($('#triggerResultOption'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),num,bulletNum,trailNum,resultNum);
-                changetriggerP($('#triggerConditonP'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),this.innerHTML);
-                $('#triggerResultSel'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum)["0"]["0"].selected = true ;
+                changetriggerP($('#triggerConditonP'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),this.innerHTML,num,bulletNum,trailNum);
+                // $('#triggerResultSel'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum)["0"]["0"].selected = true ;
+                
                 addTriggerBottomAClick($('#triggerResult'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),num,bulletNum,trailNum,resultNum);
                 show($('#triggerResultOption'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
+                show($('#triggerResultOptionBottom'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
                 switchResultSel($('#triggerResultSel'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),num,bulletNum,trailNum,resultNum);
             }
             
@@ -245,3 +258,43 @@ function addTiggerAddClick(num,bulletNum,trailNum,resultNum){
         });
 }
 
+/**
+ * 给子弹头添加点击事件
+ * @param {*} num 子弹头数量 
+ */
+function addBulletClick(num){
+    
+    $('#bulletName'+num).mouseover(function(){
+        $(this).css('background','#c1c1c1');
+        $(this).css('cursor','pointer');
+    });
+    $('#bulletName'+num).mouseout(function(){
+        $(this).css('background','rgb(245,245,245)');
+        $(this).css('cursor','pointer');
+    });
+
+    $('#bulletName'+num).click(function(){
+        show($('#bulletsMod_' + num),1);
+        addBulletsSavClick(num);
+    });
+    $('#bulletName'+num).one('click',function(){
+        if(num == 1){
+            
+            return false;
+        }else{
+            addBulletMod(num,$('#bulletsMod_1'));
+            changeBulletsId(num,$('#bulletsMod'+'_'+num));
+            changeBulletsP(num);
+            
+        }
+        
+    });
+}
+function addBulletsSavClick(num) {
+    $('#saveModBtn_' + num ).click(function(){
+        getBulletsVal(num);
+    });
+    $('#resetModBtn_' + num).click(function(){
+        resetBulletsVal(num);
+    })
+}

@@ -60,7 +60,7 @@ function addModList(bars_num,parentObj){
     elm_a.setAttribute('id','bulletOptionA' + num);
     elm_a.setAttribute('class','showPicMode fl');
     elm_p.setAttribute('id','bulletName' + num);
-    elm_p.setAttribute('class','bulletNames fl');
+    elm_p.setAttribute('class','trailNames fl');
     
     $('#powderSideBar').append(elm_div);
     elm_div.appendChild(elm_a);
@@ -70,6 +70,7 @@ function addModList(bars_num,parentObj){
         $(this).toggleClass("changePicMode");
         $('#bulletOption'+num).children('div').toggle("normal");
     });
+    addBulletClick(num);
 }
 
 /**
@@ -103,7 +104,7 @@ function addTrail(num,parentObj,trailNum){
     elm_bullet_a4.setAttribute('href','javascript:;');
     elm_a.setAttribute('id','bulletOptionConditionA' + '_' + num+'_'+trailNum);
     elm_a.setAttribute('class','showPicMode fl');
-    elm_p.setAttribute('class','bulletNames fl');
+    elm_p.setAttribute('class','trailNames fl');
     elm_p.setAttribute('id','bulletNamesOfP' + '_' + num +'_'+trailNum);
     elm_bullet_a1.setAttribute('id','pathTrail1'+'_'+num+'_'+trailNum);
     elm_bullet_a2.setAttribute('id','triggerConditon'+'_1'+'_'+num+'_'+trailNum);
@@ -173,7 +174,9 @@ function addTriggerResultMod(obj,num,bulletNum,trailNum,resultNum){
  * @param obj 触发条件的个数
  */
 function addTriggerList(obj,num,idName,htmlName,bulletNum,trailNum){
+    
     if(num < 11){
+       
         var elm_a = document.createElement('a');
         elm_a.href = 'javascript:;'
         elm_a.id = idName +'_'+num+'_' +bulletNum + '_'+trailNum;
@@ -231,8 +234,17 @@ function deleteLi(obj){
  * @param {*} trailNum 
  */
 function deleteTrail(bulletNum,trailNum){
-    if($('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum)){
+    if($('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).length){
         $('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).remove();
+        deleteTrailVal(bulletNum,trailNum);
+        if(bulletInfo.traNum ==1){
+            return false;
+        }else{
+            bulletInfo.traNum -=1;
+        }
+        
+    }else{
+        return false;
     }
 }
 
@@ -271,6 +283,15 @@ function  addTriggerBottomAClick(obj,num,bulletNum,trailNum,resultNum) {
         deleteTrailResult(num,bulletNum,trailNum,resultNum);
     });
     
+}
+
+/**
+ * 点击子弹头给子弹头添加子弹头模块
+ */
+function addBulletMod(num,obj){
+
+    obj.parent().append($(obj).clone().attr("id", 'bulletsMod'+'_'+num));
+    console.log(obj);
 }
     
 

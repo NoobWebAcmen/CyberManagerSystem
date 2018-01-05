@@ -31,11 +31,23 @@ $('.bars_input').keydown(function(e){
 /**
  * 战车发射周期里点击ADD，添加子弹头列表,添加数据
  */
-var bars_num = 1;
 $('#bars_button1').click(function(){
-	bars_num += 1;
-	addModList(bars_num,$('#bulletAddInfoUl'));
-	addBullet(bars_num);
-	getAddBulletInfo(bars_num,1);
+	bulletInfo.bulNum += 1;
+	addModList(bulletInfo.bulNum,$('#bulletAddInfoUl'));
+	addBullet(bulletInfo.bulNum);
+	getAddBulletInfo(bulletInfo.bulNum,1);
 	console.log(bulletInfo.bulletsData);
 });
+
+/**
+ * 导出数据按钮
+ */
+$('#')
+
+
+/**
+ * 返回主页按钮
+ */
+$('#home').click(function(){
+	window.location.href='../index/index.php';
+})

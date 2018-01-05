@@ -940,7 +940,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
 .bulletOptionsA{
   margin-right: 9px;
 }
-.bulletNames{
+.bulletNames,.trailNames{
   margin: 0px;
   margin-left: 5px;
   margin-top: 3px;
@@ -1012,7 +1012,7 @@ a:hover{
   display: flex;
   flex-direction: row;
 }
-.flyControlP,.rollControlP,.jumpControlP{
+.flyControlP,.rollControlP,.jumpControlP,.flyControlP1{
   font-size: 18px;
   font-weight: bold;
   line-height: 30px;
@@ -1123,6 +1123,10 @@ border-radius: 5px;
   line-height: 30px;
   
   height: 30px;
+}
+.triggerAddP{
+  font-weight: normal;
+  font-size: 14px;
 }
 .labelLeft{
   margin-left: 40px !important;
@@ -1237,4 +1241,19 @@ border-radius: 5px;
 }
 .triggerResultLis{
   cursor: pointer;
+}
+.flyControlP1{
+  margin-right: 40px;
+}
+.P2{
+  margin-right: 70px !important;
+}
+.P3{
+  margin-right: 60px!important;
+}
+.P4{
+  margin-right: 60px!important;
+}
+.P5{
+  margin-right: 30px!important;
 }

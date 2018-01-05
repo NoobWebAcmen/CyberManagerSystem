@@ -16,7 +16,7 @@
    for(var i = 0; i < 4; ++i){
         triggerVal[0].effects.push(deepClone(triggerEffectVal[0]));
         triggerVal[1].effects.push(deepClone(triggerEffectVal[0]));
-   }
+    }
     
     bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers = [];
    
@@ -375,4 +375,54 @@ function checkboxBottomval(obj,num,bulletNum,trailNum,resultNum){
     }else if(value[2] == true && value[3] == true){
         obj.buffEffectObject = 3;
     }
+}
+/**
+ * 点击删除触发结果，同时删除数组中的数据
+ * @param {*} num 触发条件
+ * @param {*} bulletNum 弹头数 
+ * @param {*} trailNum 轨迹数
+ * @param {*} resultNum 触发结果数
+ */
+function deleteTrailResult(num,bulletNum,trailNum,resultNum){
+    
+    var nowNum = num -1;
+    var bulNum = bulletNum - 1;
+    var traNum = trailNum - 1;
+    var resNum = resultNum - 1;
+    var test1 = bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum];
+    delete bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum];
+}
+/**
+ * 选择添加轨迹阶段后，添加轨迹阶段的数据
+ * @param {*} bulletNum 
+ * @param {*} trailNum 
+ */
+function addTrailVal(bulletNum,trailNum){
+    var bulNum = bulletNum - 1;
+    var traNum = trailNum - 1;
+    bulletInfo.bulletsData.bullets[bulNum].cycles[traNum] = deepClone(bulletConstVal[0].cycles[0]);
+    triggerVal[0].effects = [];
+    triggerVal[1].effects = [];
+   for(var i = 0; i < 4; ++i){
+        triggerVal[0].effects.push(deepClone(triggerEffectVal[0]));
+        triggerVal[1].effects.push(deepClone(triggerEffectVal[0]));
+    }
+    
+    bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers = [];
+   
+    bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[0]));
+    bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[1]));
+    
+}
+/**
+ * 给在触发结果点击ADD按钮添加的子弹头，添加标志位
+ * @param {*} num 
+ * @param {*} bulletInfo 
+ * @param {*} bulNum 
+ * @param {*} trailNum 
+ * @param {*} resultNum 
+ */
+function addUniqueFlag(bulletNum){
+    var bulNum = bulletNum - 1;
+    bulletInfo.bulletsData.bullets[bulNum].launched = true;
 }

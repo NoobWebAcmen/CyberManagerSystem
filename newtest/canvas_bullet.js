@@ -53,6 +53,7 @@ scale.prototype = {
 function  Bullet(options){
     this._init(options);
     this.flag = true;
+    this.bulNum = 1;   //子弹头的数量
 }
 
 Bullet.prototype ={
@@ -136,62 +137,6 @@ bulletConstVal = [{
             obstructionForce : 1.0, 
             elasticForce : 1.2,
             triggers : []
-        },
-        {
-            Rotation : 10,
-            Scale : 1,
-            Speed : 0,
-            motionMode : 1,
-            flyMode : 1,
-            rotateMode : 3,
-            obstructionForce : 0.9,
-            triggers : [
-            {
-                triggerMode : 1,
-                triggerParams : null,
-                effects : [
-                    {
-                        effectMode : 2,
-                        effectParams : null
-                    }
-                ]
-            },
-            {
-                triggerMode : 2,
-                triggerParams : null,
-                effects : [
-                    {
-                        effectMode : 2,
-                        effectParams : null
-                    }
-                ]
-            }
-            ]
-        },
-        {
-            motionMode : 3,
-            triggers : [
-                {
-                    triggerMode : 5,
-                    triggerParams : 2,
-                    effects : [
-                        {
-                            effectMode : 1,
-                            effectParams : null
-                        }
-                    ]
-                },
-                {
-                    triggerMode : 4,
-                    triggerParams : 3,
-                    effects : [
-                        {
-                            effectMode : 1,
-                            effectParams : null
-                        }
-                    ]
-                }
-            ]
         }
     ]
 }];

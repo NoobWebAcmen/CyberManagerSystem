@@ -193,8 +193,12 @@ function changeTriggerResult(obj,num,bulletNum,trailNum,resultNum){
 /**
  * 此函数用于更改触发条件的显示P
  */
-function changetriggerP(obj,text){
-    obj["0"].innerHTML = text;
+function changetriggerP(obj,text,num,bulletNum,trailNum){
+    var str = '<span class="triggerAddP">'+'&nbsp'+'&nbsp' + bulletNum + '_' + trailNum + '</span>'
+    if(obj.length){
+        obj["0"].innerHTML = text + str;
+    }
+    
 }
 /**
  * 为触发条件Top的select框添加change事件,并存值
@@ -235,44 +239,45 @@ function switchTriggerSel(obj,num,bulletNum,trailNum){
  * 为触发条件Bottom的select框添加change事件,并存值
  */
 function switchResultSel(obj,num,bulletNum,trailNum,resultNum){
-    var newTrailNum = trailNum + 1;
+    var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1;
     if(obj.length){
         obj.change(function(){
             switch (this.value) {
                 case 'triggerResult1':
+                    
                     show($('#triggerOfTrail'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    addTrail(bulletNum,$('#bulletOption'+bulletNum),newTrailNum);
-                    getTrggerResultMode(num,bulletNum,trailNum,resultNum,1);
+                    addTrail(bulletNum,$('#bulletOption'+bulletNum),len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,1);
                     break;
                 case 'triggerResult2':
                     show($('#triggerOfEffectOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,newTrailNum);
-                    getTrggerResultMode(num,bulletNum,trailNum,resultNum,2);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,2);
                     break;
                 case 'triggerResult3':
                     show($('#triggerOfAddBuff'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,newTrailNum);
-                    getTrggerResultMode(num,bulletNum,trailNum,resultNum,3);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,3);
                     break;
                 case 'triggerResult4':
                     show($('#triggerOfTerrianOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,newTrailNum);
-                    getTrggerResultMode(num,bulletNum,trailNum,resultNum,4);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,4);
                     break;
                 case 'triggerResult5':
                     show($('#triggerOfArtOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,newTrailNum);
-                    getTrggerResultMode(num,bulletNum,trailNum,resultNum,5);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,5);
                     break;
                 case 'triggerResult6':
                     show($('#triggerOfAddBullet'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,newTrailNum);
-                    getTrggerResultMode(num,bulletNum,trailNum,resultNum,6);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,6);
                     break;
                 case 'triggerResult7':
                     show($('#triggerOfEnd'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,newTrailNum);
-                    getTrggerResultMode(num,bulletNum,trailNum,resultNum,7);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,7);
                     break;
             
                 default:
@@ -285,4 +290,82 @@ function switchResultSel(obj,num,bulletNum,trailNum,resultNum){
     }
     
    
+}
+/**
+ * 修改动态添加的弹头的id值
+ */
+function changeBulletsId(num,obj){
+    if(obj.children().length){
+        var len = obj.children().length;
+        for(var i = 0;i < len ; ++i){
+            if(obj.children().eq(i).attr('id')){
+                var str = obj.children().eq(i).attr('id').slice(0,-1);
+                obj.children().eq(i).attr('id',str + num);
+            }
+        }
+        changeBulletsId(num,obj.children());
+    }
+    
+}
+/**
+ * 修改弹头的名字
+ * @param {*} num 
+ */
+function changeBulletsP(num){
+    $('#bulletsModP_'+ num).html('弹头' + num);
+}
+
+/**
+ * 记录触发结果被选择的状态
+ */
+function findWhoSelected(num,bulletNum,trailNum,resultNum){
+    var str = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
+    var len = $('#triggerResultSel'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum).children().length;
+    var arr = new Array();
+    for(var i = 0;i < len ;++i){
+        arr[i] = $('#triggerResultSel'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum).children().eq(i).prop('selected');
+        
+    }
+    if(arr[0]){
+        return false;
+    }else if(arr[1]){
+        show($('#triggerOfTrail'+ str),3);
+    }else if(arr[2]){
+        show($('#triggerOfEffectOfValue'+ str),3);
+    }else if(arr[3]){
+        show($('#triggerOfAddBuff'+ str),3);
+    }else if(arr[4]){
+        show($('#triggerOfTerrianOfValue'+ str),3);
+    }else if(arr[5]){
+        show($('#ArtOfValue'+ str),3);
+    }else if(arr[6]){
+        show($('#triggerOfAddBullet'+ str),3);
+    }else if(arr[7]){
+        show($('#triggerOfEnd'+ str),3);
+    }
+   
+    
+}
+
+/**
+ * 记录轨迹阶段被选择状态
+ */
+function findWhoSel(bulletNum,trailNum) {
+    var str = '_'+ bulletNum + '_' + trailNum;
+    var len = $('#trailSelect'+ str).children().length;
+
+    var arr = new Array();
+    for(var i = 0;i < len ;++i){
+        arr[i] = $('#trailSelect'+ str).children().eq(i).prop('selected');
+        console.log(i,arr[i]);
+    }
+    if(arr[0]){
+        show($('#flyControlContent'+str),2)
+    }else if(arr[1]){
+        show($('#rollControl'+ str),2);
+    }else if(arr[2]){
+        show($('#jumpControl'+ str),2);
+    }else if(arr[3]){
+        show($('#snapControl'+ str),2);
+    }
 }

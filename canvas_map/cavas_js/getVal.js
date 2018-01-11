@@ -37,24 +37,34 @@
 * 此函数用于判断运动轨迹下拉菜单框的事件,并将获取到的数据存入数组
 * @param text 下拉菜单选项的名字
 */
-function switchFlySel(text,preNum,nexNum){
-    switch (text) {
-        case '飞行':
-        bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 1;
-        triggerFlyControl(preNum,nexNum);
-        break;
-        case '滚动':
-        bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 2;
-        break;
-        case '弹跳':
-        bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 3;
-        break;
-        case '粘着':
-        bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 4;
-        break;
-        default:
+function switchFlySel(obj,preNum,nexNum){
+    var bulletNum = preNum + 1;
+    var trailNum = nexNum + 1;
+    triggerFlyControl(preNum,nexNum);
+    obj.change(function(){
+        switch (this.value) {
+            case 'trailMove1':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 1;
+            triggerFlyControl(preNum,nexNum);
             break;
-    }
+            case 'trailMove2':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 2;
+            switchRotateMod($('#rollRotateMod'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,'scrollRotateMode');
+            break;
+            case 'trailMove3':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 3;
+            switchRotateMod($('#jumpRotateMod'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,'jumpRotateMode');
+            break;
+            case 'trailMove4':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 4;
+            break;
+            default:
+                break;
+        }
+    });
+    
+    
+    
 }
 /**
  * 此函数用于飞行模式下的下拉菜单的选择情况
@@ -65,7 +75,10 @@ function triggerFlyControl(preNum,nexNum){
     switchFlyContSel($('#flyBegin'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
     switchFlyContSel($('#flyVen'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
     switchFlyContSel($('#flySpeed'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
-    switchFlyContSel($('#flyMode'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
+    switchFlyContSel($('#flyMode'+'_'+bulletNum+'_'+trailNum),preNum,nexNum);
+    switchFlyContSel($('#flyTrack'+'_'+bulletNum+'_'+trailNum),preNum,nexNum); 
+    switchFlyContSel($('#flyRotateMod'+'_'+bulletNum+'_'+trailNum),preNum,nexNum);
+    switchFlyContSel($('#trackTarget'+'_'+bulletNum+'_'+trailNum),preNum,nexNum);
 }
 
 /**
@@ -73,35 +86,100 @@ function triggerFlyControl(preNum,nexNum){
  * 
  */
 function switchFlyContSel(obj,preNum,nexNum) {
+    var bulletNum = preNum + 1;
+    var trailNum = nexNum + 1;
+    var str = '_' + bulletNum + '_' + trailNum;
     obj.change(function(){
         switch (this.value) {
             case 'beginSel2':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCor = true;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCor = true;
+                rmReadOnly($('#flyContorlBeginInpX' + str),bulletNum,trailNum);
+                rmReadOnly($('#flyContorlBeginInpY' + str),bulletNum,trailNum);
                 break;
             case 'beginSel1':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCor = false;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCor = false;
+                rmReadOnly($('#flyContorlBeginInpX' + str),bulletNum,trailNum);
+                rmReadOnly($('#flyContorlBeginInpY' + str),bulletNum,trailNum);
                 break;
             case 'vendor1':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = false;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = false;
+                rmReadOnly($('#flyContorlVendorInpX' + str),bulletNum,trailNum);
                 break;
             case 'vendor2':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = true;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = true;
+                rmReadOnly($('#flyContorlVendorInpX' + str),bulletNum,trailNum);
                 break;
             case 'strength1':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = false;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = false;
+                rmReadOnly($('#flyContorlStrengthInpX' + str),bulletNum,trailNum);
                 break;
             case 'strength2':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = true;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = true;
+                rmReadOnly($('#flyContorlStrengthInpX' + str),bulletNum,trailNum);
                 break;
             case 'isGravity':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].flyMode = 1;
-            break;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].flyMode = 1;
+                break;
             case 'notGravity':
-            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].flyMode = 2;
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].flyMode = 2;
+                break;
+            case 'notRotate':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].flyRotateMode = 1;
+                break;
+            case 'rotateSelf':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].flyRotateMode = 2;
+                break;
+            case 'rotateOfAngel':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].flyRotateMode = 3;
+                break;
+            case 'notTrack':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isTrack = false;
+                $('#flyDiv8' + str).css('display') == 'none' ? $('#flyDiv8' + str).css('display','none') : $('#flyDiv8' + str).css('display','none');
+                break;
+            case 'isTrack':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isTrack = true;
+                $('#flyDiv8' + str).css('display') == 'none' ? $('#flyDiv8' + str).css('display','block') : $('#flyDiv8' + str).css('display','block');
+                break;
+            case 'anemy':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].detectionTarget = 1;
+                break;
+            case 'partner':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].detectionTarget = 2;
+                break;
+            case 'both':
+                bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].detectionTarget = 3;
+            
             break;
             default:
+            isInherit(obj,this.value,preNum,nexNum);
             break;
         }
+    });
+}
+
+/**
+ * 用于滚动，弹跳状态下的获取旋转方式的值 
+ * @param {*} obj 
+ * @param {*} preNum 
+ * @param {*} nexNum 
+ * @param {*} attr 存储该属性的属性名 
+ */
+function  switchRotateMod(obj,preNum,nexNum,attr){
+    obj.change(function(){
+       switch (this.value) {
+        case 'notRotate':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum][attr] = 1;
+            break;
+        case 'rotateSelf':
+        
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum][attr] = 2;
+            break;
+        case 'rotateOfAngel':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum][attr] = 3;
+            break;
+           default:
+               break;
+       }
     });
 }
 /**
@@ -114,10 +192,14 @@ function getFlyValue(bulletNum,trailNum){
     var trails = trailNum + 1;
     bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].x = parseFloat($('#flyContorlBeginInpX'+'_'+bullets+'_'+trails).val());
     bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].y = parseFloat($('#flyContorlBeginInpY'+'_'+bullets+'_'+trails).val());
-    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].rotation = parseFloat($('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).val());
-    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].speed = parseFloat($('#flyContorlStrength'+'_'+bullets+'_'+trails).val());
+    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].flyAngle = parseFloat($('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).val());
+    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].flySpeed = parseFloat($('#flyContorlStrengthInpX'+'_'+bullets+'_'+trails).val());
     bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].obstructionForce = parseFloat($('#flyContorlResisInpX'+'_'+bullets+'_'+trails).val());
     bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].elasticForce = parseFloat($('#jumpControlInp'+'_'+bullets+'_'+trails).val());
+    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].scrollDistance = parseFloat($('#rollControlInp1'+'_'+bullets+'_'+trails).val());
+    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].scrollSpeed = parseFloat($('#rollControlInp2'+'_'+bullets+'_'+trails).val());
+    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].detectionRange = parseFloat($('#trackArea'+'_'+bullets+'_'+trails).val());
+    bulletInfo.bulletsData.bullets[bulletNum].cycles[trailNum].trackAngle = parseFloat($('#trackArea'+'_'+bullets+'_'+trails).val());
     var inpx = $('#elasticControlInp'+'_'+bullets+'_'+trails)[0].value;
     $('#elasticControlInp'+'_'+bullets+'_'+trails)[0].value = parseFloat($('#flyContorlResisInpX'+'_'+bullets+'_'+trails).val());
     console.log(bulletInfo.bulletsData);
@@ -218,9 +300,7 @@ function getTriggerResult(num,bulletNum,trailNum,resultNum){
     //按顺序取值
     obj.areaEffects = parseFloat($('#triggerOfInpa'+str)[0].value);
     checkboxBottomval(obj,num,bulletNum,trailNum,resultNum);
-    switchValueType(obj,$('#effectOfValueSela' + str));
     obj.type = parseFloat($('#triggerOfInpb' + str )[0].value);
-    switchDamageAttribute(obj,$('#effectOfValueSelb' + str));
     obj.buffAreaEffects = parseFloat($('#triggerOfInpc'+str)[0].value);
     obj.buffId = parseFloat($('#triggerOfInpd'+str)[0].value);
     obj.damageArea = parseFloat($('#triggerOfInpe'+str)[0].value);
@@ -229,6 +309,7 @@ function getTriggerResult(num,bulletNum,trailNum,resultNum){
     //Top触发条件的值
     var top = bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum];
     switchTopSelVal(top,num,bulletNum,trailNum,resultNum);
+    console.log(bulletInfo.bulletsData);
 }
 /**
  * Top触发条件框下的input的值
@@ -329,8 +410,7 @@ function resetTriggerResult(num,bulletNum,trailNum,resultNum){
     $('#input'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('value','');
     $('#charitoChecka'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('checked',false);
     $('#charitoCheckb'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('checked',false);
-    
-    // console.log( $('#charitoChecka'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('checked','false'));
+    $('#fileSpan'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).css('display','none');
 }
 
 /**
@@ -346,7 +426,6 @@ function  checkboxval(obj,num,bulletNum,trailNum,resultNum){
     var value = new Array();
     for(var i = 0;i < len ; ++i){
        value.push($('#charitoInfo'+'_' + num + '_' + bulletNum + '_' + trailNum).children('input').eq(i).prop('checked'));
-        
     }
     if(value[0] == true && value[1] == false){
         obj.triggerParams = 1;
@@ -390,7 +469,6 @@ function checkboxBottomval(obj,num,bulletNum,trailNum,resultNum){
  * @param {*} resultNum 触发结果数
  */
 function deleteTrailResult(num,bulletNum,trailNum,resultNum){
-    
     var nowNum = num -1;
     var bulNum = bulletNum - 1;
     var traNum = trailNum - 1;
@@ -415,7 +493,6 @@ function addTrailVal(bulletNum,trailNum){
     }
     
     bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers = [];
-   
     bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[0]));
     bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[1]));
     
@@ -440,11 +517,11 @@ function addUniqueFlag(bulletNum){
  */
 function getBulletsVal(num){
    var bulNum = num - 1;
-    bulletInfo.bulletsData.bullets[bulNum].speed = parseFloat($('#speedModInp_' + num).prop('value'));
+    bulletInfo.bulletsData.bullets[bulNum].initialSpeed = parseFloat($('#speedModInp_' + num).prop('value'));
     bulletInfo.bulletsData.bullets[bulNum].width = parseFloat($('#sizeModWid_' + num).prop('value'));
     bulletInfo.bulletsData.bullets[bulNum].height = parseFloat($('#sizeModHei_' + num).prop('value'));
     bulletInfo.bulletsData.bullets[bulNum].mass = parseFloat($('#massModInp_' + num).prop('value'));
-    bulletInfo.bulletsData.bullets[bulNum].rotationMoment = parseFloat($('#rotationMomentModInp_' + num).prop('value'));
+    bulletInfo.bulletsData.bullets[bulNum].rotationSpeed = parseFloat($('#rotationMomentModInp_' + num).prop('value'));
    
 }
 /**
@@ -470,4 +547,66 @@ function deleteTrailVal(bulletNum,trailNum){
     var traNum = trailNum - 1;
     delete bulletInfo.bulletsData.bullets[bulNum].cycles[traNum];
     
+}
+/**
+ * 改变战车发射周期总时长，改变值
+ */
+function changeDuration(val) {
+    bulletInfo.bulletsData.launchDuration = parseFloat(val);
+    console.log(bulletInfo.bulletsData);
+}
+
+/**
+ * 获取弹头的图片资源
+ * @param name 获取到的图片的名字
+ * @param num 子弹的数量
+ */
+function getImgSrc(name,num){
+    var bulNum = num - 1;
+    bulletInfo.bulletsData.bullets[bulNum].image = name;
+    console.log(bulletInfo.bulletsData);
+}
+/**
+ * 获取弹头的图片资源
+ * @param name 获取到的图片的名字
+ * @param num 子弹的数量
+ */
+function getImgSrc1(name,num,bulletNum,trailNum,resultNum){
+    var bulNum = bulletNum - 1;
+    var nowNum = num - 1;
+    var traNum = trailNum - 1;
+    var resNum = resultNum - 1;
+    bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.artSource = name;
+    console.log(bulletInfo.bulletsData);
+}
+
+/**
+ * 判断是否继承 如果是轨迹阶段1，则不能选择继承,如果非轨迹阶段1，选择继承之后，input框不能操作
+ * @param {*} obj  继承的select选项
+ * @param {*} val  selectd option选项
+ * @param {*} preNum 弹头 -1
+ * @param {*} nexNum 轨迹阶段-1
+ */
+function isInherit(obj,val,preNum,nexNum){
+    var bulletNum = preNum + 1;
+    var trailNum = nexNum + 1;
+    var str = '_' + bulletNum + '_' + trailNum;
+    switch (val) {
+        case 'beginSel3':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isBeginPointInherit = true;
+            $('#flyContorlBeginInpX' + str).prop('readonly','readonly');
+            $('#flyContorlBeginInpY' + str).prop('readonly','readonly');
+            break;
+        case 'vendor3':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isAngleInherit = true;
+            $('#flyContorlVendorInpX' + str).prop('readonly','readonly');
+            break;
+        case 'strength3':
+            bulletInfo.bulletsData.bullets[preNum].cycles[nexNum].isSpeedInherit = true;
+            $('#flyContorlStrengthInpX' + str).prop('readonly','readonly');    
+            break;
+    
+        default:
+            break;
+    }
 }

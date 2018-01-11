@@ -47,13 +47,13 @@ function funDownload(content, filename,tag){
     eleLink.download = filename;
     eleLink.style.display = 'none';
     var blob = new Blob([json2lua(content,tag)]);
-    // // 字符内容转变成blob地址
-    // eleLink.href = URL.createObjectURL(blob);
-    // // 触发点击
-    // document.body.appendChild(eleLink);
-    // eleLink.click();
-    // // 然后移除
-    // document.body.removeChild(eleLink);
+    // 字符内容转变成blob地址
+    eleLink.href = URL.createObjectURL(blob);
+    // 触发点击
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    // 然后移除
+    document.body.removeChild(eleLink);
  }
 
 
@@ -109,13 +109,15 @@ function json2lua(jsonString,tag){
                 triggers[key2].effects = [];
                 cycles[key1].triggers[key2] = triggers[key2];
                 
-
-                var len3 = Object.keys(jsonString.bullets[i].cycles[j].triggers[k].effects);
-                for(var m = 0; m < len3.length; ++m){
-                    var key3 = "[" + (m+1) + "]";
-                    effects[key3] = deepClone(jsonString.bullets[i].cycles[j].triggers[k].effects[m]);
-                    triggers[key2].effects[key3] = effects[key3];
+                if(jsonString.bullets[i].cycles[j].triggers[k]){
+                    var len3 = Object.keys(jsonString.bullets[i].cycles[j].triggers[k].effects);
+                    for(var m = 0; m < len3.length; ++m){
+                        var key3 = "[" + (m+1) + "]";
+                        effects[key3] = deepClone(jsonString.bullets[i].cycles[j].triggers[k].effects[m]);
+                        triggers[key2].effects[key3] = effects[key3];
+                    }
                 }
+                
             }
         }
     }

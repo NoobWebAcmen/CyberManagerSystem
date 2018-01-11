@@ -126,7 +126,28 @@ function resetAllInp(obj,bulletNum,trailNum){
     var len = obj.children().children('input').length;
     for(var i = 0;i < len ; ++i){
         obj.children().children('input')[i].value = '';
-    } 
+    }
+    var len1 = obj.children().children('select').length;
+    for(var j = 0;j < len1; ++j){
+        obj.children().children('select').eq(j).children('option').eq(0).prop('selected',true);
+    }
+}
+/**
+ * 重置运动轨迹的input框
+ * @param {*} obj 
+ * @param {*} bulletNum 
+ * @param {*} trailNum 
+ */
+function resetAllInp1(obj,bulletNum,trailNum){
+    
+    var len = obj.children().children('input').length;
+    for(var i = 3;i < len ; ++i){
+        obj.children().children('input')[i].value = '';
+    }
+    var len1 = obj.children().children('select').length;
+    for(var j = 2;j < len1; ++j){
+        obj.children().children('select').eq(j).children('option').eq(0).prop('selected',true);
+    }
 }
 
 /**
@@ -139,18 +160,15 @@ function changeTriggerCondition(obj,bulletNum,trailNum,num){
     if(obj.children().length){
         var len1 = obj.children().length;
     for(var i =0 ;i < len1 ; ++i){
+        //更改label
         if(obj.children('label')[i]){
              var forArray = obj.children('label')[i].getAttribute('for').replace(/[^a-zA-Z]/g,'');
-            
              if(forArray == 'charitoChecka' || forArray == 'charitoCheckb'){
                  forArray += '_' + num + '_' + bulletNum + '_' + trailNum;
-                
-                obj.children('label')[i].setAttribute('for',forArray);
-                
+                 obj.children('label')[i].setAttribute('for',forArray);
              }
-            
         }
-        
+        //更改id
         if(obj.children()[i].id){
             var str1 = obj.children()[i].id.slice(0,-6);
             var str2 = str1 + '_' + num + '_' + bulletNum + '_' + trailNum;
@@ -240,6 +258,12 @@ function switchTriggerSel(obj,num,bulletNum,trailNum){
  */
 function switchResultSel(obj,num,bulletNum,trailNum,resultNum){
     var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1;
+    var bulNum = bulletNum -1;
+    var traNum = trailNum -1;
+    var nowNum = num -1;
+    var resNum = resultNum - 1;
+    var str1 = bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
+    var str2 = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
     if(obj.length){
         obj.change(function(){
             switch (this.value) {
@@ -253,6 +277,8 @@ function switchResultSel(obj,num,bulletNum,trailNum,resultNum){
                     show($('#triggerOfEffectOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
                     deleteTrail(bulletNum,len);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,2);
+                    switchValueType(str1,$('#effectOfValueSela' + str2));
+                    switchDamageAttribute(str1,$('#effectOfValueSelb' + str2));
                     break;
                 case 'triggerResult3':
                     show($('#triggerOfAddBuff'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
@@ -281,7 +307,7 @@ function switchResultSel(obj,num,bulletNum,trailNum,resultNum){
                     break;
             
                 default:
-                    
+                    deleteTrail(bulletNum,len);
                 break;
             }
         });
@@ -316,7 +342,7 @@ function changeBulletsP(num){
 }
 
 /**
- * 记录触发结果被选择的状态
+ * 记录触发结果被选择的状态   ？？？可能有问题
  */
 function findWhoSelected(num,bulletNum,trailNum,resultNum){
     var str = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
@@ -357,7 +383,6 @@ function findWhoSel(bulletNum,trailNum) {
     var arr = new Array();
     for(var i = 0;i < len ;++i){
         arr[i] = $('#trailSelect'+ str).children().eq(i).prop('selected');
-        console.log(i,arr[i]);
     }
     if(arr[0]){
         show($('#flyControlContent'+str),2)
@@ -368,4 +393,84 @@ function findWhoSel(bulletNum,trailNum) {
     }else if(arr[3]){
         show($('#snapControl'+ str),2);
     }
+}
+
+/**
+ * 上传图片并显示
+ */
+function handleFileSelect(evt,num) {
+    var files = evt.target.files; // FileList object
+ 
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+ 
+    //   // Only process image files.
+      if (!f.type.match('image.*')) {
+          alert('请只上传图片');
+        continue;
+      }
+      var reader = new FileReader();
+      
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+        $('#fileSpan_' + num).html(['<img class="imgFile" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join(''));
+        $('#fileSpan_'+num).css('display','block');
+        };
+      })(f);
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+      getImgSrc(f.name,num);
+    }
+    
+  }
+  /**
+ * 上传图片并显示
+ */
+function handleFileSelect1(evt,num,bulletNum,trailNum,resultNum) {
+    var files = evt.target.files; // FileList object
+ 
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+ 
+    //   // Only process image files.
+      if (!f.type.match('image.*')) {
+          alert('请只上传图片');
+        continue;
+      }
+      var reader = new FileReader();
+      
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+        $('#fileSpan'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).html(['<img class="imgFile" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join(''));
+        $('#fileSpan'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).css('display','block');
+        };
+      })(f);
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(f);
+      getImgSrc1(f.name,num,bulletNum,trailNum,resultNum);
+    }
+    
+  }
+
+/**
+ * 隐藏图片资源span块
+ * @param {*} num 
+ * @param {*} obj DOM对象 
+ */
+  function removeBulletSrc(num){
+    
+      $('#fileSpan_'+num).css('display','none');
+  }
+/**
+ * 移除readOnly属性
+ * @param {*} obj
+ * @param {*} bulletNum 
+ * @param {*} trailNum 
+ */
+function  rmReadOnly(obj,bulletNum,trailNum){
+    obj.prop('readonly') == true ? obj.prop('readonly',false) : obj.prop('readonly',false);
 }

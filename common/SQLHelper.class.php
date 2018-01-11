@@ -3,7 +3,7 @@
 // 完成对数据库的操作
     class SQLHelper{
         public $conn;
-        public $dbname="hire_table";
+        public $dbname="gametool";
         public $username="Mr_Tang";
         public $password="tang123";
         public $host="localhost";

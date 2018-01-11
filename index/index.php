@@ -186,7 +186,7 @@
                             <a href="../canvas_map/map.php">地图编辑器</a>
                         </li>
                         <li>
-                            <a href="../canvas_map/bullet.php">炮弹编辑器</a> 
+                            <a href="../canvas_map/bullet_index.php">炮弹编辑器</a> 
                         </li>
                     </ul>
                 </div>

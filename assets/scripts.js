@@ -361,26 +361,4 @@ $(function() {
 	});
 	
 
-
-
-
-	$('.bars_input').keydown(function(e){
-		
-		if(e.keyCode == "13"){
-		$(this).val(this.value);
-		if(scale.btn.style.left){
-			scale.btn.style.left = 0 + 'px';
-			scale.step.style.width = 0 +'px';
-			scale.title.innerHTML = 0;
-		}
-		
-			
-		}
-	});
-	
-	
-	
-	
-	
-	
 });

@@ -97,7 +97,7 @@ triggerEffectVal = [{
         areaEffects : 1,
         effectObject : 1,
         valueType : 1,
-        value : 10,
+        value : 0,
         damageAttribute : 1,
         buffAreaEffects : 1,
         buffEffectObject : 1,
@@ -108,12 +108,12 @@ triggerEffectVal = [{
     }
 }];
 triggerVal = [{
-    triggerMode : 4,
+    triggerMode : 1,
     triggerParams : 1,
     effects : []
     },
     {
-    triggerMode : 4,
+    triggerMode : 1,
     triggerParams : 1,
     effects : []
 }];
@@ -121,26 +121,37 @@ triggerVal = [{
 bulletConstVal = [{
     image : 'explosion_1.png',
     launchTime : 0,
-    speed : 10,
-    width : 201,
-    height : 160,
-    mass : 1,
-    rotationMoment : 1,
+    initialSpeed : 0,
+    width : 0,
+    height : 0,
+    mass : 0,
+    rotationSpeed : 0,
     launched : false,
     cycles : [
         {
             isOffsetCor: false,
             isOffsetSpeed : false,
             isOffsetRotation : false,
-            x : 500,
-            y : 200,
-            rotation : 10,
-            speed : 10,
+            isBeginPointInherit : false,
+            isAngleInherit : false,
+            isSpeedInherit : false,
+            isTrack : true, 
+            x : 0,
+            y : 0,
+            flyAngle : 0,
+            flySpeed : 0,
             motionMode : 1,
             flyMode : 1,
-            rotateMode : 3,    //???
-            obstructionForce : 1.0, 
-            elasticForce : 1.2,
+            flyRotateMode : 1,
+            detectionRange : 1,
+            trackAngle : 1,
+            detectionTarget : 1,
+            scrollRotateMode : 1,
+            jumpRotateMode : 1,
+            obstructionForce : 0, 
+            elasticForce : 0,
+            scrollDistance : 0,
+            scrollSpeed : 0,
             triggers : []
         }
     ]

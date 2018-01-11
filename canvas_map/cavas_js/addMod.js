@@ -62,7 +62,7 @@ function addModList(bars_num,parentObj){
     elm_p.setAttribute('id','bulletName' + num);
     elm_p.setAttribute('class','trailNames fl');
     
-    $('#powderSideBar').append(elm_div);
+    $('#topBar').append(elm_div);
     elm_div.appendChild(elm_a);
     elm_div.appendChild(elm_p);
     addTrail(num,$(elm_div),1);
@@ -293,7 +293,19 @@ function addBulletMod(num,obj){
     obj.parent().append($(obj).clone().attr("id", 'bulletsMod'+'_'+num));
     console.log(obj);
 }
-    
+
+/**
+ * 添加炮弹id列表
+ * @param {*} idName 
+ */
+function addList(idName){
+    var elm_li = document.createElement('li');
+        elm_li.id = idName;
+        elm_li.setAttribute('class','bullet_infoLi');
+        elm_li.innerHTML = '炮弹id : ' + idName;
+        $('#bullet_info_list').append(elm_li);  
+
+}
 
     
 

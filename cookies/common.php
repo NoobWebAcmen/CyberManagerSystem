@@ -27,7 +27,7 @@ function getLastTime(){
         session_start();
         if(empty($_SESSION['loginuser']))
         {
-            header("Location:../login/login.php?errno=2");
+            header("Location:../index.php?errno=2");
         }
     }
     function showUserName(){

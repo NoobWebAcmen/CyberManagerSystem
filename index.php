@@ -1,5 +1,5 @@
 <?php
-  require_once '../cookies/common.php';
+  require_once 'cookies/common.php';
   getCookieVal($key);
   session_start();
   // //读取COOKIE的用户名和密码的值即可
@@ -14,10 +14,10 @@
   <head>
     <title>CyberManagerV1.0</title>
     <!-- Bootstrap -->
-    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="../bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
-    <link href="../assets/styles.css" rel="stylesheet" media="screen">
-    <link href="../images/cyber.ico" rel="shortcut icon" />
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+    <link href="assets/styles.css" rel="stylesheet" media="screen">
+    <link href="images/cyber.ico" rel="shortcut icon" />
      <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -28,13 +28,13 @@
   <body id="login">
     <div class="container">
 
-      <form class="form-signin clear" action="loginprocess.php" method="post" onsubmit="return checkform(this);"> 
+      <form class="form-signin clear" action="login/loginprocess.php" method="post" onsubmit="return checkform(this);"> 
         <h2 class="form-signin-heading">登录</h2>
         <p>用户名:</p><input type="text" class="input-block-level" placeholder="用户名" name="name"  id="username" value="<?=$CKUNAME;?>"/>
         
         <p>密码:</p><input type="password" class="input-block-level" placeholder="Password" name="password" value="<?=$CKPWD;?>"/>
         <p>验证码:</p><input type="text" name="checkcode"/>
-        <img src="checkCode.php" onclick="this.src='checkCode.php?aa='+Math.random()"/>
+        <img src="login/checkCode.php" onclick="this.src='login/checkCode.php?aa='+Math.random()"/>
         <label class="checkbox fr">
           <input type="checkbox"  name="keep"  value="1" <? if($CKUNAME!=''){ checked="checked" } ?>  记住登录
         </label>
@@ -44,10 +44,10 @@
       </form>
 
     </div> <!-- /container -->
-    <script src="../vendors/jquery-1.9.1.min.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
-    <script src="../common/ajax.js"></script>
-    <script src="../common/verifyUserName.js"></script>
+    <script src="vendors/jquery-1.9.1.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="common/ajax.js"></script>
+    <!-- <script src="common/verifyUserName.js"></script> -->
   </body>
 </html>
 
@@ -73,7 +73,7 @@
       alert("该浏览器不支持Ajax，请换一个浏览器");
       return ;
     }
-    var url="loginprocess.php";
+    var url="login/loginprocess.php";
     url+="?q"+str;
     url+="&sid="+Math.random();
     xmlHttp.onreadystatechange=stateChanged;

@@ -13,7 +13,7 @@
     
     session_start();
 	if($checkCode!=$_SESSION['myCheckCode']){
-        header("Location: login.php?errno=3");
+        header("Location: ../index.php?errno=3");
 		exit();
     }
     
@@ -40,7 +40,7 @@
 		header("Location:../index/index.php?name=$name"); 
 		exit();
     }else{
-        header("Location:login.php?errno=1");
+        header("Location:../index.php?errno=1");
         exit();
 }
 

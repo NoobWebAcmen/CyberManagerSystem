@@ -840,26 +840,55 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
 
 /* ********************************bullet_index.php CSS样式 ***********************************/
 #bullet_index_content{
-  width : 900px;
+  width : 700px;
   height: 600px;
   background: rgba(242, 242, 242, 1);
   margin: 20px auto;
   padding-top : 200px;
+  padding-left : 200px;
+  display: flex;
+  flex-direction: column;
 }
 .bullet_index_btn{
-    margin: 50px 0 0 450px;
     border: 1px solid #c1c1c1;
-    padding : 5px 30px;
-    line-height: 30px;
-    font-size: 16px;
-    border-radius: 5px;
     background: #ffffff;
-    color: black;
-    display: inline-block;
+    border-radius: 5px; 
+    width:  100px;
+    height : 40px;
+    display: flex;
+    align-items: center;
+    padding-left : 40px;
+    margin-left: 150px;
 }
 .bullet_index_btn:hover{
   text-decoration: none;
+  cursor: pointer;
 }
+.createForms{
+  display: flex;
+  flex-direction: row;
+  margin-top: 15px;
+}
+.createLabs{
+  margin : 10px 10px 0 0;
+}
+.createInp1s{
+  margin: 5px 40px 0 20px !important;
+}
+.createInp2s{
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+  background: #ffffff;
+  width: 60px !important;
+  margin-top: 7px;
+}
+
+
+
+
+
+
+
 /* ********************************bullet.php CSS样式 ***********************************/
 .powederSideBarClass{
   width: 211px;
@@ -1007,6 +1036,7 @@ a:hover{
 }
 .flyControlContentClass{
   display: block;
+  position: relative;
 }
 .flyControlDiv,.rollControlList,.jumpControlList{
   display: flex;
@@ -1246,7 +1276,7 @@ border-radius: 5px;
   margin-right: 40px;
 }
 .P2{
-  margin-right: 70px !important;
+  margin-right: 35px !important;
 }
 .P3{
   margin-right: 60px!important;
@@ -1256,4 +1286,84 @@ border-radius: 5px;
 }
 .P5{
   margin-right: 30px!important;
+}
+.imgSrcDiv{
+  height: 120px;
+  margin-top: 10px;
+}
+.widthLab,.heightLab{
+  margin-right: 0px;
+}
+.widthInp,.heightInp{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.fileSpan{
+  width: 120px;
+  height: 120px;
+}
+.imgFile{
+  width: 100%;
+  height: 100%;
+}
+
+.fileSrcInp,.fileSpan1{
+  margin: 60px 0 0 120px;
+}
+.fileSpan1{
+  display: block;
+  width: 200px;
+  height: 200px;
+}
+.effectOfValue_art{
+  display: flex;
+  flex-direction: column;
+}
+.bullet_infoDiv{
+  width : 300px;
+  height: 300px;
+  border: 2px solid #c1c1c1;
+  border-radius: 5px;
+  margin-left: 80px;
+}
+.bullet_infoUl{
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 260px;
+  height: 260px;
+}
+.bullet_infoLi{
+  margin: 10px 20px;
+  border-bottom: 1px solid #fff;
+  font-size: 16px;
+  line-height: 30px;
+}
+#topBar{
+  height: 780px;
+  overflow: auto;
+}
+.flyExtra{
+  width : 310px;
+}
+.trackValue{
+  width : 220px;
+  height: 195px;
+  position: absolute;left:340px;bottom: 20px;
+  border: 1px solid #c1c1c1;
+  padding-left: 20px;
+  border-radius: 5px;
+}
+.trackValueLab{
+  font-size: 14px;
+  font-weight: bold;
+}
+.trackValueInp{
+  width : 180px;
+}
+.trackValueSel{
+  width : 198px;
+}
+.flyBeginEx{
+  width : 224px;
 }

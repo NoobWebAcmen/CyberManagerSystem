@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        canvas{ 
+         border: 1px dashed red; 
+            float: left; 
+            position: relative; 
+        } 
+        body {
+            background: #000000;
+        }
+    </style>
+</head>
+<body>
+    <div id="cantox" style="position: relative"> 
+        <canvas id="oldcanvas" width="1024px" height="1024px"> 
+        </canvas> 
+        <div id="cliptox" style="position: absolute;display:none"></div> 
+      </div> 
+      <button id ="btnclip" style="float: left">截取该区域</button> 
+      <canvas id="nowcanvas" width="500px" height="300px" > 
+      </canvas> 
+</body>
+<script type="text/javascript" src="cavas_js/jCanvaScript.1.5.18.min.js"></script>
+<script src="cavas_js/test.js"></script> 
+</html>

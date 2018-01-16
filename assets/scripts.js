@@ -213,7 +213,10 @@ $(function() {
     $('#downIndex').click(function(){
        plotcanvas.downIndex(activeImageInfo);
 		
-    });
+	});
+	$('#loadPic').click(function(){
+		plotcanvas.loadPic(activeImageInfo);
+	})
 
     $('#clearBtn').click(function(){
 		plotcanvas.clearPic(activeImageInfo);

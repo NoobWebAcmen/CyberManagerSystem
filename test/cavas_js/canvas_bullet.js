@@ -2,11 +2,8 @@ function scale(btn, bar, title,value) {
     
     this.btn = document.getElementById(btn);  
     this.bar = document.getElementById(bar);  
-    this.title = document.getElementById(title);
-    if(this.bar){
-        this.step = this.bar.getElementsByTagName("div")[0]; 
-    }  
-     
+    this.title = document.getElementById(title);  
+    this.step = this.bar.getElementsByTagName("div")[0];  
     this._init();  
 
    };  
@@ -15,40 +12,44 @@ scale.prototype = {
     _init: function () {  
 
         var _this = this, doc = document, win = window;  
-        if(_this.btn){
-            _this.btn.onmousedown = function (e) {  
-            
-                var x = (e || win.event).clientX;  
-                var left = this.offsetLeft;     
-                var max = _this.bar.offsetWidth - this.offsetWidth;    
-                
-                doc.onmousemove = function (e) {  
-    
-                    var val = document.getElementsByClassName('bars_input')[0].value;
-                    
-                    var thisX = (e || win.event).clientX;  
-                    var to = Math.min(max, Math.max(-2, left + (thisX - x)));  
-                    
-                    _this.btn.style.left = to + 'px';  
-                    _this.ondrag(Math.round(Math.max(0, to / max) * val * 10), to);   
-                    win.getSelection ? win.getSelection().removeAllRanges() : doc.selection.empty();  
-                };  
-    
-                doc.onmouseup = new Function('this.onmousemove=null');  
-            };  
-        }
-    },  
-        ondrag: function (pos, x) {  
-            //通过改变Pos，改变步长
-             this.step.style.width = Math.max(0, x) + 'px'; 
-             this.title.innerHTML = pos / 10 + '';  
-        
-            }  
-}
 
+        _this.btn.onmousedown = function (e) {  
+            
+            var x = (e || win.event).clientX;  
+            var left = this.offsetLeft;     
+            var max = _this.bar.offsetWidth - this.offsetWidth;    
+            
+            doc.onmousemove = function (e) {  
+
+                var val = document.getElementsByClassName('bars_input')[0].value;
+                
+                var thisX = (e || win.event).clientX;  
+                var to = Math.min(max, Math.max(-2, left + (thisX - x)));  
+                
+                _this.btn.style.left = to + 'px';  
+                _this.ondrag(Math.round(Math.max(0, to / max) * val * 10), to);   
+                win.getSelection ? win.getSelection().removeAllRanges() : doc.selection.empty();  
+            };  
+
+            doc.onmouseup = new Function('this.onmousemove=null');  
+        };  
+    },  
+
+    ondrag: function (pos, x) {  
+    //通过改变Pos，改变步长
+     this.step.style.width = Math.max(0, x) + 'px'; 
+     this.title.innerHTML = pos / 10 + '';  
+
+    }  
+   }  
 
    var scale = new scale('btn0', 'bar0', 'title0');  
    
+
+
+
+
+
 function  Bullet(options){
     this._init(options);
     this.bulNum = 1;   //子弹头的数量
@@ -128,9 +129,12 @@ bulletConstVal = [{
     launched : false,
     cycles : [
         {
-            beginPointMode : 1,
-            flyAngleMode : 1,
-            flySpeedMode : 1,
+            isOffsetCor: false,
+            isOffsetSpeed : false,
+            isOffsetRotation : false,
+            isBeginPointInherit : false,
+            isAngleInherit : false,
+            isSpeedInherit : false,
             isTrack : true, 
             x : 0,
             y : 0,
@@ -153,37 +157,3 @@ bulletConstVal = [{
         }
     ]
 }];
-
-
-
-
-
-/**
- * load 原型
- */
-
-function Load(options){
-    this._init(options);
-    this.bulNum = strStoreData.bullets.length;   //子弹头的数量
-    this.traNum = 6;   //轨迹阶段的数量
-    this.triggerNum = 10;
-    this.resultNum = 10;
-    this.saveFlag = false;
-    
-}
-var time = new Array();
-Load.prototype = {
-    _init : function(options){
-        this.bulletsData = options;
-        
-    },
-    
-   
-}
-if(Object.keys(strStoreData)){
-    var loadVal = new Load({
-        id : strStoreData.id,
-        launchDuration: strStoreData.launchDuration,
-        bullets : strStoreData.bullets
-    });
-}

@@ -2,12 +2,16 @@
  * 本文件用于增加各个块，删除各个块，只对addEvent.js负责
  */
 
+
+
+
+
 /**
  * 此函数用于点击ADD按钮，在ul下添加子弹的信息，同时添加删除事件
  * @param bars_num  哪个子弹头
  * @param parentObj 在Ul下添加子弹头
  */
-function addModList(bars_num,parentObj,tag,proto){
+function addModList(bars_num,parentObj,tag){
         
     var liName = document.createElement('li');
     var labelName = document.createElement('label');
@@ -41,7 +45,7 @@ function addModList(bars_num,parentObj,tag,proto){
     liName.appendChild(aName);
     aName.appendChild(imgName);
     
-    addDelLiClick(aName,proto);
+    addDelLiClick(aName);
 
 }
 
@@ -50,7 +54,7 @@ function addModList(bars_num,parentObj,tag,proto){
  * @param num 哪个子弹头
  * 
  */
- function addBullet(num,proto){
+ function addBullet(num){
     var elm_div = document.createElement('div');
         var elm_a = document.createElement('a');
         var elm_p = document.createElement('p');
@@ -66,9 +70,12 @@ function addModList(bars_num,parentObj,tag,proto){
     $('#topBar').append(elm_div);
     elm_div.appendChild(elm_a);
     elm_div.appendChild(elm_p);
-    addTrail(num,$(elm_div),1,proto);
-    addBulletAImgClick('#bulletOptionA','#bulletOption',num);
-    addBulletClick(num,proto);
+    addTrail(num,$(elm_div),1);
+    $('#bulletOptionA'+ num).click(function(){   
+        $(this).toggleClass("changePicMode");
+        $('#bulletOption'+num).children('div').toggle("normal");
+    });
+    addBulletClick(num);
 }
 
 /**
@@ -76,7 +83,7 @@ function addModList(bars_num,parentObj,tag,proto){
  * @param num 控制弹头数的数字
  * @param trailNum 控制轨迹阶段的数字
  */
-function addTrail(num,parentObj,trailNum,proto){
+function addTrail(num,parentObj,trailNum){
         
     var elm_div = document.createElement('div');
         var elm_a = document.createElement('a');
@@ -123,9 +130,9 @@ function addTrail(num,parentObj,trailNum,proto){
     elm_bullet.appendChild(elm_bullet_a3);
     elm_bullet.appendChild(elm_bullet_a4);
     addAImgCliCK(elm_a.id,elm_bullet.id);
-    addTrialClick(elm_bullet.id,num,trailNum,proto);   //轨迹阶段事件
+    addTrialClick(elm_bullet.id,num,trailNum);   //轨迹阶段事件
     if(trailNum != 1){
-        addTrailVal(num,trailNum,proto);
+        addTrailVal(num,trailNum);
     }
 }
 
@@ -171,7 +178,7 @@ function addTriggerResultMod(obj,num,bulletNum,trailNum,resultNum){
  * @param obj 在添加条件按钮前添加
  * @param obj 触发条件的个数
  */
-function addTriggerList(obj,num,idName,htmlName,bulletNum,trailNum,proto){
+function addTriggerList(obj,num,idName,htmlName,bulletNum,trailNum){
     
     if(num < 11){
        
@@ -180,7 +187,7 @@ function addTriggerList(obj,num,idName,htmlName,bulletNum,trailNum,proto){
         elm_a.id = idName +'_'+num+'_' +bulletNum + '_'+trailNum;
         elm_a.innerHTML = htmlName + num ;
         obj.before(elm_a);
-        addTriggersVal(num,bulletNum,trailNum,proto);
+        addTriggersVal(num,bulletNum,trailNum);
     }else{
         alert('添加的太多');
     }
@@ -190,7 +197,7 @@ function addTriggerList(obj,num,idName,htmlName,bulletNum,trailNum,proto){
  * @param obj 在添加条件按钮前添加
  * @param obj 触发条件的个数
  */
-function addTriggerResult(obj,num,bulletNum,trailNum,len,idName,htmlName,proto){
+function addTriggerResult(obj,num,bulletNum,trailNum,len,idName,htmlName){
     if(len < 11){
         var elm_li = document.createElement('li');
         elm_li.id = idName + len +'_'+num+'_' +bulletNum + '_'+trailNum;
@@ -199,7 +206,7 @@ function addTriggerResult(obj,num,bulletNum,trailNum,len,idName,htmlName,proto){
         obj.before(elm_li);
         
         //添加数据
-        addTriggerEffect(num,bulletNum,trailNum,len,proto);
+        addTriggerEffect(num,bulletNum,trailNum,len);
     }else{
         alert('添加的太多了');
     }
@@ -208,7 +215,7 @@ function addTriggerResult(obj,num,bulletNum,trailNum,len,idName,htmlName,proto){
  * 用于删除添加的弹头的信息，同时删除弹头的数据
  * @param obj 点击的垃圾桶的id
  */
-function deleteLi(obj,proto){
+function deleteLi(obj){
     if(bulletInfo.Tip(1)){
         var targetHtml = $(obj).parent().children('label')[0].innerHTML.replace(/\s/g,""); 
         var targetNum  = $(obj).parent().children('label')[0].innerHTML.replace(/[^0-9]/ig,'');
@@ -219,7 +226,7 @@ function deleteLi(obj,proto){
                 
                 $('#bulletOption' + targetNum).remove();
                 $(obj).parent().remove();
-                deleteBullet(targetNum-1,proto);    //删除数据
+                deleteBullet(targetNum-1);    //删除数据
                 
         }
     
@@ -231,14 +238,14 @@ function deleteLi(obj,proto){
  * @param {*} bulletNum 
  * @param {*} trailNum 
  */
-function deleteTrail(bulletNum,trailNum,proto){
+function deleteTrail(bulletNum,trailNum){
     if($('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).length){
         $('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).remove();
-        deleteTrailVal(bulletNum,trailNum,proto);
-        if(proto.traNum ==1){
+        deleteTrailVal(bulletNum,trailNum);
+        if(bulletInfo.traNum ==1){
             return false;
         }else{
-            proto.traNum -=1;
+            bulletInfo.traNum -=1;
         }
         
     }else{
@@ -250,7 +257,7 @@ function deleteTrail(bulletNum,trailNum,proto){
  * 给触发条件top的A标签添加删除事件，同时删除触发条件的数据
  * @param {*} obj TopA的jquery对象 
  */
-function addTriggerTopAClick(obj,num,bulletNum,trailNum,proto){
+function addTriggerTopAClick(obj,num,bulletNum,trailNum){
     $(obj).click(function(){
         //删除视图
          var aimHtml = $(obj)["0"].previousElementSibling.children["0"].innerHTML;
@@ -263,14 +270,14 @@ function addTriggerTopAClick(obj,num,bulletNum,trailNum,proto){
           }
          
         //删除数据
-         deleteTrailInfo(num,bulletNum,trailNum,proto);
+         deleteTrailInfo(num,bulletNum,trailNum);
     });
 }
 /**
  * 给bottom的触发结果的垃圾桶添加删除事件
  * @param {*} params 
  */
-function  addTriggerBottomAClick(obj,num,bulletNum,trailNum,resultNum,proto) {
+function  addTriggerBottomAClick(obj,num,bulletNum,trailNum,resultNum) {
     obj.click(function(){
         //删除视图
         obj.parent().parent().css('display','none');
@@ -278,7 +285,7 @@ function  addTriggerBottomAClick(obj,num,bulletNum,trailNum,resultNum,proto) {
             
         
         //删除数据
-        deleteTrailResult(num,bulletNum,trailNum,resultNum,proto);
+        deleteTrailResult(num,bulletNum,trailNum,resultNum);
     });
     
 }

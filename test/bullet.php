@@ -13,6 +13,11 @@
         <link href="../vendors/easypiechart/jquery.easy-pie-chart.css" rel="stylesheet" media="screen">
         <link href="../images/cyber.ico" rel="shortcut icon" />
         <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        <script src="../vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script src="../vendors/xlsx.full.min.js"></script>   
         <link href="../assets/styles.css" rel="stylesheet" media="screen">
         
     </head>
@@ -21,9 +26,9 @@
         checkUserValidate();
     ?> 
     
-    <body >
-        
-        <div class="navbar navbar-fixed-top" >
+    <body>
+    
+        <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container-fluid">
                     <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span>
@@ -121,8 +126,7 @@
                 </div>
             </div>
         </div>
-       
-        <div class="container-fluid map" id = "mainContent"> 
+        <div class="container-fluid map"> 
                 <!--/span-->
                 <div class="span9 map_width" id="content">
                     <div class="row-fluid clear">
@@ -135,12 +139,10 @@
                                 <div id="ChariotInfo" class="ChariotInfoClass">
                                     <a href="javascript:;" id="ChariotInfoA">战车发射周期</a>
                                 </div>
-                           
                                 <div id="bulletOptionInfo" class="bulletOptionInfoClass">
                                     <a href="javascript:;" id="bulletOptionInfoA" class="showPicMode"></a>
                                     <p>弹头生命周期</p>
                                 </div>
-                                
                             </div>
                             
                             <div id="bulletBottomBtn">
@@ -174,7 +176,6 @@
                                 <p class="flyControlP1 P5">图片资源</p>
                                 <input type="file" id="filesSrc_1" name="files[]" multiple />
                                 <span id="fileSpan_1" class="fileSpan"></span>
-                                <input type="text" id="filesName_1" class="fileName"/>
                             </div>
                             <div id="saveMod_1">
                                 <button class="flyControlBtn" id="resetModBtn_1">重填</button>
@@ -492,7 +493,6 @@
                                             <div id="triggerOfArtOfValue_1_0_0_0" class="brotherHiddTag hidd">
                                                 <div id="ArtOfValue_1_0_0_0" class="effectOfValue_art">
                                                     <input type="file" id="filesSrc_1_0_0_0" name="files[]" multiple  class="fileSrcInp"/>
-                                                    <input type="text" id="filesName_1_0_0_0" class="fileName1"/>
                                                     <span id="fileSpan_1_0_0_0" class="fileSpan1"></span>
                                                 </div>
                                             </div>
@@ -523,21 +523,21 @@
         </div>
     </div>
         <!--/.fluid-container-->
-    </body >
-
-        <script type="text/javascript" src="cavas_js/jCanvaScript.1.5.18.min.js"></script>
+        
+        <!-- <script type="text/javascript" src="cavas_js/jCanvaScript.1.5.18.min.js"></script> -->
         <script src="../vendors/jquery-1.9.1.min.js"></script>
         <script src="../assets/zxx.drag.1.0-min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
         <script src="../vendors/easypiechart/jquery.easy-pie-chart.js"></script>
-        <script src="../canvas_map/cavas_js/getVal.js"></script>
-        <script src="../canvas_map/cavas_js/addResponse.js"></script>
-        <script src="../canvas_map/cavas_js/addMod.js"></script>
-        <script src="../canvas_map/cavas_js/addEvent.js"></script>
-        <script src="../canvas_map/cavas_js/mainScripts.js"></script>
-        <script src="../canvas_map/cavas_js/canvas_bullet.js"></script>
+        <script src="../test/cavas_js/getVal.js"></script>
+        <script src="../test/cavas_js/addResponse.js"></script>
+        <script src="../test/cavas_js/addMod.js"></script>
+        <script src="../test/cavas_js/addEvent.js"></script>
+        <script src="../test/cavas_js/mainScripts.js"></script>
+        <script src="../test/cavas_js/canvas_bullet.js"></script>
         <script src="../common/baseTools.js"></script>
         
+    </body>
 </html>
 
 

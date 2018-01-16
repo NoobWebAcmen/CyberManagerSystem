@@ -64,18 +64,17 @@ function show(obj,index) {
 function switchTrailSel(obj,bulletNum,trailNum){
     switch (obj) {
         case 'trailMove1':
-        
-        show($('#flyControlContent'+'_'+bulletNum +'_'+trailNum),2);
+        this.show($('#flyControlContent'+'_'+bulletNum +'_'+trailNum),2);
         
             break;
         case 'trailMove2':
-        show($('#rollControl'+'_'+bulletNum +'_'+trailNum),2);
+        this.show($('#rollControl'+'_'+bulletNum +'_'+trailNum),2);
             break;
         case 'trailMove3':
-        show($('#jumpControl'+'_'+bulletNum +'_'+trailNum),2);
+        this.show($('#jumpControl'+'_'+bulletNum +'_'+trailNum),2);
             break;
         case 'trailMove4':
-        show($('#snapControl'+'_'+bulletNum +'_'+trailNum),2);
+        this.show($('#snapControl'+'_'+bulletNum +'_'+trailNum),2);
             break;
         default:
             break;
@@ -209,7 +208,7 @@ function changetriggerP(obj,text,num,bulletNum,trailNum){
  * @param {*} obj 
  */
 
-function switchTriggerSel(obj,num,bulletNum,trailNum,proto){
+function switchTriggerSel(obj,num,bulletNum,trailNum){
     var bulNum = bulletNum -1;
     var traNum = trailNum -1;
     var nowNum = num -1;
@@ -218,19 +217,19 @@ function switchTriggerSel(obj,num,bulletNum,trailNum,proto){
         switch (this.value) {
             case 'triggerSel1':
                 show($('#timeInfo'+'_'+num+'_'+bulletNum+'_'+trailNum),4);
-                getTriggerMod(bulNum,traNum,nowNum,1,proto);
+                getTriggerMod(bulNum,traNum,nowNum,1);
                 break;
             case 'triggerSel2':
                 show($('#distanceInfo'+'_'+num+'_'+bulletNum+'_'+trailNum),4);
-                getTriggerMod(bulNum,traNum,nowNum,2,proto);
+                getTriggerMod(bulNum,traNum,nowNum,2);
                 break;
             case 'triggerSel3':
                 show($('#pathInfo'+'_'+num+'_'+bulletNum+'_'+trailNum),4);
-                getTriggerMod(bulNum,traNum,nowNum,3,proto);
+                getTriggerMod(bulNum,traNum,nowNum,3);
                 break;
             case 'triggerSel4':
                 show($('#charitoInfo'+'_'+num+'_'+bulletNum+'_'+trailNum),4);
-                getTriggerMod(bulNum,traNum,nowNum,4,proto);
+                getTriggerMod(bulNum,traNum,nowNum,4);
                 break;
         
             default:
@@ -242,13 +241,13 @@ function switchTriggerSel(obj,num,bulletNum,trailNum,proto){
 /**
  * 为触发条件Bottom的select框添加change事件,并存值
  */
-function switchResultSel(obj,num,bulletNum,trailNum,resultNum,proto){
+function switchResultSel(obj,num,bulletNum,trailNum,resultNum){
     var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1;
     var bulNum = bulletNum -1;
     var traNum = trailNum -1;
     var nowNum = num -1;
     var resNum = resultNum - 1;
-    var str1 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
+    var str1 = bulletInfo.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
     var str2 = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
     if(obj.length){
         obj.change(function(){
@@ -256,44 +255,44 @@ function switchResultSel(obj,num,bulletNum,trailNum,resultNum,proto){
                 case 'triggerResult1':
                     
                     show($('#triggerOfTrail'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    addTrail(bulletNum,$('#bulletOption'+bulletNum),len,proto);
-                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,1,proto);
+                    addTrail(bulletNum,$('#bulletOption'+bulletNum),len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,1);
                     break;
                 case 'triggerResult2':
                     show($('#triggerOfEffectOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
-                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,2,proto);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,2);
                     switchValueType(str1,$('#effectOfValueSela' + str2));
                     switchDamageAttribute(str1,$('#effectOfValueSelb' + str2));
                     break;
                 case 'triggerResult3':
                     show($('#triggerOfAddBuff'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
-                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,3,proto);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,3);
                     break;
                 case 'triggerResult4':
                     show($('#triggerOfTerrianOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
-                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,4,proto);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,4);
                     break;
                 case 'triggerResult5':
                     show($('#triggerOfArtOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
-                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,5,proto);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,5);
                     break;
                 case 'triggerResult6':
                     show($('#triggerOfAddBullet'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
-                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,6,proto);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,6);
                     break;
                 case 'triggerResult7':
                     show($('#triggerOfEnd'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
-                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,7,proto);
+                    deleteTrail(bulletNum,len);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,7);
                     break;
             
                 default:
-                    deleteTrail(bulletNum,len,proto);
+                    deleteTrail(bulletNum,len);
                 break;
             }
         });
@@ -328,7 +327,7 @@ function changeBulletsP(num){
 }
 
 /**
- * 记录触发结果被选择的状态  
+ * 记录触发结果被选择的状态   ？？？可能有问题
  */
 function findWhoSelected(num,bulletNum,trailNum,resultNum){
     var str = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
@@ -358,26 +357,6 @@ function findWhoSelected(num,bulletNum,trailNum,resultNum){
    
     
 }
-function findWhichConditonSel(num,bulletNum,trailNum){
-    var str = '_' + num + '_' + bulletNum + '_' + trailNum;
-    var len = $('#triggerSelect' + str).children().length;
-    var arr = new Array();
-    for(var i = 0 ;i < len ;i++){
-        arr[i] = $('#triggerSelect' + str).children().eq(i).prop('selected');
-    }
-    if(arr[0]){
-        return false;
-    }else if(arr[1]){
-        show($('#timeInfo'+ str),3);
-    }else if(arr[2]){
-        show($('#distanceInfo'+ str),3);
-    }else if(arr[3]){
-        show($('#pathInfo'+ str),3);
-    }else if(arr[4]){
-        show($('#charitoInfo'+ str),3);
-    }
-    
-}
 
 /**
  * 记录轨迹阶段被选择状态
@@ -404,7 +383,7 @@ function findWhoSel(bulletNum,trailNum) {
 /**
  * 上传图片并显示
  */
-function handleFileSelect(evt,num,proto) {
+function handleFileSelect(evt,num) {
     var files = evt.target.files; // FileList object
  
     // Loop through the FileList and render image files as thumbnails.
@@ -427,14 +406,14 @@ function handleFileSelect(evt,num,proto) {
       })(f);
       // Read in the image file as a data URL.
       reader.readAsDataURL(f);
-      getImgSrc(f.name,num,proto);
+      getImgSrc(f.name,num);
     }
     
   }
   /**
  * 上传图片并显示
  */
-function handleFileSelect1(evt,num,bulletNum,trailNum,resultNum,proto) {
+function handleFileSelect1(evt,num,bulletNum,trailNum,resultNum) {
     var files = evt.target.files; // FileList object
  
     // Loop through the FileList and render image files as thumbnails.
@@ -457,7 +436,7 @@ function handleFileSelect1(evt,num,bulletNum,trailNum,resultNum,proto) {
       })(f);
       // Read in the image file as a data URL.
       reader.readAsDataURL(f);
-      getImgSrc1(f.name,num,bulletNum,trailNum,resultNum,proto);
+      getImgSrc1(f.name,num,bulletNum,trailNum,resultNum);
     }
     
   }
@@ -479,42 +458,4 @@ function handleFileSelect1(evt,num,bulletNum,trailNum,resultNum,proto) {
  */
 function  rmReadOnly(obj,bulletNum,trailNum){
     obj.prop('readonly') == true ? obj.prop('readonly',false) : obj.prop('readonly',false);
-}
-
-
-
-/***************************************以下为载入的响应事件*************************************************************** */
-
-/**
- * 判断是选择了运动轨迹的哪种方式
- */
-function whichTrailMove(bulNum,traNum,proto){
-    var bulletNum = bulNum - 1;
-    var trailNum  = traNum - 1;
-    var val = proto.bulletsData.bullets[bulletNum].cycles[trailNum].motionMode;
-    switch (val) {
-        case 1:
-            $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(0).prop('selected','selected');
-            show($('#flyControlContent'+'_'+bulletNum +'_'+trailNum),2);
-            break;
-        case 2:
-            show($('#rollControl'+'_'+bulletNum +'_'+trailNum),2);
-            $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(1).prop('selected','selected');
-            break;
-        case 3:
-            show($('#jumpControl'+'_'+bulletNum +'_'+trailNum),2);
-            $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(2).prop('selected','selected');
-            break;
-        case 4:
-            show($('#snapControl'+'_'+bulletNum +'_'+trailNum),2);
-            $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(3).prop('selected','selected');
-            break;
-    
-        default:
-            break;
-    }
-}
-
-function switchLoadResult(bulletNum,trailNum,triggerNum,resultNum){
-    
 }

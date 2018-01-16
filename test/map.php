@@ -177,7 +177,6 @@
                                     <button class="btn btn-primary" id="outPut" name="tool_btn5"><i class="icon-pencil icon-white"></i> 导出</button>
                                     <button class="btn btn-primary" id="upIndex" name="tool_btn6"><i class="icon-pencil icon-white"></i> 提升优先度</button>
                                     <button class="btn btn-primary" id="downIndex" name="tool_btn7"><i class="icon-pencil icon-white"></i> 降低优先度</button>
-                                    <button class="btn btn-primary" id="loadPic" name="tool_btn9"><i class="icon-pencil icon-white"></i> 导出图片</button>
                                     <button class="btn btn-primary" id="clearBtn" name="tool_btn8"><i class="icon-pencil icon-white"></i> 清除</button>
                                 </div>
                             </div>

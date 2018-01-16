@@ -1264,7 +1264,7 @@ border-radius: 5px;
   padding: 5px 22px;
   background: #ffffff;
   border-radius: 5px;
-  margin : 20px -60px 0 120px;
+  margin : 0px -60px 0 200px;
 }
 .showDiv{
   display: block;
@@ -1290,6 +1290,7 @@ border-radius: 5px;
 .imgSrcDiv{
   height: 120px;
   margin-top: 10px;
+  position: relative;
 }
 .widthLab,.heightLab{
   margin-right: 0px;
@@ -1318,6 +1319,7 @@ border-radius: 5px;
 .effectOfValue_art{
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 .bullet_infoDiv{
   width : 300px;
@@ -1338,6 +1340,12 @@ border-radius: 5px;
   border-bottom: 1px solid #fff;
   font-size: 16px;
   line-height: 30px;
+  cursor: pointer;
+}
+.bullet_infoLi:hover{
+  background: teal;
+  font-weight: bold;
+  color: #ffffff;
 }
 #topBar{
   height: 780px;
@@ -1366,4 +1374,12 @@ border-radius: 5px;
 }
 .flyBeginEx{
   width : 224px;
+}
+.fileName{
+  position: absolute;left: 100px;top:50px;
+  width: 140px;
+}
+.fileName1{
+  width: 140px;
+  position: absolute;left: 120px;top:100px;
 }

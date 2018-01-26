@@ -21,7 +21,15 @@ function addBulletAImgClick(aId,divId,num){
         $(divId+num).children('div').toggle("normal");
     });
 }
-
+function adddeleteTrailClick(num,trailNum,proto){
+    $('#deleteTrail_' + num + '_' + trailNum).click(function(){
+        if(bulletInfo.Tip(1)){
+            $('#triP')
+            // deleteTrail(num,trailNum,proto);
+            // $('#trailOfMove_' + num + '_' + trailNum).remove();
+        }
+    });
+}
 /**
  * 给ADD了的弹头添加删除事件
  * @param obj 触发的对象
@@ -43,22 +51,15 @@ function addTrialClick (obj,bulletNum,trailNum,proto){
    
     //运动轨迹点击事件
     $('#' + obj).children().eq(0).one('click',function(){
-        if($('#' + obj).children().eq(0).attr('id') == 'pathTrail1_1_1'){
-            resetBtnClick(bulletNum,trailNum);
-            return ;
-        }else{
-            
-            addTrailOfMove($('#trailOfMove_1_1'),bulletNum,trailNum);
-        
-           resetBtnClick(bulletNum,trailNum);
-    
-           changeFlySelId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
-    
-           changeFlyTrailId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
-           changeFlyModId($('#flyControlContent'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
-           changeFlyModId($('#rollControl'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
-           changeFlyModId($('#jumpControl'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
-        }
+        addTrailOfMove($('#trailOfMove_0_0'),bulletNum,trailNum);
+        changeDelTrailId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
+        changeFlySelId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
+        changeResetId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
+        changeFlyTrailId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
+        changeFlyModId($('#flyControlContent'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
+        changeFlyModId($('#rollControl'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
+        changeFlyModId($('#jumpControl'+'_'+bulletNum+'_'+trailNum),bulletNum,trailNum);
+        resetBtnClick(bulletNum,trailNum);
     }); 
 
     $('#' + obj).children().eq(0).click(function(){
@@ -70,8 +71,11 @@ function addTrialClick (obj,bulletNum,trailNum,proto){
              switchTrailSel(this.value,bulletNum,trailNum);
         });
         
-        
         switchFlySel($('#trailSelect'+'_' + bulletNum + '_' + trailNum),preNum,nexNum,proto);
+        if(trailNum != 1){
+            adddeleteTrailClick(bulletNum,trailNum,proto);
+        }
+        
 
     });
     //触发条件点击事件
@@ -136,9 +140,34 @@ function addTriggerClick(obj,num,bulletNum,trailNum,proto){
 function addTriggerTopClick(obj,num,bulletNum,trailNum,proto){
     switchTriggerSel($(obj).children()["0"].children[1],num,bulletNum,trailNum,proto);
     addTriggerTopAClick($(obj).children()[1],num,bulletNum,trailNum,proto);
-    // $('#triggerSelect'+'_'+num+'_'+bulletNum+'_'+trailNum)["0"]["0"].selected = 'true';
     
     
+    
+}
+/**
+ * 给触发条件top的A标签添加删除事件，同时删除触发条件的数据
+ * @param {*} obj TopA的jquery对象 
+ */
+function addTriggerTopAClick(obj,num,bulletNum,trailNum,proto){
+    $(obj).click(function(){
+        //删除视图
+        if(num == 1){
+            return false;
+        }else{
+            var aimHtml = $(obj)["0"].previousElementSibling.children["0"].innerHTML;
+            var target = $('#triggerConditon'+'_'+num+'_'+bulletNum+'_'+trailNum);
+            target.remove();
+            if($(obj).parent().parent()["0"].id == 'triggerConditionMod_1_1_1'){
+                $(obj).parent().parent().css('display','none');
+            }else{
+                $(obj).parent().parent().remove();
+            }
+         
+        //删除数据
+         deleteTrailInfo(num,bulletNum,trailNum,proto);
+        }
+         
+    });
 }
 
 /**
@@ -216,8 +245,7 @@ function addTiggerAddClick(num,bulletNum,trailNum,resultNum,proto){
         
          addBullet(proto.bulNum,proto);
          addModList(proto.bulNum,$('#bulletAddInfoUl'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum),2,proto);
-         getAddBulletInfo(proto.bulNum,trailNum,proto);
-        //  addUniqueFlag(num,proto.bulNum,trailNum,resultNum,proto);
+         getAddBulletInfo(proto.bulNum,1,proto);
         addUniqueFlag(proto);
         });
 }
@@ -240,6 +268,7 @@ function addBulletClick(num,proto){
     $('#bulletName'+num).click(function(){
         show($('#bulletsMod_' + num),1);
         addBulletsSavClick(num,proto);
+        whichSize(num,proto);
     });
     $('#bulletName'+num).one('click',function(){
         if(num == 1){
@@ -249,6 +278,9 @@ function addBulletClick(num,proto){
             addBulletMod(num,$('#bulletsMod_1'));
             changeBulletsId(num,$('#bulletsMod'+'_'+num));
             changeBulletsP(num);
+            addBulletsSavClick(num,proto);
+            whichSize(num,proto);
+            show($('#bulletsMod_' + num),1);
             
         }
         
@@ -314,7 +346,6 @@ function addTriggerBottomClick1(obj,num,bulletNum,trailNum,proto){
                 show($('#triggerResultOption'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
                 show($('#triggerResultOptionBottom'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
                 findWhoSelected(num,bulletNum,trailNum,resultNum);
-                
              }else{
                 addTriggerResultMod($('#triggerResultOption_1_0_0_0'),num,bulletNum,trailNum,resultNum);
                 changeTriggerResult($('#triggerResultOption'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),num,bulletNum,trailNum,resultNum);
@@ -327,9 +358,57 @@ function addTriggerBottomClick1(obj,num,bulletNum,trailNum,proto){
                 addArtClick(num,bulletNum,trailNum,resultNum,proto);
             }
             addTriggerResetClick(num,bulletNum,trailNum,resultNum);
-            
-            
         }
         
     });
+}
+/**
+ * 载入页面的时候，点击哪个触发结果载入哪个触发结果的页面
+ * @param {*} bulletNum 
+ * @param {*} trailNum 
+ * @param {*} num 
+ * @param {*} resultNum 
+ * @param {*} proto 
+ */
+function addResultListClick(bulletNum,trailNum,num,resultNum,proto){
+    var bulNum = bulletNum - 1;
+    var traNum = trailNum - 1;
+    var nowNum = num - 1;
+    var resNum = resultNum - 1;
+    var str = resultNum + '_' + num + '_' + bulletNum + '_' + trailNum;
+    var val = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectMode;
+        $('#triggerResultLi' + str).click(function(){
+            switch (val) {
+                case 1:
+                    show($('#triggerOfTrail_' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(1).prop('selected','selected');
+                    break;
+                case 2:
+                    show($('#triggerOfEffectOfValue_' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(2).prop('selected','selected');
+                    break;
+                case 3:
+                    show($('#triggerOfAddBuff_' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(3).prop('selected','selected');
+                    break;
+                case 4:
+                    show($('#triggerOfTerrianOfValue_' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(4).prop('selected','selected');
+                    break;
+                case 5:
+                    show($('#triggerOfArtOfValue_' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(5).prop('selected','selected');
+                    break;
+                case 6:
+                    show($('#triggerOfAddBullet_' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(6).prop('selected','selected');
+                    break;
+                case 7:
+                    show($('#triggerOfEnd_' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(7).prop('selected','selected');
+                    break;
+                default:
+                    break;
+            }
+        });
 }

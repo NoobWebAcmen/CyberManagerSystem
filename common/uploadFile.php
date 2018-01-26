@@ -22,7 +22,8 @@ $id = $_REQUEST['id'];
     if(!empty($bullet)){
         
         $fileName1 = $save_dir.'/'.'bullets'.$id.'.json';
-        $res1 =file_put_contents($fileName1,json_encode($bullet),FILE_APPEND);
+        
+        $res1 =file_put_contents($fileName1,json_encode($bullet));
         if ($res1) {
             echo 'Write success!';
         } else {
@@ -32,7 +33,7 @@ $id = $_REQUEST['id'];
     if(!empty($bulletHtml)){
         
         $fileName2 = $save_dir.'/'.'bullets'.$id.'html'.'.html';
-        $res2 =file_put_contents($fileName2,$bulletHtml,FILE_APPEND);
+        $res2 =file_put_contents($fileName2,$bulletHtml);
         if ($res2) {
             echo 'Write success!';
         } else {

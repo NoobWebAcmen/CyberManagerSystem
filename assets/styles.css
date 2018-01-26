@@ -952,7 +952,7 @@ background: -moz-linear-gradient(top, #999, #666 100%); background: -webkit-grad
 
   margin-left: 40px;
   width: 507px;
-  height: 440px;
+  height: 560px;
   padding: 20px;
   padding-left: 60px;
   /* display: none; */
@@ -1007,6 +1007,11 @@ a:hover{
 .changePicMode{
   background: url('../images/page1/u17.png') left no-repeat;
 }
+.triggerResultLis:hover{
+  background: #08c;
+  color: white;
+  font-weight: bold;
+}
 
 /* **************************************运动轨迹CSS效果**************************************************************** */
 .trailOfMoveClass{
@@ -1028,7 +1033,7 @@ a:hover{
   margin-top: 15px;
   
   width : 560px;
-  height: 360px;
+  height: 400px;
 }
 .flyBeginAxies{
   margin-left: 5px;
@@ -1042,8 +1047,11 @@ a:hover{
   display: flex;
   flex-direction: row;
 }
+.triggerResultAs{
+  margin: 6px 85px 0 0 !important;
+}
 .flyControlP,.rollControlP,.jumpControlP,.flyControlP1{
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   line-height: 30px;
   
@@ -1172,6 +1180,7 @@ border-radius: 5px;
   margin-right: 160px !important;
   width: 22px;
   height: 22px;
+
 }
 .charitoLabel_p{
   margin-top: 5px;
@@ -1211,6 +1220,7 @@ border-radius: 5px;
 }
 .triggerResultA{
   margin :18px 0 0 0px;
+  cursor: pointer;
 }
 .triggerResultOptionBottomClass{
   border: 2px solid #c1c1c1;
@@ -1294,6 +1304,7 @@ border-radius: 5px;
 }
 .widthLab,.heightLab{
   margin-right: 0px;
+  margin-left: 0px;
 }
 .widthInp,.heightInp{
   margin-left: 5px;
@@ -1357,10 +1368,11 @@ border-radius: 5px;
 .trackValue{
   width : 220px;
   height: 195px;
-  position: absolute;left:340px;bottom: 20px;
+  position: absolute;left:330px;top: 200px;
   border: 1px solid #c1c1c1;
   padding-left: 20px;
   border-radius: 5px;
+  display: none;
 }
 .trackValueLab{
   font-size: 14px;

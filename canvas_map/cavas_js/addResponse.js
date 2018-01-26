@@ -2,10 +2,11 @@
   * 本文件用于对addEvent的点击事件的响应，只对addEvent.js负责
   */
  
- 
-
-
-
+  function  changeDelTrailId(obj,bulletNum,trailNum){
+      var str = obj.children().eq(0).children().eq(1).prop('id').slice(0,-4);
+      var str1 = '_' + bulletNum + '_' + trailNum;
+      obj.children().eq(0).children().eq(1).prop('id',str + str1);
+  }
 
 /**
  * 改变运动轨迹中头部下拉选择框的id
@@ -14,7 +15,6 @@
  * @param {*} trailNum 
  */
 function changeFlySelId(obj,bulletNum,trailNum){
-        
     for(var i = 0;i<4;++i){
         var str = $(obj.children()[1]).children()[i].id;
        
@@ -97,9 +97,7 @@ function changeFlyModId(obj,bulletNum,trailNum){
                 var str4 = str3.slice(0,-4);
                 var str5 = str1.children().eq(j).attr('id',str4+ '_' +bulletNum + '_' + trailNum);                 
             }
-
         }
-        
     }  
 }
 /**
@@ -109,6 +107,7 @@ function changeFlyModId(obj,bulletNum,trailNum){
  * @param {*} trailNum 
  */
 function resetAllInp(obj,bulletNum,trailNum){
+    
     var len = obj.children().children('input').length;
     for(var i = 0;i < len ; ++i){
         obj.children().children('input')[i].value = '';
@@ -117,6 +116,7 @@ function resetAllInp(obj,bulletNum,trailNum){
     for(var j = 0;j < len1; ++j){
         obj.children().children('select').eq(j).children('option').eq(0).prop('selected',true);
     }
+  
 }
 /**
  * 重置运动轨迹的input框
@@ -125,15 +125,30 @@ function resetAllInp(obj,bulletNum,trailNum){
  * @param {*} trailNum 
  */
 function resetAllInp1(obj,bulletNum,trailNum){
-    
+    var str1 = $('#flyDiv8'+ '_' + bulletNum + '_' + trailNum);
+    var str2 = $('#flyTrack' + '_' + bulletNum + '_' + trailNum).children().eq(0);
+    var str3 = $('#flyBegin' + '_' + bulletNum + '_' + trailNum).children().eq(0);
+    var str4 = $('#flyVen' + '_' + bulletNum + '_' + trailNum).children().eq(0);
+    var str5 = $('#flySpeed' + '_' + bulletNum + '_' + trailNum).children().eq(0);
+    var str6 = $('#flyContorlBeginInpX' + '_' + bulletNum + '_' + trailNum);
+    var str7 = $('#flyContorlBeginInpY' + '_' + bulletNum + '_' + trailNum);
+    var str8 = $('#flyContorlVendorInpX' + '_' + bulletNum + '_' + trailNum);
+    var str9 = $('#flyContorlStrengthInpX' + '_' + bulletNum + '_' + trailNum);
     var len = obj.children().children('input').length;
-    for(var i = 3;i < len ; ++i){
-        obj.children().children('input')[i].value = '';
+    for(var i = 0;i < len ; ++i){
+        obj.children().children('input').eq(i).prop('value','');
     }
     var len1 = obj.children().children('select').length;
-    for(var j = 2;j < len1; ++j){
+    for(var j = 0;j < len1; ++j){
         obj.children().children('select').eq(j).children('option').eq(0).prop('selected',true);
     }
+    str2.prop('selected') == true ?  str1.css('display','block') :  str1.css('display','none');
+    if(str3.prop('selected')){
+        str6.attr('readonly','readonly');
+        str7.attr('readonly','readonly');
+    }
+    str4.prop('selected') == true ?  str8.attr('readonly','readonly') :  str8.attr('readonly',false);
+    str5.prop('selected') == true ?  str9.attr('readonly','readonly') :  str9.attr('readonly',false);
 }
 
 /**
@@ -239,6 +254,7 @@ function switchTriggerSel(obj,num,bulletNum,trailNum,proto){
     });
     
 }
+
 /**
  * 为触发条件Bottom的select框添加change事件,并存值
  */
@@ -254,9 +270,9 @@ function switchResultSel(obj,num,bulletNum,trailNum,resultNum,proto){
         obj.change(function(){
             switch (this.value) {
                 case 'triggerResult1':
-                    
+                    changeTrailP($('#triP' + str2),bulletNum);
                     show($('#triggerOfTrail'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    addTrail(bulletNum,$('#bulletOption'+bulletNum),len,proto);
+                    addTrail(bulletNum,$('#bulletOption'+bulletNum),$('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1,proto);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,1,proto);
                     break;
                 case 'triggerResult2':
@@ -495,18 +511,14 @@ function whichTrailMove(bulNum,traNum,proto){
     switch (val) {
         case 1:
             $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(0).prop('selected','selected');
-            show($('#flyControlContent'+'_'+bulletNum +'_'+trailNum),2);
             break;
         case 2:
-            show($('#rollControl'+'_'+bulletNum +'_'+trailNum),2);
             $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(1).prop('selected','selected');
             break;
         case 3:
-            show($('#jumpControl'+'_'+bulletNum +'_'+trailNum),2);
             $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(2).prop('selected','selected');
             break;
         case 4:
-            show($('#snapControl'+'_'+bulletNum +'_'+trailNum),2);
             $('#trailSelect' +'_' +bulNum + '_' +traNum).children().eq(3).prop('selected','selected');
             break;
     
@@ -515,6 +527,45 @@ function whichTrailMove(bulNum,traNum,proto){
     }
 }
 
-function switchLoadResult(bulletNum,trailNum,triggerNum,resultNum){
-    
+function changeResetId(obj,bulletNum,trailNum){
+    var str1 = $(obj).children().eq(2).prop('id').slice(0,-4);
+    var str2 = $(obj).children().eq(2).children('button').prop('id').slice(0,-4);
+    var str = '_' + bulletNum + '_' + trailNum;
+    $(obj).children().eq(2).children('button').prop('id',str2 + str);
+    $(obj).children().eq(2).prop('id',str1 + str);
+}
+/**
+ * 改变触发结果中动态添加的轨迹阶段的描述语句
+ */
+function changeTrailP(obj,bulletNum){
+    var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1;
+    var str = "已成功添加 \"轨迹阶段" + len + "\""; 
+    obj.html(str);
+}
+
+/**
+ * 弹头框中判断是哪种形状
+ * @param {*} bulNum 
+ */
+function whichSize(bulNum,proto){
+    var bulletNum = bulNum - 1;
+    $('#sizSel_'+ bulNum).change(function(){
+        if(this.value == 'size1'){
+            //改变视图
+            $('#sizeModWid_' + bulNum).attr('readonly','readonly');
+            $('#sizeModHei_' + bulNum).attr('readOnly','readObly');
+            $('#cycle_' + bulNum).attr('readOnly',false);
+            $('#sizeModWid_' + bulNum).prop('value','');
+            $('#sizeModHei_' + bulNum).prop('value','');
+            //保存数据
+            proto.bulletsData.bullets[bulletNum].sizeMode = 1;
+        }else if(this.value == 'size2'){
+            
+            proto.bulletsData.bullets[bulletNum].sizeMode = 2;
+            $('#cycle_' + bulNum).attr('readOnly','readObly');
+            $('#sizeModWid_' + bulNum).attr('readonly',false);
+            $('#sizeModHei_' + bulNum).attr('readOnly',false);
+            $('#cycle_' + bulNum).prop('value','');
+        }
+    });
 }

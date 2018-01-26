@@ -57,56 +57,38 @@ function funDownload(content, filename,tag){
  }
 
 
-/**
- * 下载是否按格式输出 
- */
-function jsonNaN(jsonString){
-
-     if(document.getElementById('radio1').checked){
-        
-         var jsonstr = JSON.stringify(jsonString);
-         return jsonstr;
-     }else{
-        console.log(jsonString);
-        var jsonstr = JSON.stringify(jsonString);
-        var jsonstr =JSON.stringify(jsonString,null,4);
-        return jsonstr;
-     }
-}
 
 /**
  * 把数据转换成lua
  */
 function json2lua(jsonString,tag){
-    
+    jsonString = JSON.stringify(jsonString,null,4);
+    jsonString = JSON.parse(jsonString);
     var list = new Object();
     var cycles = new Object();
     var triggers = new Object();
     var effects = new Object();
     var listStr;
     var listy;
+    var testStr = new Object();
     var len = jsonString.bullets.length;
     for(var i = 0;i < len ; ++i){
         var key = "[" + (i + 1) + "]";
         list[key] = deepClone(jsonString.bullets[i]);
-        list[key].cycles = [];
-        console.log(list[key].cycles);
-        
-
+        list[key].cycles = new Object();
         var len1 = Object.keys(jsonString.bullets[i].cycles); //对象用Object.keys取值
         for(var j = 0;j < len1.length; ++j){
             var key1 = "[" + (j + 1) + "]";
             cycles[key1] = deepClone(jsonString.bullets[i].cycles[j]);
-            list[key].cycles[key1] = cycles[key1];
-            cycles[key1].triggers = [];
             
-        
-
+            list[key].cycles[key1] = cycles[key1];
+            cycles[key1].triggers = new Object();
+            
             var len2 = jsonString.bullets[i].cycles[j].triggers.length;
             for(var k = 0;k < len2;k++){
                 var key2 = "[" + (k+1) + "]";
                 triggers[key2] = deepClone(jsonString.bullets[i].cycles[j].triggers[k]);
-                triggers[key2].effects = [];
+                triggers[key2].effects = new Object();
                 cycles[key1].triggers[key2] = triggers[key2];
                 
                 if(jsonString.bullets[i].cycles[j].triggers[k]){
@@ -121,25 +103,27 @@ function json2lua(jsonString,tag){
             }
         }
     }
-    
-    
     if(tag == 1){
-        listy = JSON.stringify(deepClone(list)).replace(/"\:/g,"=").replace(/\{\"/g,'\{').replace(/\,\"/g,'\,').replace(/\]\=\{/g,'\]\=\{\n\t')
-        .replace(/\=\{\[/g,'\=\{\n\t\[').replace(/\=\n\{/g,'\=\n\{\n\t').replace(/\,/g,'\,\n\t\t').replace(/\=\{/g,'\=\{\n\t\t').replace(/\}\}\,/g,'\n\t\t\t\}\n\t\t\}\,')
-        .replace(/\}\}\}\}\}\}\}\}\}/,'\n\t\t\t\t\}\n\t\t\t\}\n\t\t\}\n\t\}\n\}').replace(/\{\[/g,'\{\n\t\[');
-
-        listStr = "localBulletConfig = {}\n" + "\nBulletConfig["+ jsonString.id +"] = {\n" 
-        + "\tlaunchDuration = " + jsonString. launchDuration + ",\n" 
-        + "\tbullets = " + listy + "\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\nreturn BulletConfig";
+        listy =JSON.stringify(list,null,4)
+        .replace(/"\:/g,"=")
+        .replace(/\"(.*?)\=/g,'$1 \=')
+        .replace(/\{\"/g,'\{')
+        .replace(/\,\"/g,'\,')
+        .replace(/\"NaN\"/g,0);
+        listy = listy.replace(/\}/g,'\t\}');
+        console.log('2',listy);
+        listStr = "local BulletConfig = {\n" 
+            + "\tid = " + jsonString. id + ",\n"
+            + "\tlaunchDuration = " + jsonString. launchDuration + ",\n" 
+            + "\tbullets = " +listy + "\n}\nreturn BulletConfig";
     }else if(tag == 2){
-        listy = JSON.stringify(deepClone(list)).replace(/"\:/g,"=").replace(/\{\"/g,'\{').replace(/\,\"/g,'\,');
-        listStr = "localBulletConfig = {}" + "BulletConfig["+ jsonString.id +"] = {" 
-        + "launchDuration = " + jsonString. launchDuration + "," 
-        + "bullets = " + listy + "}}}}}return BulletConfig";
+        listy = JSON.stringify(deepClone(list)).replace(/"\:/g,"=").replace(/\{\"/g,'\{').replace(/\,\"/g,'\,').replace(/\"NaN\"/g,0);
+        
+        listStr = "local BulletConfig={"
+        + "id=" +  jsonString.id + ','
+        + "launchDuration=" + jsonString. launchDuration + "," 
+        + "bullets=" + listy + "}return BulletConfig";
     }
-   
-    
-    console.log(listStr);
     return listStr;
     
 }

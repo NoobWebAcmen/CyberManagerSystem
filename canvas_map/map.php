@@ -37,7 +37,7 @@
                      <span class="icon-bar"></span>
                      <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="../index/index.php">Cyber后台管理系统V1.0</a>
+                    <a class="brand" href="../index/index.php">坦克后台工具</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">

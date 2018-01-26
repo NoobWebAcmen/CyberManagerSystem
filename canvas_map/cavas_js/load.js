@@ -39,22 +39,49 @@ $('.bars_input').keydown(function(e){
  * 导出数据按钮
  */
 $('#downloadData').click(function(){
+	
 	if(loadVal.saveFlag){
-		if(bulletInfo.Tip(3) == true){
-			funDownload(loadVal.bulletsData,'bulletConfig.lua',1);
-		}else{
-			funDownload(loadVal.bulletsData,'bulletConfig.lua',2);
-		}
-		uselocalStorage(loadVal.bulletsData);
+		var id = loadVal.bulletsData.id;
+		getJsonVal(id);
 	}else{
 		alert('请先点击保存数据');
 	}
 });
+function getJsonVal(id){
+	$.ajax({
+		type : 'GET',
+		url  : '../common/loadFile.php', 
+		data : {'id' : id,'flag' : 1},
+		success : function (data) {
+			//json数据
+			
+			Data = data.replace(/\"([-+]?[0-9]*\.?[0-9]+)\"/g,"$1").replace(/\"false\"/g,'false').replace(/\"true\"/g,'true');
+			Data = JSON.parse(Data);
+			downloadProfile(Data,id);
+		},
+		error : function (data){
+			console.log('error',data.responseText);
+		}
+	});
+}
+function downloadProfile(data,id){
+	if(bulletInfo.Tip(3) == true){
+		funDownload(data,'bullet_' + id + '.lua',1);
+	}else {
+		funDownload(data,'bullet_' + id + '.lua',2);
+	}
+}
+
 /**
  * 返回主页按钮
  */
 $('#home').click(function(){
-	window.location.href='bullet_index.php';
+	if(loadVal.saveFlag){
+		window.location.href='bullet_index.php';
+	}else{
+		alert("请先保存数据");
+	}
+	
 	loadVal.saveFlag = false;
 });
 $('#bulletOptionInfoA').click(function(){
@@ -76,65 +103,100 @@ $('#saveData').click(function(){
 			}	
 		}
 	}
-    loadVal.saveFlag = true;
-    console.log(loadVal);
+	console.log(loadVal);
+	loadVal.saveFlag = true;
+	postDataAjax(loadVal.bulletsData,loadVal.bulletsData.id);
+	useAjax(loadVal.bulletsData);
+	
 });
+function postDataAjax(bulletsData,id){
+	$.ajax({
+		type : 'POST',
+		url  : '../common/uploadFile.php',
+		data : {
+			"bullets" :bulletsData,
+			"id" :id
+		},
+		dataType : "json",
+		success : function(data){
+		},
+		error : function(data){
+			console.log('error',data.responseText);
+		}
+	});
+}
 /**
- * 使用localStorage存储bullet的数据
+ * 使用ajax在服务器端存储bullet的数据
  * @param {*} data 保存的Object对象
  * @param {*} id   弹头的id值
  */
-function uselocalStorage(data){
+function useAjax(data){
 	var id = data.id;
-	var test=document.getElementsByTagName('html')[0].outerHTML;
-	test=test.replace(new RegExp('<script[^]*>[\\s\\S]*?</'+'script>','gi'),'');
-	var object = JSON.stringify(data);
-	if (window.localStorage) {
-		localStorage.setItem("bullets" + id, object);
-		localStorage.setItem("bullets" + id +'html', test);
-	} else {
-		Cookie.write("bullets" + id, object);
-		Cookie.write("bullets" +'html', test);	
-	}
+	var test = document.getElementsByClassName('contentRight')[0].outerHTML;
+	postHtml(test,id);
 }
 
+function postHtml(html,id){
+	$.ajax({
+		type : 'POST',
+		url  : '../common/uploadFile.php',
+		data : {
+			"bulletsHtml" : html,
+			"id" : id
+		},
+		dataType : "html",
+		success : function(data){
 
-for(var i = 1;i <= firstNum - 1 ;++i){
-	if(loadVal.bulletsData.bullets[i-1]){
-		addBulletClick(i,loadVal);
-	//弹头 
-		loadBulletsVal(i,loadVal);
-		addBulletAImgClick('#bulletOptionA','#bulletOption',i);
-		for(var j = 1;j <= Object.keys(loadVal.bulletsData.bullets[i-1].cycles).length; ++j){
-			if(loadVal.bulletsData.bullets[i-1].cycles[j-1]){
-				
-				addDelLiClick('#BulletDel' + i,loadVal);
-				addTrialClick ('bulletOptionConditionInfo'+ '_' + i+'_'+j,i,j,loadVal);
-				loadTrailMoveVal(i,j,loadVal);
-				addAImgCliCK('bulletOptionConditionA'+ '_' + i+'_'+j,'bulletOptionConditionInfo'+ '_' + i + '_' + j);
-				//运动轨迹
-				for(var m = 1;m <= Object.keys(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers).length; ++m){
-					//触发条件
-					if(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1]){
-						loadConditionVal(i,j,m,loadVal);
-						addTriggerBottomClick1($('#triggerConditionMod'+'_'+m+'_'+i+'_'+j),m,i,j,loadVal);
-						if($('#triggerConditons'+ '_' + m + '_' + i+'_'+j).length){
-							switchTriggerSel($('#triggerConditons'+ '_' + m + '_' + i+'_'+j).children()["0"].children[1],m,i,j,loadVal);
-						}
-						
-						for(var n = 1;n <= Object.keys(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1].effects).length; ++n){
-						//触发结果
-							if(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1].effects[n-1]){
+		},
+		error : function(data){
+			console.log('error',data.responseText);
+		}
+	});
+}
+
+$.getScript('cavas_js/canvas_bullet.js',function(){
+	for(var i = 1;i <= firstNum - 1 ;++i){
+		if(loadVal.bulletsData.bullets[i-1]){
+			addBulletClick(i,loadVal);
+		//弹头 
+			loadBulletsVal(i,loadVal);
+			addBulletAImgClick('#bulletOptionA','#bulletOption',i);
+			for(var j = 1;j <= Object.keys(loadVal.bulletsData.bullets[i-1].cycles).length; ++j){
+				if(loadVal.bulletsData.bullets[i-1].cycles[j-1]){
+					addDelLiClick('#BulletDel' + i,loadVal);
+					addTrialClick ('bulletOptionConditionInfo'+ '_' + i+'_'+j,i,j,loadVal);
+					loadTrailMoveVal(i,j,loadVal);
+					addAImgCliCK('bulletOptionConditionA'+ '_' + i+'_'+j,'bulletOptionConditionInfo'+ '_' + i + '_' + j);
+					//运动轨迹
+					if(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers){
+						for(var m = 1;m <= Object.keys(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers).length; ++m){
+							//触发条件
+							if(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1]){
+								addTriggerTopAClick('#triggerCondition'+ '_' + m + '_' + i+'_'+j,m,i,j,loadVal);
+								loadConditionVal(i,j,m,loadVal);
+								addTriggerBottomClick1($('#triggerConditionMod'+'_'+m+'_'+i+'_'+j),m,i,j,loadVal);
+								if($('#triggerConditons'+ '_' + m + '_' + i+'_'+j).length){
+									switchTriggerSel($('#triggerConditons'+ '_' + m + '_' + i+'_'+j).children()["0"].children[1],m,i,j,loadVal);
+								}
 								
-								switchResultSel($('#triggerResultSel'+'_'+n+'_'+m+'_'+i+'_'+j),m,i,j,n,loadVal);
-								addTiggerAddClick(m,i,j,n,loadVal)
-								loadResultVal(i,j,m,n,loadVal);
+								for(var n = 1;n <= Object.keys(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1].effects).length; ++n){
+								//触发结果
+									if(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1].effects[n-1]){
+										addResultListClick(i,j,m,n,loadVal,1);
+										addTriggerBottomAClick($('#triggerResult'+'_'+n+'_'+m+'_'+i+'_'+j),m,i,j,n,loadVal)
+										switchResultSel($('#triggerResultSel'+'_'+n+'_'+m+'_'+i+'_'+j),m,i,j,n,loadVal);
+										switchValueType(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1].effects[n-1].effectParams,$('#effectOfValueSela' +'_'+n+'_'+m+'_'+i+'_'+j));
+										addTiggerAddClick(m,i,j,n,loadVal)
+										loadResultVal(i,j,m,n,loadVal);
+									}
+								}
 							}
 						}
 					}
+					
 				}
 			}
 		}
+		
 	}
-	
-}
+});

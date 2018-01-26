@@ -74,6 +74,8 @@ Bullet.prototype ={
             var msg = "确定要添加触发条件吗？\n\n请确认！";
         }else if(flag == 3){
             var msg = "是否需要有格式输出配置文件？\n\n请确认！"
+        }else if(flag == 4){
+            var msg = "是否输出配置文件？\n\n请确认！"
         }
         
         if (confirm(msg)==true){ 
@@ -93,18 +95,16 @@ var bulletInfo = new Bullet({
 triggerEffectVal = [{
     effectMode : 2,
     effectParams : {
-        areaEffects : 1,
-        effectObject : 1,
-        valueType : 1,
-        value : 0,
-        damageAttribute : 1,
-        buffAreaEffects : 1,
-        buffEffectObject : 1,
-        buffId : 1,
-        damageArea : 1,
-        edgeTypes : 1,
-        artSource : 1,
+        range : 0,
+        target : 0,
+        effectType : 1,
+        effectValue : 0,
+        damageType : 1,
+        buffId : 0,
+        edgeTypes : 0,
+        source : 0
     }
+    
 }];
 triggerVal = [{
     triggerMode : 1,
@@ -120,35 +120,32 @@ triggerVal = [{
 bulletConstVal = [{
     image : 'explosion_1.png',
     launchTime : 0,
-    initialSpeed : 0,
+    speed : 0,
     width : 0,
     height : 0,
     mass : 0,
-    rotationSpeed : 0,
-    launched : false,
+    rotationMoment : 0,
+    sizeMode : 1,
+    radius : 0,
+    launched : true,
     cycles : [
         {
-            beginPointMode : 1,
-            flyAngleMode : 1,
-            flySpeedMode : 1,
-            isTrack : true, 
+            isOffsetCoord : true,
+            isOffsetRotation : true,
+            isOffsetSpeed : true,
+            isTrack : false, 
             x : 0,
             y : 0,
-            flyAngle : 0,
-            flySpeed : 0,
+            rotation : 0,
+            speed : 0,
             motionMode : 1,
             flyMode : 1,
-            flyRotateMode : 1,
-            detectionRange : 1,
+            rotateMode : 1,
+            trackRange : 1,
             trackAngle : 1,
-            detectionTarget : 1,
-            scrollRotateMode : 1,
-            jumpRotateMode : 1,
-            flyObstructionForce : 0,
-            obstructionForce : 0, 
-            elasticForce : 0,
-            scrollDistance : 0,
-            scrollSpeed : 0,
+            trackTarget : 1,
+            obstructionLoss : 0, 
+            elasticityLoss : 0,
             triggers : []
         }
     ]
@@ -169,6 +166,7 @@ function Load(options){
     this.triggerNum = 10;
     this.resultNum = 10;
     this.saveFlag = false;
+    this.resetFlag = true;
     
 }
 var time = new Array();
@@ -181,6 +179,7 @@ Load.prototype = {
    
 }
 if(Object.keys(strStoreData)){
+    
     var loadVal = new Load({
         id : strStoreData.id,
         launchDuration: strStoreData.launchDuration,

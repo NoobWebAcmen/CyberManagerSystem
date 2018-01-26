@@ -85,7 +85,7 @@ $(selector).one(event,data,function)
 
 ·2018/1/2
 
-​	bulletInfo.bulletsData.bullets[0].cycles[0].triggers = [];
+​    bulletInfo.bulletsData.bullets[0].cycles[0].triggers = [];
 
 ​    bulletInfo.bulletsData.bullets[0].cycles[0].triggers.push(deepClone(triggerVal[0]));
 
@@ -94,3 +94,31 @@ $(selector).one(event,data,function)
 1.如果是一个对象想要使用push方法，那就在push之前先把这个对象初始化成数组
 
 2.如果想要push到数组的对应的地方，则push多次
+
+
+
+·2018/1/19
+
+​	<div class="doc-buttons">
+
+​		 <button type="button" class="btn btn-primary" data-method="setDragMode" data-option="move" title="Move">
+
+​           <span class="docs-tooltip" data-toggle="tooltip" title="$().cropper(&quot;setDragMode&quot;, &quot;move&quot;)">
+
+​              <span class="fa fa-arrows"></span>
+
+​            </span>
+
+​          </button>
+
+​	</div>
+
+采用以上结构，父级块class唯一 通过父级块找到子级块的 [data-method]属性，从而获取整个以class作为标志的DOM节点
+
+​	$('.doc-buttons').on( 'click' , '[data-method]' , function()){
+
+​		var  $this = $$(this);                        //点击的button块
+
+​		var data = $this.data();      //可以获得 button的 data属性  method :'setDragMode'  option : 'move'
+
+​	}

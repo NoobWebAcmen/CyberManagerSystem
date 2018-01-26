@@ -22,12 +22,12 @@ function addModList(bars_num,parentObj,tag,proto){
     labelName.id = "Bullet" + bars_num;
     inputName.className = "bars_info_input fl";
     inputName.setAttribute('type','text');
-    inputName.setAttribute('readonly','readonly');
+    inputName.setAttribute('id','bars_info_input_' + 'bars_num');
     inputName.setAttribute('tag',bars_num-1);
     if(tag == 1){
-        inputName.setAttribute('value',scale.title.innerHTML + ' ' + 's');
+        inputName.setAttribute('value',scale.title.innerHTML);
     }else if(tag == 2){
-        inputName.setAttribute('value','0s');
+        inputName.setAttribute('value','0');
     }
     
     
@@ -125,6 +125,7 @@ function addTrail(num,parentObj,trailNum,proto){
     addAImgCliCK(elm_a.id,elm_bullet.id);
     addTrialClick(elm_bullet.id,num,trailNum,proto);   //轨迹阶段事件
     if(trailNum != 1){
+        
         addTrailVal(num,trailNum,proto);
     }
 }
@@ -246,26 +247,7 @@ function deleteTrail(bulletNum,trailNum,proto){
     }
 }
 
-/**
- * 给触发条件top的A标签添加删除事件，同时删除触发条件的数据
- * @param {*} obj TopA的jquery对象 
- */
-function addTriggerTopAClick(obj,num,bulletNum,trailNum,proto){
-    $(obj).click(function(){
-        //删除视图
-         var aimHtml = $(obj)["0"].previousElementSibling.children["0"].innerHTML;
-         var target = $('#triggerConditon'+'_'+num+'_'+bulletNum+'_'+trailNum);
-         target.remove();
-          if($(obj).parent().parent()["0"].id == 'triggerConditionMod_1_1_1'){
-              $(obj).parent().parent().css('display','none');
-          }else{
-            $(obj).parent().parent().remove();
-          }
-         
-        //删除数据
-         deleteTrailInfo(num,bulletNum,trailNum,proto);
-    });
-}
+
 /**
  * 给bottom的触发结果的垃圾桶添加删除事件
  * @param {*} params 
@@ -273,7 +255,8 @@ function addTriggerTopAClick(obj,num,bulletNum,trailNum,proto){
 function  addTriggerBottomAClick(obj,num,bulletNum,trailNum,resultNum,proto) {
     obj.click(function(){
         //删除视图
-        obj.parent().parent().css('display','none');
+        // obj.parent().parent().css('display','none');
+        obj.parent().parent().remove();
         $('#triggerResultLi'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum).remove();
             
         
@@ -289,7 +272,6 @@ function  addTriggerBottomAClick(obj,num,bulletNum,trailNum,resultNum,proto) {
 function addBulletMod(num,obj){
 
     obj.parent().append($(obj).clone().attr("id", 'bulletsMod'+'_'+num));
-    console.log(obj);
 }
 
 /**

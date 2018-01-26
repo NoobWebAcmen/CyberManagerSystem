@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .test{
+            width: 1000px;
+            height : 600px;
+            background: yellow;
+            overflow: scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <div id='test1' class="test"></div>
+</body>
+<script type="text/javascript" src="cavas_js/jCanvaScript.1.5.18.min.js"></script>
+<script src="../vendors/jquery-1.9.1.min.js"></script>
+<script src="../canvas_map/cavas_js/test.js"></script>
+<script>
+    var myCanvas = document.createElement('canvas');
+    var myTestDiv = $('#test1');
+    
+    myCanvas.setAttribute('width',462 + 'px');
+    myCanvas.setAttribute('height',504 + 'px');
+    myCanvas.setAttribute('id','myCanvas');
+    myTestDiv.append(myCanvas);
+    var content = myCanvas.getContext('2d');
+    setImgWidth('../images/plot_img/plot_img_0.jpg',content);
+   
+    
+
+    function setImgWidth(src,ctx){
+        var img = new Image(); 
+        var start_time = new Date().getTime();
+        //读取图片的宽高
+        var img_url = src +'?'+start_time;
+        img.src = img_url;
+        var check =function(){
+        // 只要任何一方大于0
+        // 表示已经服务器已经返回宽高
+            if(img.width>0 || img.height>0){
+                var diff = new Date().getTime() - start_time;
+                drawImage(ctx, '../images/plot_img/plot_img_0.jpg', 0, 0, img.width , img.height);
+                clearInterval(set);
+                
+                }
+        };
+        var set = setInterval(check,40);
+        
+        
+    }
+
+    function drawImage(ctx,src,x,y,width,height){
+        var img = new Image(); //创建一个Image对象，实现图片的预下载    
+        img.src = src;        
+        
+        if (img.complete) { // 如果图片已经存在于浏览器缓存，直接调用回调函数    
+            ctx.save();    
+            ctx.drawImage(img,x,y,width,height);                      
+            ctx.restore();    
+        }     
+        else {
+            img.onload = function () { //图片下载完毕时异步调用callback函数。    
+                ctx.save();    
+                ctx.drawImage(img,x,y,width,height);                      
+                ctx.restore();     
+            }; 
+        }
+    }
+
+    
+</script>
+</html>

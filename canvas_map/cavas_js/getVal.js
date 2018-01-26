@@ -8,7 +8,6 @@
   */
   var time = new Array();
  function getAddBulletInfo(bulletNum,trailNum,proto){
-     console.log(proto);
     var bulNum = bulletNum - 1;
     var traNum = trailNum - 1; 
     proto.bulletsData.bullets.push(deepClone(bulletConstVal[0]));
@@ -18,11 +17,12 @@
         triggerVal[0].effects.push(deepClone(triggerEffectVal[0]));
         triggerVal[1].effects.push(deepClone(triggerEffectVal[0]));
     }
+    if(proto.bulletsData.bullets[bulNum].cycles[traNum]){
+        proto.bulletsData.bullets[bulNum].cycles[traNum].triggers = [];
+        proto.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[0]));
+        proto.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[1]));
+    }
     
-    proto.bulletsData.bullets[bulNum].cycles[traNum].triggers = [];
-   
-    proto.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[0]));
-    proto.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[1]));
     proto.bulletsData.launchDuration = parseFloat($('#barsInp1')[0].value);
     proto.bulletsData.id = parseInt($('#powderIdOfP').html()); 
 
@@ -50,11 +50,11 @@ function switchFlySel(obj,preNum,nexNum,proto){
                 break;
                 case 'trailMove2':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 2;
-                switchRotateMod($('#rollRotateMod'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,'scrollRotateMode',proto);
+                switchRotateMod($('#rollRotateMod'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,'rotateMode',proto);
                 break;
                 case 'trailMove3':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 3;
-                switchRotateMod($('#jumpRotateMod'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,'jumpRotateMode',proto);
+                switchRotateMod($('#jumpRotateMod'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,'rotateMode',proto);
                 break;
                 case 'trailMove4':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].motionMode = 4;
@@ -91,42 +91,44 @@ function switchFlyContSel(obj,preNum,nexNum,proto) {
     obj.change(function(){
         switch (this.value) {
             case 'beginSel3':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].beginPointMode= 1;  //继承
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCoord= true;  //继承
                 $('#flyContorlBeginInpX' + str).prop('readonly','readonly');
                 $('#flyContorlBeginInpY' + str).prop('readonly','readonly');
+                $('#flyContorlBeginInpX' + str).prop('value','');
+                $('#flyContorlBeginInpY' + str).prop('value','');
                 break;
             case 'beginSel2':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].beginPointMode = 3;  //偏移
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCoord = false;  //偏移
                 rmReadOnly($('#flyContorlBeginInpX' + str),bulletNum,trailNum);
                 rmReadOnly($('#flyContorlBeginInpY' + str),bulletNum,trailNum);
                 break;
             case 'beginSel1':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].beginPointMode = 2; //绝对
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCoord = true; //绝对
                 rmReadOnly($('#flyContorlBeginInpX' + str),bulletNum,trailNum);
                 rmReadOnly($('#flyContorlBeginInpY' + str),bulletNum,trailNum);
                 break;
             case 'vendor3':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flyAngleMode = 1;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = true;
                 $('#flyContorlVendorInpX' + str).prop('readonly','readonly');
                 break;
             case 'vendor1':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flyAngleMode = 2;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = true;
                 rmReadOnly($('#flyContorlVendorInpX' + str),bulletNum,trailNum);
                 break;
             case 'vendor2':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flyAngleMode = 3;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = false;
                 rmReadOnly($('#flyContorlVendorInpX' + str),bulletNum,trailNum);
                 break;
             case 'strength3':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flySpeedMode = 1;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = true;
                 $('#flyContorlStrengthInpX' + str).prop('readonly','readonly');
                 break;
             case 'strength1':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flySpeedMode = 2;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = true;
                 rmReadOnly($('#flyContorlStrengthInpX' + str),bulletNum,trailNum);
                 break;
             case 'strength2':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flySpeedMode = 3;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = false;
                 rmReadOnly($('#flyContorlStrengthInpX' + str),bulletNum,trailNum);
                 break;
             case 'isGravity':
@@ -136,13 +138,13 @@ function switchFlyContSel(obj,preNum,nexNum,proto) {
                 proto.bulletsData.bullets[preNum].cycles[nexNum].flyMode = 2; //直线
                 break;
             case 'notRotate':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flyRotateMode = 1; //不旋转
+                proto.bulletsData.bullets[preNum].cycles[nexNum].rotateMode = 1; //不旋转
                 break;
             case 'rotateSelf':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flyRotateMode = 2;  //自转
+                proto.bulletsData.bullets[preNum].cycles[nexNum].rotateMode = 2;  //自转
                 break;
             case 'rotateOfAngel':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].flyRotateMode = 3;  //随角度转
+                proto.bulletsData.bullets[preNum].cycles[nexNum].rotateMode = 3;  //随角度转
                 break;
             case 'notTrack':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].isTrack = false;
@@ -153,13 +155,13 @@ function switchFlyContSel(obj,preNum,nexNum,proto) {
                 $('#flyDiv8' + str).css('display') == 'none' ? $('#flyDiv8' + str).css('display','block') : $('#flyDiv8' + str).css('display','block');
                 break;
             case 'anemy':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].detectionTarget = 1;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].trackTarget = 1;
                 break;
             case 'partner':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].detectionTarget = 2;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].trackTarget = 2;
                 break;
             case 'both':
-                proto.bulletsData.bullets[preNum].cycles[nexNum].detectionTarget = 3;
+                proto.bulletsData.bullets[preNum].cycles[nexNum].trackTarget = 3;
             
             break;
             default:
@@ -204,21 +206,35 @@ function getFlyValue(bulletNum,trailNum,proto){
     var trails = trailNum + 1;
     if(proto.bulletsData.bullets[bulletNum]){
         if(proto.bulletsData.bullets[bulletNum].cycles[trailNum]){
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].x = parseFloat($('#flyContorlBeginInpX'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].y = parseFloat($('#flyContorlBeginInpY'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].flyAngle = parseFloat($('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].flySpeed = parseFloat($('#flyContorlStrengthInpX'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].flyObstructionForce = parseFloat($('#flyContorlResisInpX'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].elasticForce = parseFloat($('#jumpControlInp'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].scrollDistance = parseFloat($('#rollControlInp1'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].scrollSpeed = parseFloat($('#rollControlInp2'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].detectionRange = parseFloat($('#trackArea'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].trackAngle = parseFloat($('#trackAngle'+'_'+bullets+'_'+trails).val());
-            proto.bulletsData.bullets[bulletNum].cycles[trailNum].obstructionForce = parseFloat($('#elasticControlInp'+'_'+bullets+'_'+trails).val());
+            var val = proto.bulletsData.bullets[bulletNum].cycles[trailNum].motionMode;
+            switch (val) {
+                case 1:
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].x = parseFloat($('#flyContorlBeginInpX'+'_'+bullets+'_'+trails).val());
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].y = parseFloat($('#flyContorlBeginInpY'+'_'+bullets+'_'+trails).val());
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].rotation = parseFloat($('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).val());
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].speed = parseFloat($('#flyContorlStrengthInpX'+'_'+bullets+'_'+trails).val());
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].obstructionLoss = parseFloat($('#flyContorlResisInpX'+'_'+bullets+'_'+trails).val());
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].trackRange = parseFloat($('#trackArea'+'_'+bullets+'_'+trails).val());
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].trackAngle = parseFloat($('#trackAngle'+'_'+bullets+'_'+trails).val());  
+                     break;
+                case 2:
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].speed = parseFloat($('#rollControlInp2'+'_'+bullets+'_'+trails).val());
+                    break;
+                case 3:
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].elasticityLoss = parseFloat($('#jumpControlInp'+'_'+bullets+'_'+trails).val());
+                proto.bulletsData.bullets[bulletNum].cycles[trailNum].obstructionLoss = parseFloat($('#elasticControlInp'+'_'+bullets+'_'+trails).val());
+                    break;
+                case 4:
+                    
+                    break;
+                default:
+                    break;
+            }
+           
+            
         }
     }
-    
-    
+
 }
 /**
  * 用于删除弹头的数据,且同时保留以前弹头的tag值，数组长度不变
@@ -228,7 +244,9 @@ function deleteBullet(num,proto){
     if(num < 0){
         return ;
     }else{
-        delete proto.bulletsData.bullets[num];       //delete函数，只删除值，不改变序列
+        proto.bulletsData.bullets.splice(num,1);
+        proto.bulNum -= 1;
+        // delete proto.bulletsData.bullets[num];       //delete函数，只删除值，不改变序列
     }
     
     
@@ -241,7 +259,15 @@ function addTriggersVal(num,bulletNum,trailNum,proto) {
     var bulNum = bulletNum -1;
     var traNum = trailNum -1;
     var nowNum = num -1;
-    proto.bulletsData.bullets[bulNum].cycles[traNum].triggers.push(deepClone(triggerVal[0]));
+    if(triggerVal[0].effects.length != 0){
+        proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum] = (deepClone(triggerVal[0]));
+    }else{
+        for(var i = 0; i < 2; ++i){
+            triggerVal[0].effects.push(deepClone(triggerEffectVal[0]));
+        }
+        proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum] = (deepClone(triggerVal[0]));
+    }
+    
 }
 
 /**
@@ -289,7 +315,6 @@ function addTriggerEffect(num,bulletNum,trailNum,len,proto){
     test1[length] = deepClone(triggerEffectVal[0]);
    
 }
-
 /**
  * 点击触发结果保存按钮保存触发结果的数据
  * @param {*} num 控制触发条件
@@ -308,39 +333,41 @@ function getTriggerResult(num,bulletNum,trailNum,resultNum,proto){
         if(proto.bulletsData.bullets[bulNum].cycles[traNum]){
             if(proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum]){
                 if(proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum]){
-                    var obj = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
+                    if(proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams){
+                        var obj = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
 
-                    //按顺序取值
-                    if($('#triggerOfInpa'+str).length){
-                        if($('#triggerOfInpa'+str).prop('value')){
-                            obj.areaEffects = parseFloat($('#triggerOfInpa'+str).prop('value'));
+                        //按顺序取值
+                        if($('#triggerOfInpa'+str).length){
+                            if($('#triggerOfInpa'+str).prop('value')){
+                                obj.range = parseFloat($('#triggerOfInpa'+str).prop('value'));   //影响范围
+                            }
                         }
-                    }
-                    if($('#triggerOfInpb' + str ).length){
-                        if($('#triggerOfInpb' + str ).prop('value')){
-                            obj.type = parseFloat($('#triggerOfInpb' + str ).prop('value'));
+                        if($('#triggerOfInpb' + str ).length){
+                            if($('#triggerOfInpb' + str ).prop('value')){
+                                obj.effectValue = parseFloat($('#triggerOfInpb' + str ).prop('value'));
+                            }
                         }
-                    }
-                    if($('#triggerOfInpc' + str ).length){
-                        if($('#triggerOfInpc' + str ).prop('value')){
-                            obj.buffAreaEffects = parseFloat($('#triggerOfInpc' + str ).prop('value'));
+                        if($('#triggerOfInpc' + str ).length){
+                            if($('#triggerOfInpc' + str ).prop('value')){
+                                obj.range = parseFloat($('#triggerOfInpc' + str ).prop('value'));
+                            }
                         }
-                    }
-                    if($('#triggerOfInpd' + str ).length){
-                        if($('#triggerOfInpd' + str ).prop('value')){
-                            obj.buffId = parseFloat($('#triggerOfInpd' + str ).prop('value'));
+                        if($('#triggerOfInpd' + str ).length){
+                            if($('#triggerOfInpd' + str ).prop('value')){
+                                obj.buffId = parseFloat($('#triggerOfInpd' + str ).prop('value'));
+                            }
                         }
-                    }
-                    if($('#triggerOfInpe' + str ).length){
-                        if($('#triggerOfInpe' + str ).prop('value')){
-                            obj.damageArea = parseFloat($('#triggerOfInpe' + str ).prop('value'));
+                        if($('#triggerOfInpe' + str ).length){
+                            if($('#triggerOfInpe' + str ).prop('value')){
+                                obj.range = parseFloat($('#triggerOfInpe' + str ).prop('value'));
+                            }
                         }
+                        checkboxBottomval(obj,num,bulletNum,trailNum,resultNum);
+                    
+                        //Top触发条件的值
+                        var top = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum];
+                        switchTopSelVal(top,num,bulletNum,trailNum,resultNum);
                     }
-                    checkboxBottomval(obj,num,bulletNum,trailNum,resultNum);
-                
-                    //Top触发条件的值
-                    var top = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum];
-                    switchTopSelVal(top,num,bulletNum,trailNum,resultNum);
                 }
             }
         }
@@ -380,24 +407,24 @@ function switchTopSelVal(top,num,bulletNum,trailNum,resultNum){
  * @param {*} sel 
  */
 function switchDamageAttribute(obj,sel){
-    sel.change(function(){
-        switch (this.value) {
-            case 'triggerHurt1':
-                obj.damageAttribute = 1;
-                break;
-            case 'triggerHurt2':
-                obj.damageAttribute = 2;
-                break;
-            case 'triggerHurt3':
-                obj.damageAttribute = 3;
-                break;
-            case 'triggerHurt4':
-                obj.damageAttribute = 3;
-                break;
-            default:
-                break;
-        }
-    });
+        sel.change(function(){
+            switch (this.value) {
+                case 'triggerHurt1':
+                    obj.damageType = 1;
+                    break;
+                case 'triggerHurt2':
+                    obj.damageType = 2;
+                    break;
+                case 'triggerHurt3':
+                    obj.damageType = 3;
+                    break;
+                case 'triggerHurt4':
+                    obj.damageType = 4;
+                    break;
+                default:
+                    break;
+            }
+        });
 }
 /**
  * 值类型下拉菜单选择
@@ -405,22 +432,23 @@ function switchDamageAttribute(obj,sel){
  * @param {*} sel 
  */
 function switchValueType(obj,sel){
-    sel.change(function(){
-        switch (this.value) {
-            case 'triggerValue1':
-                obj.valueType = 1;
-                break;
-            case 'triggerValue2':
-                obj.valueType = 2;
-                break;
-            case 'triggerValue3':
-                obj.valueType = 3;
-                break;
-        
-            default:
-                break;
-        }
-    });
+        sel.change(function(){
+            switch (this.value) {
+                case 'triggerValue1':
+                    obj.effectType = 1;
+                    break;
+                case 'triggerValue2':
+                    obj.effectType = 2;
+                    break;
+                case 'triggerValue3':
+                    obj.effectType = 3;
+                    break;
+            
+                default:
+                    break;
+            }
+        });
+
 }
 
 /**
@@ -446,10 +474,7 @@ function resetTriggerResult(num,bulletNum,trailNum,resultNum){
     for(var j = 0;j < len1; ++j){
         str1.eq(j).children('option').eq(0).prop('selected',true);
     }
-    $('#time'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('value','');
-    $('#input'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('value','');
-    $('#charitoChecka'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('checked',false);
-    $('#charitoCheckb'+'_' + num + '_' + bulletNum + '_' + trailNum).prop('checked',false);
+
     $('#fileSpan'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).css('display','none');
 }
 
@@ -487,18 +512,18 @@ function checkboxBottomval(obj,num,bulletNum,trailNum,resultNum){
         value.push(str.eq(i).prop('checked'))
     }
     if(value[0] == true && value[1] == false){
-        obj.effectObject = 1;
+        obj.target = 1;
     }else if(value[0] == false && value[1] == true){
-        obj.effectObject = 2;
+        obj.target = 2;
     }else if(value[0] == true && value[1] == true){
-        obj.effectObject = 3;
+        obj.target = 3;
     }
     if(value[2] == true && value[3] == false){
-        obj.buffEffectObject = 1;
+        obj.target = 1;
     }else if(value[2] == false && value[3] == true){
-        obj.buffEffectObject = 2;
+        obj.target = 2;
     }else if(value[2] == true && value[3] == true){
-        obj.buffEffectObject = 3;
+        obj.target = 3;
     }
 }
 /**
@@ -526,7 +551,7 @@ function addTrailVal(bulletNum,trailNum,proto){
     proto.bulletsData.bullets[bulNum].cycles[traNum] = deepClone(bulletConstVal[0].cycles[0]);
     triggerVal[0].effects = [];
     triggerVal[1].effects = [];
-   for(var i = 0; i < 4; ++i){
+   for(var i = 0; i < 2; ++i){
         triggerVal[0].effects.push(deepClone(triggerEffectVal[0]));
         triggerVal[1].effects.push(deepClone(triggerEffectVal[0]));
     }
@@ -546,7 +571,7 @@ function addTrailVal(bulletNum,trailNum,proto){
  */
 function addUniqueFlag(proto){
     var bulNum = proto.bulNum - 1;
-    proto.bulletsData.bullets[bulNum].launched = true;
+    proto.bulletsData.bullets[bulNum].launched = false;
 }
 
 /**
@@ -557,12 +582,15 @@ function addUniqueFlag(proto){
 function getBulletsVal(num,proto){
    var bulNum = num - 1;
    if(proto.bulletsData.bullets[bulNum]){
-        proto.bulletsData.bullets[bulNum].initialSpeed = parseFloat($('#speedModInp_' + num).prop('value'));
+
+        proto.bulletsData.bullets[bulNum].speed = parseFloat($('#speedModInp_' + num).prop('value'));
         proto.bulletsData.bullets[bulNum].width = parseFloat($('#sizeModWid_' + num).prop('value'));
         proto.bulletsData.bullets[bulNum].height = parseFloat($('#sizeModHei_' + num).prop('value'));
         proto.bulletsData.bullets[bulNum].mass = parseFloat($('#massModInp_' + num).prop('value'));
-        proto.bulletsData.bullets[bulNum].rotationSpeed = parseFloat($('#rotationMomentModInp_' + num).prop('value'));
-   }
+        proto.bulletsData.bullets[bulNum].rotationMoment = parseFloat($('#rotationMomentModInp_' + num).prop('value'));
+        proto.bulletsData.bullets[bulNum].radius = parseInt($('#cycle_' + num).prop('value'));
+
+    }
    
    
 }
@@ -577,6 +605,8 @@ function resetBulletsVal(num){
     $('#sizeModHei_' + num).prop('value',null);
     $('#massModInp_' + num).prop('value',null);
     $('#rotationMomentModInp_' + num).prop('value',null);
+    $('#cycle_' + num).prop('value','');
+    $('#filesName_' + num).prop('value','');
 
 }
 /**
@@ -619,7 +649,7 @@ function getImgSrc1(name,num,bulletNum,trailNum,resultNum,proto){
     var nowNum = num - 1;
     var traNum = trailNum - 1;
     var resNum = resultNum - 1;
-    proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.artSource = name;
+    proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.source = name;
     $('#filesName'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).prop('value',name);
 }
 
@@ -668,15 +698,33 @@ function loadBulletsVal(num,proto){
     var bulNum = num - 1;
    if(proto.bulletsData.bullets[bulNum]){
        var bulObj = proto.bulletsData.bullets[bulNum];
-        $('#speedModInp_' + num).prop('value',bulObj.initialSpeed);
-        $('#sizeModWid_' + num).prop('value',bulObj.width);
-        $('#sizeModHei_' + num).prop('value',bulObj.height);
-        $('#massModInp_' + num).prop('value',bulObj.mass);
-        $('#rotationMomentModInp_' + num).prop('value',bulObj.rotationSpeed);
+       
+        bulObj.speed !='NaN' ? $('#speedModInp_' + num).prop('value',bulObj.speed) : $('#speedModInp_' + num).prop('value','');
+        bulObj.width !='NaN' ?  $('#sizeModWid_' + num).prop('value',bulObj.width) : $('#sizeModWid_' + num).prop('value','');
+        bulObj.height !='NaN' ? $('#sizeModHei_' + num).prop('value',bulObj.height) : $('#sizeModHei_' + num).prop('value','');
+        bulObj.mass !='NaN' ? $('#massModInp_' + num).prop('value',bulObj.mass) : $('#massModInp_' + num).prop('value','');
+        bulObj.rotationMoment !='NaN' ? $('#rotationMomentModInp_' + num).prop('value',bulObj.rotationMoment) :  $('#rotationMomentModInp_' + num).prop('value','');
         $('#filesName_' + num).prop('value',bulObj.image);
+        bulObj.radius !='NaN' ? $('#cycle_' + num).prop('value',bulObj.radius) : $('#cycle_' + num).prop('value','');
+        whichSizeSel(bulObj,num);
    }
 }
-
+function whichSizeSel(bulObj,num){
+    var val = bulObj.sizeMode;
+    if(val == 1){
+        $('#sizSel_' + num).children().eq(0).prop('selected','selected');
+        $('#sizeModWid_' + num).attr('readonly','readonly');
+        $('#sizeModHei_' + num).attr('readOnly','readObly');
+        $('#cycle_' + num).attr('readOnly',false);
+        
+    }else if(val == 2){
+        $('#sizSel_' + num).children().eq(1).prop('selected','selected');
+        $('#cycle_' + num).attr('readOnly','readObly');
+        $('#sizeModWid_' + num).attr('readonly',false);
+        $('#sizeModHei_' + num).attr('readOnly',false);
+        
+    }
+}
 /**
  * 载入运动轨迹的数据
  * @param {*} bulNum 
@@ -688,8 +736,8 @@ function loadTrailMoveVal(bulletNum,trailNum,proto){
     var nexNum = trailNum - 1;
     //决定是哪个模块的页面
     whichTrailMove(bulletNum,trailNum,proto);
-    //载入页面数据
-    //首先载入页面的switch选项
+    // //载入页面数据
+    // //首先载入页面的switch选项
     
     whichSwitchFlyContSel($('#flyBegin'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,proto); 
     whichSwitchFlyContSel($('#flyVen'+'_'+bulletNum+'_'+trailNum),preNum,nexNum,proto); 
@@ -734,22 +782,48 @@ function loadResultVal(bulletNum,trailNum,num,resultNum,proto){
     var traNum = trailNum - 1;
     var nowNum = num - 1;
     var resNum = resultNum - 1;
-    var val1 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.effectObject;
-    var val2 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.buffEffectObject;
-    loadcheckBoxVal1(bulletNum,trailNum,num,resultNum,val1,'#charitoCheckc','#charitoCheckd');
-    loadcheckBoxVal1(bulletNum,trailNum,num,resultNum,val2,'#charitoChecke','#charitoCheckf');
-    //所有结果的inp的值
-    var val = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
-    loadResultInpVal(bulletNum,trailNum,num,resultNum,val);
+    if(proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams){
+        var val = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
+        var val1 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum];
+        //所有结果的inp的值
+        
+        loadResultInpVal(bulletNum,trailNum,num,resultNum,val,val1);
+    }
+   
+  
+    
+    
 }
 
-function loadResultInpVal(bulletNum,trailNum,num,resultNum,val){
+function loadResultInpVal(bulletNum,trailNum,num,resultNum,val,val1){
     var str = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
-    $('#triggerOfInpa'+str).prop('value',val.areaEffects);
-    $('#triggerOfInpb' + str ).prop('value',val.type);
-    $('#triggerOfInpc' + str ).prop('value',val.buffAreaEffects);
-    $('#triggerOfInpd' + str ).prop('value',val.buffId);
-    $('#triggerOfInpe' + str ).prop('value',val.damageArea);
+    switch (val1.effectMode) {
+        case 1:
+            break;
+        case 2:
+            loadcheckBoxVal1(bulletNum,trailNum,num,resultNum,val.target,'#charitoCheckc','#charitoCheckd');
+            val.range == null ? $('#triggerOfInpa'+str).prop('value','') : $('#triggerOfInpa'+str).prop('value',val.range);
+            val.effectValue == null ? $('#triggerOfInpb' + str ).prop('value','') : $('#triggerOfInpb' + str ).prop('value',val.effectValue);
+            break;
+        case 3:
+            loadcheckBoxVal1(bulletNum,trailNum,num,resultNum,val.target,'#charitoChecke','#charitoCheckf');
+            val.range == null ?$('#triggerOfInpc' + str ).prop('value','') : $('#triggerOfInpc' + str ).prop('value',val.range);
+            val.buffId == null ? $('#triggerOfInpd' + str ).prop('value','') : $('#triggerOfInpd' + str ).prop('value',val.buffId);
+            break;
+        case 4:
+            val.range == null ? $('#triggerOfInpe' + str ).prop('value','') : $('#triggerOfInpe' + str ).prop('value',val.range);
+            break;
+        case 5:
+            val.source == null ? $('#filesName' + str ).prop('value','') :$('#filesName' + str ).prop('value',val.source);
+            break;
+        case 6:
+            break;
+        case 7:
+            break;
+        default:
+            break;
+    }
+
 }
 /**
  * 载入触发结果的checkbox
@@ -794,8 +868,11 @@ function whichValueSel(bulletNum,trailNum,num,resultNum,proto){
     var nowNum = num - 1;
     var resNum = resultNum - 1;
     var str = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
-    var val1 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.valueType;
-    var val2 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.damageAttribute;
+    if(proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams){
+        var val1 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.effectType;
+        var val2 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams.damageType;
+    }
+    
     switch (val1) {
         case 1:
             $('#effectOfValueSela' + str).children().eq(0).prop('selected','selected');
@@ -948,17 +1025,32 @@ function loadTrailInpVal(preNum,nexNum,proto){
     var bullets = preNum + 1;
     var trails = nexNum + 1;
     var val = proto.bulletsData.bullets[preNum].cycles[nexNum];
-    $('#flyContorlBeginInpX'+'_'+bullets+'_'+trails).val(val.x);
-    $('#flyContorlBeginInpY'+'_'+bullets+'_'+trails).val(val.y);
-    $('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).val(val.flyAngle);
-    $('#flyContorlStrengthInpX'+'_'+bullets+'_'+trails).val(val.flySpeed);
-    $('#flyContorlResisInpX'+'_'+bullets+'_'+trails).val(val.flyObstructionForce);
-    $('#jumpControlInp'+'_'+bullets+'_'+trails).val(val.elasticForce);
-    $('#rollControlInp1'+'_'+bullets+'_'+trails).val(val.scrollDistance);
-    $('#rollControlInp2'+'_'+bullets+'_'+trails).val(val.scrollSpeed);
-    $('#trackArea'+'_'+bullets+'_'+trails).val(val.detectionRange);
-    $('#trackAngle'+'_'+bullets+'_'+trails).val(val.trackAngle);
-    $('#elasticControlInp'+'_'+bullets+'_'+trails).val(val.obstructionForce);
+    switch (val.motionMode) {
+        case 1:
+            val.x == "NaN" ? $('#flyContorlBeginInpX'+'_'+bullets+'_'+trails).prop('value','') : $('#flyContorlBeginInpX'+'_'+bullets+'_'+trails).prop('value',val.x);
+            val.y == "NaN" ? $('#flyContorlBeginInpY'+'_'+bullets+'_'+trails).prop('value','') :$('#flyContorlBeginInpY'+'_'+bullets+'_'+trails).prop('value',val.y);
+            val.rotation == "NaN" ? $('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).prop('value','') :$('#flyContorlVendorInpX'+'_'+bullets+'_'+trails).prop('value',val.rotation);
+            val.speed == "NaN" ? $('#flyContorlStrengthInpX'+'_'+bullets+'_'+trails).prop('value','') :$('#flyContorlStrengthInpX'+'_'+bullets+'_'+trails).prop('value',val.speed);
+            val.obstructionLoss == "NaN" ? $('#flyContorlResisInpX'+'_'+bullets+'_'+trails).prop('value','') :$('#flyContorlResisInpX'+'_'+bullets+'_'+trails).prop('value',val.obstructionLoss);
+            val.trackRange == "NaN"? $('#trackArea'+'_'+bullets+'_'+trails).prop('value','') :$('#trackArea'+'_'+bullets+'_'+trails).prop('value',val.trackRange);
+            val.trackAngle == "NaN"? $('#trackAngle'+'_'+bullets+'_'+trails).prop('value','') :$('#trackAngle'+'_'+bullets+'_'+trails).prop('value',val.trackAngle);
+            break;
+        case 2:
+            val.speed == "NaN"? $('#rollControlInp2'+'_'+bullets+'_'+trails).prop('value','') :$('#rollControlInp2'+'_'+bullets+'_'+trails).prop('value',val.speed);
+            break;
+        case 3:
+            val.obstructionLoss == "NaN"? $('#elasticControlInp'+'_'+bullets+'_'+trails).prop('value','') :$('#elasticControlInp'+'_'+bullets+'_'+trails).prop('value',val.obstructionLoss);
+            val.elasticityLoss == "NaN"? $('#jumpControlInp'+'_'+bullets+'_'+trails).prop('value','') :$('#jumpControlInp'+'_'+bullets+'_'+trails).prop('value',val.elasticityLoss);
+        break;
+        case 4:
+            
+            break;
+        default:
+            break;
+    }
+   
+   
+
 }
 
 
@@ -973,27 +1065,28 @@ function whichSwitchFlyContSel(obj,preNum,nexNum,proto){
     var bulletNum = preNum + 1;
     var trailNum = nexNum + 1;
     var str = '_' + bulletNum + '_' +trailNum;
-    var val1 = proto.bulletsData.bullets[preNum].cycles[nexNum].beginPointMode;
-    var val2 = proto.bulletsData.bullets[preNum].cycles[nexNum].flyAngleMode;
-    var val3 = proto.bulletsData.bullets[preNum].cycles[nexNum].flySpeedMode;
+    var proBul = proto.bulletsData.bullets[preNum].cycles[nexNum];
+    var val1 = proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetCoord;
+    var val2 = proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation;
+    var val3 = proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed;
     var val4 = proto.bulletsData.bullets[preNum].cycles[nexNum].flyMode;
     var val5 = proto.bulletsData.bullets[preNum].cycles[nexNum].isTrack;
-    var val6 = proto.bulletsData.bullets[preNum].cycles[nexNum].flyRotateMode;
-    var val7 = proto.bulletsData.bullets[preNum].cycles[nexNum].jumpRotateMode;
-    var val8 = proto.bulletsData.bullets[preNum].cycles[nexNum].scrollRotateMode;
-    var val9 = proto.bulletsData.bullets[preNum].cycles[nexNum].detectionTarget;
+    var val6 = proto.bulletsData.bullets[preNum].cycles[nexNum].rotateMode;
+    var val9 = proto.bulletsData.bullets[preNum].cycles[nexNum].trackTarget;
     switch (val1) {
-        case 1:
-            $('#flyContorlBeginInpX' + str).prop('readonly','readonly');
-            $('#flyContorlBeginInpY' + str).prop('readonly','readonly');
-            $('#flyBegin' + str).children().eq(0).prop('selected','selected');
-            break;
-        case 2:
+        case true:
+        if(proBul.x != "NaN"){
             rmReadOnly($('#flyContorlBeginInpX' + str),bulletNum,trailNum);
             rmReadOnly($('#flyContorlBeginInpY' + str),bulletNum,trailNum);
             $('#flyBegin' + str).children().eq(1).prop('selected','selected');
+        }else{
+            $('#flyContorlBeginInpX' + str).prop('readonly','readonly');
+            $('#flyContorlBeginInpY' + str).prop('readonly','readonly');
+            $('#flyBegin' + str).children().eq(0).prop('selected','selected');
+        }            
             break;
-        case 3:
+
+        case false:
             rmReadOnly($('#flyContorlBeginInpX' + str),bulletNum,trailNum);
             rmReadOnly($('#flyContorlBeginInpY' + str),bulletNum,trailNum);
             $('#flyBegin' + str).children().eq(2).prop('selected','selected');
@@ -1002,8 +1095,8 @@ function whichSwitchFlyContSel(obj,preNum,nexNum,proto){
         default:
             break;
     }
-    switchInheritModSel(val2,'#flyContorlVendorInpX',bulletNum,trailNum,'#flyVen');
-    switchInheritModSel(val3,'#flyContorlStrengthInpX',bulletNum,trailNum,'#flySpeed');
+    switchInheritModSel(val2,'#flyContorlVendorInpX',bulletNum,trailNum,'#flyVen',proBul.rotation);
+    switchInheritModSel(val3,'#flyContorlStrengthInpX',bulletNum,trailNum,'#flySpeed',proBul.speed);  //??
     switch (val4) {
         case 1:
             $('#flyMode' + str).children().eq(0).prop('selected','selected');
@@ -1015,20 +1108,21 @@ function whichSwitchFlyContSel(obj,preNum,nexNum,proto){
             break;
     }
     switch (val5) {
-        case false:
-            $('#flyTrack' + str).children().eq(1).prop('selected','selected');
-            $('#flyDiv8' + str).css('display') == 'none' ? $('#flyDiv8' + str).css('display','none') : $('#flyDiv8' + str).css('display','none');
-            break;
         case true:
-            $('#flyTrack' + str).children().eq(0).prop('selected','selected');
+            $('#flyTrack' + str).children().eq(1).prop('selected','selected');
             $('#flyDiv8' + str).css('display') == 'none' ? $('#flyDiv8' + str).css('display','block') : $('#flyDiv8' + str).css('display','block');
+            break;
+        case false:
+            $('#flyTrack' + str).children().eq(0).prop('selected','selected');
+            $('#flyDiv8' + str).css('display') == 'none' ? $('#flyDiv8' + str).css('display','none') : $('#flyDiv8' + str).css('display','none');
+            
             break;
         default:
             break;
     }
     switchRotateModSel(val6,bulletNum,trailNum,'#flyRotateMod');
-    switchRotateModSel(val7,bulletNum,trailNum,'#rollRotateMod');
-    switchRotateModSel(val8,bulletNum,trailNum,'#jumpRotateMod');
+    switchRotateModSel(val6,bulletNum,trailNum,'#rollRotateMod');
+    switchRotateModSel(val6,bulletNum,trailNum,'#jumpRotateMod');
     switchRotateModSel(val9,bulletNum,trailNum,'#trackTarget');
 
 }
@@ -1059,18 +1153,19 @@ function switchRotateModSel(val,bulletNum,trailNum,select){
 /**
  * 3种继承下拉菜单选项的switch模块,
  */
-function switchInheritModSel(val,inp,bulletNum,trailNum,select){
+function switchInheritModSel(val,inp,bulletNum,trailNum,select,obj){
     var str = '_' + bulletNum + '_' +trailNum;
     switch (val) {
-        case 1:
-            $(inp + str).prop('readonly','readonly');
-            $(select + str).children().eq(0).prop('selected','selected');
-            break;
-        case 2:
+        case true:
+        if(obj != "NaN"){
             rmReadOnly($(inp + str),bulletNum,trailNum);
             $(select + str).children().eq(1).prop('selected','selected');
+        }else{
+            $(inp + str).prop('readonly','readonly');
+            $(select + str).children().eq(0).prop('selected','selected');
+        }
             break;
-        case 3:
+        case false:
             rmReadOnly($(inp + str),bulletNum,trailNum);
             $(select + str).children().eq(2).prop('selected','selected');
             break;

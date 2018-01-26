@@ -30,7 +30,7 @@
                      <span class="icon-bar"></span>
                      <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="../index/index.php">Cyber后台管理系统V1.0</a>
+                    <a class="brand" href="../index/index.php">坦克后台工具</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">
@@ -155,12 +155,23 @@
                                 <p class="flyControlP1 P2">初速度</p>
                                 <input type="text" id="speedModInp_1" class="flyBeginAxies" />
                             </div>
+                            <div id="sizeSel_1" class="flyControlDiv">
+                                <p class="flyControlP1 P5">弹头形状</p>
+                                <select id="sizSel_1">
+                                    <option value="size1">圆形</option>
+                                    <option value="size2">方块</option>
+                                </select>
+                            </div>
+                            <div id="cycleMod_1" class="flyControlDiv">
+                                <p class="flyControlP1 P4">半径</p>
+                                <input type="text"  id="cycle_1">
+                            </div>
                             <div id="sizeMod_1" class="flyControlDiv ">
                                 <p class="flyControlP1 P3">宽 高</p>
                                 <label for="" class="flyBeginLab widthLab">W: </label>
-                                <input type="text" id="sizeModWid_1" class="flyBeginInpAxies widthInp" />
+                                <input type="text" id="sizeModWid_1" class="flyBeginInpAxies widthInp" readonly="readonly"/>
                                 <label for="" class="flyBeginLab heightLab">H: </label>
-                                <input type="text" id="sizeModHei_1" class="flyBeginInpAxies heightInp" />
+                                <input type="text" id="sizeModHei_1" class="flyBeginInpAxies heightInp" readonly="readonly"/>
                             </div>
                             <div id="massMod_1" class="flyControlDiv">
                                 <p class="flyControlP1 P4">质量</p>
@@ -204,154 +215,152 @@
                                             <!-- 添加的子弹头显示部分 -->
                                                 <li class="clear" id="BulletList1">
                                                     <label class="bars_info_label fl" id="Bullet1">弹头1</label>
-                                                    <input type="text" class="bars_info_input fl" readonly="readonly" tag="1" value="0 s">
+                                                    <input type="text" class="bars_info_input fl" id="bars_info_input_1" tag="1" value="0">
                                                     <a class="bars_info_button fr" id="BulletDel1">
                                                         <img src="../images/page1/u99.png" />
                                                     </a>
                                                 </li>
                                             </ul>
-                                            
                                         </div> 
                                     </div>  
                                 </div>
                             </div>
                         </div>
-                        <div id="trailOfMove_1_1" class="fl parentHiddTag hidd trailOfMoveClass">
-                            <div id="trailSel">
-                                <select  id="trailSelect_1_1">
+                        <div id="trailOfMove_0_0" class="fl parentHiddTag hidd trailOfMoveClass ">
+                            <div id="trailSel" class="clear">
+                                <select  id="trailSelect_0_0">
                                     <!-- <option value="0">请选择运动轨迹</option> -->
                                     <option value="trailMove1" >飞行</option>
                                     <option value="trailMove2" >滚动</option>
                                     <option value="trailMove3" >弹跳</option>
                                     <option value="trailMove4" >粘着</option>
                                 </select>
+                                <a id = 'deleteTrail_0_0' class="triggerResultA fr triggerResultAs">
+                                    <img src="../images/page1/u99.png" alt="">
+                                </a>
                             </div>
 
                             <form method="post" action="">                      <!-- 表单提交1 -->
                                 
-                            <div id="flyControlContent_1_1" class="hiddTag hidd flyControlContentClass">
+                            <div id="flyControlContent_0_0" class="hiddTag hidd flyControlContentClass">
                                 <!-- 飞行控制 -->
-                                <div class="flyControlDiv" id="flyDiv1_1_1">
+                                <div class="flyControlDiv" id="flyDiv1_0_0">
                                     <p class="flyControlP">起始点</p>
-                                    <select class="flyControlSel specialSel1" id="flyBegin_1_1">
+                                    <select class="flyControlSel specialSel1" id="flyBegin_0_0">
                                         <option value="beginSel3">继承</option>
                                         <option value="beginSel1">偏移坐标</option>
                                         <option value="beginSel2">绝对坐标</option>
                                         
                                     </select>
                                     <label for="" class="flyBeginLab">x: </label>
-                                    <input type="text" id="flyContorlBeginInpX_1_1" class="flyBeginInpAxies" readonly="readonly"/>
+                                    <input type="text" id="flyContorlBeginInpX_0_0" class="flyBeginInpAxies" readonly="readonly"/>
                                     <label for="" class="flyBeginLab">y: </label>
-                                    <input type="text" id="flyContorlBeginInpY_1_1" class="flyBeginInpAxies" readonly="readonly"/>
+                                    <input type="text" id="flyContorlBeginInpY_0_0" class="flyBeginInpAxies" readonly="readonly"/>
                                 </div>
-                                <div class="flyControlDiv" id="flyDiv2_1_1">
+                                <div class="flyControlDiv" id="flyDiv2_0_0">
                                     <p class="flyControlP">飞行角度</p>
-                                    <select class="flyControlSel" id="flyVen_1_1">
+                                    <select class="flyControlSel" id="flyVen_0_0">
                                         <option value="vendor3">继承</option>
                                         <option value="vendor1">偏移方向</option>
                                         <option value="vendor2">绝对方向</option>
                                         
                                     </select>
-                                    <input type="text" id="flyContorlVendorInpX_1_1" class="flyBeginAxies flyBeginEx" readonly="readonly"/>
+                                    <input type="text" id="flyContorlVendorInpX_0_0" class="flyBeginAxies flyBeginEx" readonly="readonly"/>
 
                                 </div>
-                                <div class="flyControlDiv" id="flyDiv3_1_1">
+                                <div class="flyControlDiv" id="flyDiv3_0_0">
                                     <p class="flyControlP">飞行速度</p>
-                                    <select class="flyControlSel" id="flySpeed_1_1">
+                                    <select class="flyControlSel" id="flySpeed_0_0">
                                         <option value="strength3">继承</option>
                                         <option value="strength1">偏移速度</option>
                                         <option value="strength2">绝对速度</option>
                                         
                                     </select>
-                                    <input type="text" id="flyContorlStrengthInpX_1_1" class="flyBeginAxies flyBeginEx" readonly="readonly"/>
+                                    <input type="text" id="flyContorlStrengthInpX_0_0" class="flyBeginAxies flyBeginEx" readonly="readonly"/>
                                     
                                 </div>
-                                <div class="flyControlDiv flyExtra" id="flyDiv4_1_1">
+                                <div class="flyControlDiv flyExtra" id="flyDiv4_0_0">
                                     <p class="flyControlP">飞行模式</p>
-                                    <select class="flyControlSel" id="flyMode_1_1">
+                                    <select class="flyControlSel" id="flyMode_0_0">
                                         <option value="isGravity">抛物线</option>
                                         <option value="notGravity">直线</option>
                                     </select>
                                 </div>
-                                <div class="flyControlDiv flyExtra" id="flyDiv5_1_1">
+                                <div class="flyControlDiv flyExtra" id="flyDiv5_0_0">
                                     <p class="flyControlP">飞行阻力</p>
-                                    <input type="text" id="flyContorlResisInpX_1_1" class="flyBeginAxies" />
+                                    <input type="text" id="flyContorlResisInpX_0_0" class="flyBeginAxies" />
                                 </div>
-                                <div class="flyControlDiv flyExtra" id="flyDiv6_1_1">
+                                <div class="flyControlDiv flyExtra" id="flyDiv6_0_0">
                                     <p class="flyControlP">跟踪效果</p>
-                                    <select class="flyControlSel" id="flyTrack_1_1">
-                                        <option value="isTrack">是</option>
+                                    <select class="flyControlSel" id="flyTrack_0_0">
                                         <option value="notTrack">否</option> 
+                                        <option value="isTrack">是</option>
                                     </select>
                                 </div>
-                                <div class="flyControlDiv flyExtra" id="flyDiv7_1_1">
+                                <div class="flyControlDiv flyExtra" id="flyDiv7_0_0">
                                     <p class="flyControlP">旋转方式</p>
-                                    <select class="flyControlSel" id="flyRotateMod_1_1">
+                                    <select class="flyControlSel" id="flyRotateMod_0_0">
                                         <option value="notRotate">不旋转</option>
                                         <option value="rotateSelf">自旋转</option>
                                         <option value="rotateOfAngel">随角度旋转</option>
                                     </select>
                                 </div>
-                                <div class="trackValue " id="flyDiv8_1_1">
+                                <div class="trackValue " id="flyDiv8_0_0">
                                     <label class="trackValueLab">检测范围</label>
-                                    <input type="text" class="trackValueInp" id="trackArea_1_1">
+                                    <input type="text" class="trackValueInp" id="trackArea_0_0">
                                     <label class="trackValueLab">追踪角度</label>
-                                    <input type="text" class="trackValueInp" id="trackAngle_1_1">
+                                    <input type="text" class="trackValueInp" id="trackAngle_0_0">
                                     <label class="trackValueLab">检测目标</label>
-                                    <select class="trackValueSel" id="trackTarget_1_1">
+                                    <select class="trackValueSel" id="trackTarget_0_0">
                                         <option value="anemy">敌方</option>
                                         <option value="partner">友方</option>
                                         <option value="both">双方</option>
                                     </select>
                                 </div>
                             </div>
-                            <div id="rollControl_1_1" class="hiddTag hidd rollControlClass">
+                            <div id="rollControl_0_0" class="hiddTag hidd rollControlClass">
                                 <!-- 滚动控制 -->
-                                <div class="rollControlList" id="rollDiv1_1_1">
-                                    <p class="rollControlP">滚动距离</p>
-                                    <input type="text" id="rollControlInp1_1_1" class="rollInp" />
-                                </div>
-                                <div class="rollControlList" id="rollDiv2_1_1">
+                                <div class="rollControlList" id="rollDiv2_0_0">
                                     <p class="rollControlP">滚动速度</p>
-                                    <input type="text" id="rollControlInp2_1_1" class="rollInp" />
+                                    <input type="text" id="rollControlInp2_0_0" class="rollInp" />
                                 </div>
-                                <div class="flyControlDiv" id="rollDiv3_1_1">
+                                <div class="flyControlDiv" id="rollDiv3_0_0">
                                     <p class="flyControlP">旋转方式</p>
-                                    <select class="flyControlSel" id="rollRotateMod_1_1">
+                                    <select class="flyControlSel" id="rollRotateMod_0_0">
                                         <option value="notRotate">不旋转</option>
                                         <option value="rotateSelf">自旋转</option>
                                         <option value="rotateOfAngel">随角度旋转</option>
                                     </select>
                                 </div>
                             </div>
-                            <div id="jumpControl_1_1" class="hiddTag hidd jumpControlClass">
+                            <div id="jumpControl_0_0" class="hiddTag hidd jumpControlClass">
                                 <!-- 弹跳控制 -->
-                                <div class="jumpControlList" id="jumpDiv3_1_1">
+                                <div class="jumpControlList" id="jumpDiv3_0_0">
                                     <p class="jumpControlP">弹力度</p>
-                                    <input type="text" id="jumpControlInp_1_1" class="jumpInp" />
+                                    <input type="text" id="jumpControlInp_0_0" class="jumpInp" />
                                 </div>
-                                <div class="jumpControlList" id="jumpDiv4_1_1">
+                                <div class="jumpControlList" id="jumpDiv4_0_0">
                                     <p class="jumpControlP">阻力值</p>
-                                    <input type="text" id="elasticControlInp_1_1" class="jumpInp" />
+                                    <input type="text" id="elasticControlInp_0_0" class="jumpInp" />
                                 </div>
-                                <div class="flyControlDiv" id="jumpDiv5_1_1">
+                                <div class="flyControlDiv" id="jumpDiv5_0_0">
                                     <p class="flyControlP">旋转方式</p>
-                                    <select class="flyControlSel" id="jumpRotateMod_1_1">
+                                    <select class="flyControlSel" id="jumpRotateMod_0_0">
                                         <option value="notRotate">不旋转</option>
                                         <option value="rotateSelf">自旋转</option>
                                         <option value="rotateOfAngel">随角度旋转</option>
                                     </select>
                                 </div>
                             </div>
-                            <div id="snapControl_1_1" class="hiddTag hidd snapControlClass">
+                            <div id="snapControl_0_0" class="hiddTag hidd snapControlClass">
                                 <!-- 黏着 -->
                                 <p class="triggerResultOptionP">无</p>
                             </div>
 
                             </form>
                                 
-                            <div id="flyControlBottom_1_1">
-                                    <button class="flyControlBtn" id="resetFlyBtn_1_1">重填</button>
+                            <div id="flyControlBottom_0_0">
+                                    <button class="flyControlBtn" id="resetFlyBtn_0_0">重填</button>
                             </div>
                                     
                         </div>
@@ -423,7 +432,7 @@
                                     <form action="" method="post">
                                         <div id="triggerResultOptionBottom_1_0_0_0" class="brotherHiddTag hidd triggerResultOptionBottomClass">
                                             <div id="triggerOfTrail_1_0_0_0" class="brotherHiddTag hidd">
-                                                <p class="triggerResultOptionP">已成功添加"轨迹阶段"</p><!--轨迹阶段名符合更改-->
+                                                <p class="triggerResultOptionP" id = 'triP_1_0_0_0'></p><!--轨迹阶段名符合更改-->
                                             </div>
                                             <div id="triggerOfEffectOfValue_1_0_0_0" class="brotherHiddTag hidd">
                                                 <div id="effectOfValuea_1_0_0_0" class="effectOfValue">

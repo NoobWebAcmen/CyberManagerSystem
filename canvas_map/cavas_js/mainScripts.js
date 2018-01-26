@@ -34,26 +34,50 @@ $('#bars_button1').click(function(){
  */
 $('#downloadData').click(function(){
 	if(bulletInfo.saveFlag){
-		// if(bulletInfo.Tip(3) == true){
-		// 	funDownload(bulletInfo.bulletsData,'bulletConfig.lua',1);
-		// }else{
-		// 	funDownload(bulletInfo.bulletsData,'bulletConfig.lua',2);
-		// }
-		uselocalStorage(bulletInfo.bulletsData);
+		var id = bulletInfo.bulletsData.id;
+		getJsonVal(id);
+		
 	}else{
 		alert('请先点击保存数据');
 	}
-		
-		
-	
+
 });
 
+function getJsonVal(id){
+	$.ajax({
+		type : 'GET',
+		url  : '../common/loadFile.php', 
+		data : {'id' : id,'flag' : 1},
+		success : function (data) {
+			//json数据
+			
+			Data = data.replace(/\"([-+]?[0-9]*\.?[0-9]+)\"/g,"$1").replace(/\"false\"/g,'false').replace(/\"true\"/g,'true');
+			Data = JSON.parse(Data);
+			downloadProfile(Data,id);
+		},
+		error : function (data){
+			console.log('error',data.responseText);
+		}
+	});
+}
+function downloadProfile(data,id){
+	if(bulletInfo.Tip(3) == true){
+		funDownload(data,'bullet_' + id + '.lua',1);
+	}else {
+		funDownload(data,'bullet_' + id + '.lua',2);
+	}
+}
 
 /**
  * 返回主页按钮
  */
 $('#home').click(function(){
-	window.location.href='bullet_index.php';
+	if(bulletInfo.saveFlag){
+		window.location.href='bullet_index.php';
+	}else{
+		alert("请先保存数据");
+	}
+	
 	bulletInfo.saveFlag = false;
 });
 
@@ -74,22 +98,14 @@ $('.bars_input').keydown(function(e){
 });
 
 /**
- * 使用localStorage存储bullet的数据
+ * 使用ajax在服务器端存储bullet的数据
  * @param {*} data 保存的Object对象
  * @param {*} id   弹头的id值
  */
-function uselocalStorage(data){
+function useAjax(data){
 	var id = data.id;
 	var test=document.getElementsByTagName('html')[0].outerHTML;
 	test=test.replace(new RegExp('<script[^]*>[\\s\\S]*?</'+'script>','gi'),'');
-	var object = JSON.stringify(data);
-	if (window.localStorage) {
-		localStorage.setItem("bullets" + id, object);
-		localStorage.setItem("bullets" + id +'html', test);
-	} else {
-		Cookie.write("bullets" + id, object);
-		Cookie.write("bullets" +'html', test);	
-	}
 	postHtml(test,id);
 }
 
@@ -115,15 +131,13 @@ function postHtml(html,id){
 /**
  * 点击新建炮弹的事件
  */
-$('#createPowder').one('click',function(){
-	//要清除就打开此语句
-	// localStorage.clear();  
-	$('#bullet_info').removeClass('hidden');
-	$('#bullet_info').addClass('show');
+$('#createPowder').one('click',function(){ 
 	$('#createForm').removeClass('hidden');
 	$('#createForm').addClass('show');
-
-	getList();
+	if($('#bullet_info').prop('class') == "bullet_infoDiv hidden"){
+		$('#bullet_info').prop('class',"bullet_infoDiv show");
+		getList();
+	}
 	
 });
 
@@ -165,11 +179,6 @@ function getList(){
 $('#bulletOptionInfoA').click(function(){
 	$(this).toggleClass("changePicMode");
 	
-	// var len = $('#topBar').children('div').length;
-	// for(var i = 2;i < len; ++i){
-	// 	$('#topBar').children('div').eq(i).toggle("normal");
-	// }
-    
 });
 
 $('#saveData').click(function(){
@@ -186,24 +195,29 @@ $('#saveData').click(function(){
 		}
 	}
 	bulletInfo.saveFlag = true;
+	postDataAjax(bulletInfo.bulletsData,bulletInfo.bulletsData.id); //传值
+	useAjax(bulletInfo.bulletsData); //传页面
 	console.log(bulletInfo);
+	
+	
+});
+function postDataAjax(bulletData,id){
 	$.ajax({
 		type : 'POST',
 		url  : '../common/uploadFile.php',
 		data : {
-			"bullets" : bulletInfo.bulletsData,
-			"id" :  bulletInfo.bulletsData.id
+			"bullets" : bulletData,
+			"id" :  id
 		},
 		dataType : "json",
 		success : function(data){
-			console.log(data);
+		
 		},
 		error : function(data){
 			console.log('error',data.responseText);
 		}
 	});
-	
-});
+}
 $('#createInp2').click(function(){
 	var arr = new Array();
 	var len = $('#bullet_info_list').children().length;

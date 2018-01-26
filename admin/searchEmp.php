@@ -28,7 +28,7 @@
                      <span class="icon-bar"></span>
                      <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="../index/index.php">Cyber 后台管理系统V1.0</a>
+                    <a class="brand" href="../index/index.php">坦克后台工具</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav pull-right">
                             <li class="dropdown">
@@ -124,7 +124,7 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span3" id="sidebar">
-                <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
+            <ul class="nav nav-list bs-docs-sidenav nav-collapse collapse">
                     <li class="active">
                         <a href="../index/index.php"><i class="icon-chevron-right"></i> 主页</a>
                     </li>
@@ -132,54 +132,13 @@
                         <a href="../tools/tools.php"><i class="icon-chevron-right"></i> 策划工具</a>
                     </li>
                     <li>
-                        <a href="stats.html"><i class="icon-chevron-right"></i> 测试2</a>
+                        <a href="../canvas_map/map.php"><i class="icon-chevron-right"></i>地图编辑器</a>
                     </li>
                     <li>
-                        <a href="form.html"><i class="icon-chevron-right"></i>测试3</a>
+                        <a href="../canvas_map/bullet_index.php"><i class="icon-chevron-right"></i>炮弹编辑器</a> 
                     </li>
                     <li>
-                        <a href="tables.html"><i class="icon-chevron-right"></i> 测试4</a>
-                    </li>
-                    <li>
-                        <a href="buttons.html"><i class="icon-chevron-right"></i> 测试5</a>
-                    </li>
-                    <li>
-                        <a href="editors.html"><i class="icon-chevron-right"></i> 测试6</a>
-                    </li>
-                    <li>
-                        <a href="interface.html"><i class="icon-chevron-right"></i> 测试7</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="badge badge-success pull-right">731</span> 测试8</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="badge badge-success pull-right">812</span> 测试9</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="badge badge-info pull-right">27</span> 测试10</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="badge badge-info pull-right">1,234</span> 测试11</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="badge badge-info pull-right">2,221</span> 测试12</a>
-                    </li>
-                    <li>
-                        <a href="#"><span class="badge badge-info pull-right">11</span> 测试13</a>
-                    </li>
-                    <li>
-                        <a href="javascript:;" id="map_sel"> <i class="icon-chevron-right"></i>编辑器</a>
-                    </li>
-                    <li>
-                        <a href="../admin/admin_limit.php?rows=10"> 用户关系表</a>
-                    </li>
-                </ul>
-                <ul class="side_bar_add hidden">
-                    <li>
-                        <a href="../canvas_map/map.php">地图编辑器</a>
-                    </li>
-                    <li>
-                        <a href="../canvas_map/bullet.php">炮弹编辑器</a> 
+                        <a href="../admin/admin_limit.php?rows=10"><i class="icon-chevron-right"></i>用户关系表</a>
                     </li>
                 </ul>
             </div>

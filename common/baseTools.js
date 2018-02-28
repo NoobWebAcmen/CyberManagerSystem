@@ -57,7 +57,6 @@ function funDownload(content, filename,tag){
  }
 
 
-
 /**
  * 把数据转换成lua
  */
@@ -96,7 +95,27 @@ function json2lua(jsonString,tag){
                     for(var m = 0; m < len3.length; ++m){
                         var key3 = "[" + (m+1) + "]";
                         effects[key3] = deepClone(jsonString.bullets[i].cycles[j].triggers[k].effects[m]);
-                        triggers[key2].effects[key3] = effects[key3];
+                        var val = JSON.stringify(effects[key3].effectParams)
+                                    .replace(/\"effectValue\"\:0/g,'')
+                                    .replace(/\"range\"\:0/g,'')
+                                    .replace(/\"target\"\:0/g,'')
+                                    .replace(/\"effectType\"\:0/g,'')
+                                    .replace(/\"damageType\"\:0/g,'')
+                                    .replace(/\"buffId\"\:0/g,'')
+                                    .replace(/\"edgeTypes\"\:0/g,'')
+                                    .replace(/\"source\"\:0/g,'')
+                                    .replace(/\,\,/g,'\,')
+                                    .replace(/\,\}/g,'\}');
+                        val = JSON.parse(val
+                            .replace(/\{\,/g,'\{')
+                            .replace(/\,\}/g,'\}')
+                            .replace(/\,\,/g,'\,')
+                            .replace(/\,\,\,/g,'')
+                            .replace(/\,\}/g,'\}')
+                            .replace(/\{\,\,/g,'\{')
+                            );
+                        effects[key3].effectParams = val; 
+                        triggers[key2].effects[key3] = effects[key3];  
                     }
                 }
                 
@@ -104,20 +123,25 @@ function json2lua(jsonString,tag){
         }
     }
     if(tag == 1){
-        listy =JSON.stringify(list,null,4)
+        listy =JSON.stringify(list,null,4)  //\s+ 匹配任意个空格
         .replace(/"\:/g,"=")
         .replace(/\"(.*?)\=/g,'$1 \=')
         .replace(/\{\"/g,'\{')
         .replace(/\,\"/g,'\,')
         .replace(/\"NaN\"/g,0);
-        listy = listy.replace(/\}/g,'\t\}');
-        console.log('2',listy);
+        listy = listy.replace(/\}/g,'\t\}').replace(/\{\s+\}/g,'nil').replace(/\"\"/g,'nil');
         listStr = "local BulletConfig = {\n" 
             + "\tid = " + jsonString. id + ",\n"
             + "\tlaunchDuration = " + jsonString. launchDuration + ",\n" 
             + "\tbullets = " +listy + "\n}\nreturn BulletConfig";
     }else if(tag == 2){
-        listy = JSON.stringify(deepClone(list)).replace(/"\:/g,"=").replace(/\{\"/g,'\{').replace(/\,\"/g,'\,').replace(/\"NaN\"/g,0);
+        listy = JSON.stringify(deepClone(list))
+        .replace(/"\:/g,"=")
+        .replace(/\{\"/g,'\{')
+        .replace(/\,\"/g,'\,')
+        .replace(/\"NaN\"/g,0)
+        .replace(/\{\}/g,'nil')
+        .replace(/\"\"/g,'nil');
         
         listStr = "local BulletConfig={"
         + "id=" +  jsonString.id + ','
@@ -127,3 +151,56 @@ function json2lua(jsonString,tag){
     return listStr;
     
 }
+
+/**
+ * 下载图片
+ * @param {*} code 
+ */
+function base64Img2Blob(code){
+    var parts = code.split(';base64,');
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+      uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], {type: contentType}); 
+}
+function downloadFile(fileName, content){
+   
+    var eleLink = document.createElement('a');
+    eleLink.download = fileName;
+    eleLink.style.display = 'none';
+    var blob = base64Img2Blob(content); //new Blob([content]);
+    // 字符内容转变成blob地址
+    eleLink.href = URL.createObjectURL(blob);
+    // 触发点击
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    // 然后移除
+    document.body.removeChild(eleLink);
+}
+
+function funDownload1(filename,content){
+    
+    var eleLink = document.createElement('a');
+    eleLink.download = filename;
+    eleLink.style.display = 'none';
+    var blob = new Blob([jsonNaN(content)]);
+    // 字符内容转变成blob地址
+    eleLink.href = URL.createObjectURL(blob);
+    // 触发点击
+    document.body.appendChild(eleLink);
+    eleLink.click();
+    // 然后移除
+    document.body.removeChild(eleLink);
+ } 
+
+ function jsonNaN(jsonString){
+    var jsonstr =JSON.stringify(jsonString,null,4);
+    return jsonstr;
+ }

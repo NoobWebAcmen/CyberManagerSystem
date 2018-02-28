@@ -15,6 +15,7 @@
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
         <script src="../vendors/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
         <script src="../vendors/xlsx.full.min.js"></script>   
         <link href="../assets/styles.css" rel="stylesheet" media="screen">
         
@@ -38,7 +39,7 @@
             <input type="submit" id="loadInp2" value="提交" class="createInp2s">
         </form>
         <div id="bullet_info" class="bullet_infoDiv hidden">
-            <ul id="bullet_info_list" class="bullet_infoUl">
+            <ul id="bullet_info_list" class="bullet_infoUl ">
             </ul>
         </div>
     </div>

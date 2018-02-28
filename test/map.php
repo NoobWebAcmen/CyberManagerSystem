@@ -27,8 +27,6 @@
     <?php  
         require_once '../cookies/common.php';
         checkUserValidate();
-        
-
     ?> 
     
     <body>
@@ -146,7 +144,7 @@
                         </div>
                      </div>
                      <div class="settings" id="step2">
-                        <label >请设置总层级数</label>
+                        <label id='step2Lab'>请设置总层级数</label>
                         <div class="inpMod1">
                             <input type="text" class="step-inp1" id="layers">
                             <button type="submit" id="subLayers" class="butn">确定</button>
@@ -181,12 +179,12 @@
                             </div>
                         <div class="btn-group">
                             <!-- 提高降低图片优先级 --> 
-                            <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="-10" title="Move Up">
+                            <button type="button" class="btn btn-primary" data-method="moveup" data-option="0" data-second-option="-10" title="Move Up">
                                 <span class="docs-tooltip" data-toggle="tooltip" title="提高优先级">
                                 <span class="fa fa-arrow-up"></span>
                                 </span>
                             </button>
-                            <button type="button" class="btn btn-primary" data-method="move" data-option="0" data-second-option="10" title="Move Down">
+                            <button type="button" class="btn btn-primary" data-method="movedown" data-option="0" data-second-option="10" title="Move Down">
                                 <span class="docs-tooltip" data-toggle="tooltip" title="降低优先级">
                                 <span class="fa fa-arrow-down"></span>
                                 </span>
@@ -268,7 +266,22 @@
                                 </span>
                             </button>
                         </div>
-                       
+                        <!-- Show the cropped image in modal  canvas所在地--> 
+                        <div class="modal fade docs-cropped specialModal" id="getCroppedCanvasModal" aria-hidden="true" aria-labelledby="getCroppedCanvasTitle" role="dialog" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="getCroppedCanvasTitle">裁切</h4>
+                            </div>
+                            <div class="modal-body"></div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <a class="btn btn-primary" id="download" href="javascript:void(0);" data-method="download">Download</a>
+                            </div>
+                            </div>
+                        </div>
+                        </div><!-- /.modal -->
                      </div>
                  </div>
                  <div class="content-info" id="mainInfo">
@@ -277,6 +290,10 @@
                         <div class="img-preview preview-lg"></div>
                     </div>
                     <div class="docs-data">
+                        <div class="input-group input-group-sm">
+                            <label class="input-group-addon" for="imgName">Name</label>
+                            <input type="text" class="form-control" id="imgName" placeholder="name">
+                        </div>
                         <div class="input-group input-group-sm">
                             <label class="input-group-addon" for="dataX">X</label>
                             <input type="text" class="form-control" id="dataX" placeholder="x">
@@ -298,7 +315,66 @@
                             <span class="input-group-addon">px</span>
                         </div>
                     </div>
+                    <div class="dataList">
+                        <ul id="imgInfoList">
+                            <li class="topLi ">
+                                <input type="checkbox" id="checkbox_a" class="chk" /> 
+                                <label for="checkbox_a"></label> <p class="label_p">全选</p>
+                                <input type="button" value="删除" class="delete" id="delete_input"/>
+                            </li>
+                        </ul>
+                    </div>
                  </div>   
+            </div>
+            <div class='clear'>
+                <div class="sel_bar hidd  parentHiddTag" id="backPic_bottom">
+                    <a href="javascript:;" class="prev" id="prev3"></a>
+                    <a href="javascript:;" class="next" id="next3"></a>
+                    <div class="sel_bar_p">
+                        <p>风景</p>
+                    </div>
+                    <div class="clear plot_ul  pull-left">
+                        <ul id="back_div" class="clear ">
+                        <!-- backgroundImg图库 -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="sel_bar clear hidd  parentHiddTag" id="plot_bottom">
+                    <a href="javascript:;" class="prev" id="prev1"></a>
+                    <a href="javascript:;" class="next" id="next1"></a>
+                    <div class="sel_bar_p pull-left clear">
+                        <p>地形</p>
+                    </div>
+                    <div class="clear plot_ul  pull-left">
+                        <ul id="plot_div" class="clear ">
+                            <!-- plot图库 -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="sel_bar hidd clear  parentHiddTag" id="trim_bottom">
+                    <a href="javascript:;" class="prev" id="prev2"></a>
+                    <a href="javascript:;" class="next" id="next2"></a>
+                    <div class="sel_bar_p pull-left clear">
+                        <p>装饰物</p>
+                    </div>
+                    <div class="clear plot_ul  pull-left">
+                        <ul id="trim_div" class="clear ">
+                                <!-- trim图库 -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="sel_bar clear hidd  parentHiddTag" id="frog_bottom">
+                    <a href="javascript:;" class="prev" id="prev4"></a>
+                    <a href="javascript:;" class="next" id="next4"></a>
+                    <div class="sel_bar_p pull-left clear">
+                        <p>雾</p>
+                    </div>
+                    <div class="clear plot_ul  pull-left">
+                        <ul id="frog_div" class="clear ">
+                            <!-- frog图库 -->
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <!--/.fluid-container-->
@@ -308,12 +384,15 @@
         <script src="../assets/zxx.drag.1.0-min.js"></script>
         <script src="../bootstrap/js/bootstrap.min.js"></script>
         <script src="../vendors/easypiechart/jquery.easy-pie-chart.js"></script>
+        <script src="js/cropper.min.js"></script>
+        <script src="js/mapVal.js"></script>
+        <script src="../common/baseTools.js"></script>
         <script src="js/mapClick.js"></script>
         <script src="js/mapResponse.js"></script>
         <script src="js/mapAdd.js"></script>
-        <script src="js/mapScript.js"></script>        
-        
-        
+        <script src="js/mapScript.js"></script>  
+        <script src="js/mapScript.js"></script>
+        <script src="js/mapScript.js"></script>    
     </body>
 </html>
 

@@ -75,7 +75,9 @@ Bullet.prototype ={
         }else if(flag == 3){
             var msg = "是否需要有格式输出配置文件？\n\n请确认！"
         }else if(flag == 4){
-            var msg = "是否输出配置文件？\n\n请确认！"
+            var msg = "确定不保存数据返回吗？\n\n请确认！"
+        }else if(flag ==5){
+            var msg = "确认删除此炮弹吗? \n\n请确认!"
         }
         
         if (confirm(msg)==true){ 
@@ -97,9 +99,9 @@ triggerEffectVal = [{
     effectParams : {
         range : 0,
         target : 0,
-        effectType : 1,
+        effectType : 0,
         effectValue : 0,
-        damageType : 1,
+        damageType : 0,
         buffId : 0,
         edgeTypes : 0,
         source : 0

@@ -152,8 +152,11 @@ body {
   margin-bottom: 10px;
   
 }
+.btn-group{
+  margin: 0 20px 10px 20px;
+}
 .btn-noMargin{
-  margin-left: 0px !important;
+  margin-left: 20px !important;
 }
 
 .docs-toggles > .btn,
@@ -231,7 +234,7 @@ body {
 
 .docs-cropped .modal-body > img,
 .docs-cropped .modal-body > canvas {
-  max-width: 100%;
+  /* max-width: 100%; */
 }
 
 .docs-diagram .modal-dialog {
@@ -309,11 +312,57 @@ body {
   border-radius: 5px;
   margin: 0 20px;
 }
+.content-info{
+  border: none;
+}
+.content-canvas{
+  border-radius: 0px;
+}
 
 .content-left{
-  width: 300px;
-  height: 500px;
+  width: 320px;
+  height: 620px;
+  overflow-y: scroll;
+  margin-left: 10px;
 }
+  .layerContentP{
+    text-align: center;
+    margin: 10px 0px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #c1c1c1;
+  }
+  .layerRela{
+    position: relative;
+    padding : 0px;
+  }
+  .layerBtn{
+    border: 1px solid #c1c1c1;
+    border-radius: 5px;
+    background: #fff;
+    padding : 5px 20px;
+    color: #08c;
+  }
+  .layerSel{
+    width: 150px;
+    padding: 0px 20px;
+    margin-left: 15px;
+  }
+  .compMode{
+    position: absolute;left: 40px;top: 0px;
+  }
+  .layerRela:hover{
+    background: yellowgreen;
+    color : white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .layerP{
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .layerLab{
+    font-weight: normal;
+  }
   .settings{
     padding: 5px;
     display: flex;
@@ -336,12 +385,17 @@ body {
     margin-bottom: 0px !important;
     margin-left: 2px;
   }
-  .butn{
+  .butn,.butn1{
     border: 1px solid #c1c1c1;
     border-radius: 5px;
     background: #fff;
     color: #08c;
     padding: 5px 20px;
+  }
+  .butn1{
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0 25px;
   }
   .step-inp1{
     margin-right: 15px;
@@ -354,6 +408,15 @@ body {
   .inpMod1{
     padding-left: 20px;
   }
+
+  .layerAddLab{
+    margin-right: 20px;
+  }
+  .layer-step-inp{
+    border: 1px solid #c1c1c1;
+    border-radius: 3px;
+    width : 100px;
+  }
   .layersUl{
     margin-left: 0px;
   }
@@ -364,9 +427,39 @@ body {
     
     font-size: 16px;
   }
+  .layerRela1{
+    position:relative; 
+  }
   .layersP:hover{
-    background: yellowgreen;
+    background: rgb(93, 138, 4);
     color: #fff;
+    border-radius: 5px;
+  }
+  .deleSpan{
+    position: absolute;right: 20px; top: 3px;
+    color: #08c;
+  }
+  .deleSpan1{
+    position: absolute;right: 20px; top: 6px;
+    color: #08c;
+  }
+  .deleSpan:hover,.deleSpan1:hover{
+    border: 1px solid tomato;
+    background: tomato;
+    color: #fff;
+    padding:0 3px;
+  }
+  .layerEnd{
+    border-bottom: 1px dashed #c1c1c1;
+  }
+  .layerSet{
+    text-align: left;
+  }
+  .layerSetLab{
+    margin: 20px;
+  }
+  .layerSetLab1{
+    margin: 20px 35px 20px 20px;
   }
   .layersP > span{
     margin: 0 3px;
@@ -376,10 +469,16 @@ body {
 
 .content-canvas{
   width: 900px;
+  height: 600px;
+}
+.canvasMod{
   height: 500px;
+  width: 700px;
+  overflow: auto;
+  
 }
 .canvasTool{
-margin-left: 60px;
+margin-left: 20px;
 }
 .btn-add{
   background: rgb(245, 245, 245);
@@ -389,7 +488,7 @@ margin-left: 60px;
 .layHover:hover{
   border: 1px solid #c1c1c1;
   border-radius: 5px;
-  background: #08c;
+  background: #5caf70;
   color: #fff;
 }
 .layHover{
@@ -401,5 +500,101 @@ margin-left: 60px;
 
 .content-info{
   width: 300px;
+  
+}
+.topLi{
+  
+  margin-top: 10px;
+  display: flex;
+  align-content: center;
+  font-size: 16px;
+  color: #08c;
+  border-bottom: 1px solid #c1c1c1;
+  
+}
+.chk_1,.chk{ 
+  display: none; 
+} 
+
+.chk_1 + label,.chk + label { 
+  background-color: #FFF; 
+  border: 1px solid #C1CACA; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05); 
+  padding: 9px; 
+  border-radius: 5px; 
+  display: inline-block; 
+  position: relative; 
+  margin-left: 10px; 
+  margin-top: 5px;
+  margin-right:5px;
+} 
+.chk_1 + label:active,.chk + label:active { 
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1); 
+} 
+
+.chk_1:checked + label ,.chk:checked + label{ 
+  background-color: #ECF2F7; 
+  border: 1px solid #92A1AC; 
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05), inset 15px 10px -12px rgba(255, 255, 255, 0.1); 
+  color: #243441; 
+} 
+
+.chk_1:checked + label:after,.chk:checked + label:after { 
+  content: '\2714';  
+  position: absolute; 
+  top: 0px; 
+  left: 0px; 
+  color: #758794; 
+  width: 100%; 
+  text-align: center; 
+  font-size: 1.4em; 
+  padding: 1px 0 0 0; 
+  vertical-align: text-top; 
+}
+.label_p{
+  margin:6px 0px 0px;
+}
+.delete{
+  margin-left: 80px;
+  border:none;
+  background: rgb(245, 245, 245);
+  color:#08c;
+  font-size: 16px;
+  margin-top: 2px;
+}
+.dataList{
+  background: rgb(245, 245, 245);
+  border: 1px solid #c1c1c1;
+  border-radius: 5px;
+  width:202px;
+  height: 240px;
   overflow: auto;
+  margin-left:15px;
+}
+
+.sel_bar{
+  margin-left: 300px;
+  width: 702px;
+}
+.hidContent{
+  display: none;
+}
+.topLi,.mainLi {
+  width: 300px;
+}
+label{
+  cursor: default !important;
+}
+.specialModal{
+  width: 662px;
+  position: absolute;left: 600px;
+  visibility: hidden;
+}
+.modal-dialog{
+  visibility: visible;
+  overflow: auto;
+}
+.modal-body{
+  overflow: auto;
+
 }

@@ -4,6 +4,7 @@ $save_dir = "userData";
 $bullet = $_REQUEST['bullets'];      //炮弹数据
 $bulletHtml = $_REQUEST['bulletsHtml'];    //炮弹表现形式
 $id = $_REQUEST['id'];
+$flag = $_REQUEST['flag'];
 
 
 //创建目录
@@ -38,6 +39,17 @@ $id = $_REQUEST['id'];
             echo 'Write success!';
         } else {
             echo 'Write failed!';
+        }
+    }
+    if($flag == 3){   //删除文件
+        $fileName3 = $save_dir.'bullets'.$id.'.json';
+        $fileName4 = $save_dir.'bullets'.$id.'html.html';
+        $res3 = unlink($fileName3);
+        $res4 = unlink($fileName4);
+        if($res3){
+            echo 'Delete Sucess!';
+        }else{
+            echo 'Delete Failed!';
         }
     }
 

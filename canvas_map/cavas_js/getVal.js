@@ -110,6 +110,8 @@ function switchFlyContSel(obj,preNum,nexNum,proto) {
             case 'vendor3':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = true;
                 $('#flyContorlVendorInpX' + str).prop('readonly','readonly');
+                $('#flyContorlVendorInpX' + str).prop('value','');
+                
                 break;
             case 'vendor1':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetRotation = true;
@@ -122,6 +124,7 @@ function switchFlyContSel(obj,preNum,nexNum,proto) {
             case 'strength3':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = true;
                 $('#flyContorlStrengthInpX' + str).prop('readonly','readonly');
+                $('#flyContorlStrengthInpX' + str).prop('value','');
                 break;
             case 'strength1':
                 proto.bulletsData.bullets[preNum].cycles[nexNum].isOffsetSpeed = true;
@@ -422,6 +425,7 @@ function switchDamageAttribute(obj,sel){
                     obj.damageType = 4;
                     break;
                 default:
+                    obj.damageType = 0;
                     break;
             }
         });
@@ -443,8 +447,8 @@ function switchValueType(obj,sel){
                 case 'triggerValue3':
                     obj.effectType = 3;
                     break;
-            
                 default:
+                obj.effectType = 0;
                     break;
             }
         });
@@ -458,24 +462,43 @@ function switchValueType(obj,sel){
  * @param {*} trailNum 
  * @param {*} resultNum 
  */
-function resetTriggerResult(num,bulletNum,trailNum,resultNum){
+function resetTriggerResult(num,bulletNum,trailNum,resultNum,proto){
+    var nowNum = num - 1;
+    var bulNum = bulletNum - 1;
+    var traNum = trailNum - 1;
+    var resNum = resultNum - 1;
     var str = $('#triggerResultOption'+'_' + resultNum +'_' + num + '_' + bulletNum + '_' + trailNum).children().children().children().children().children('input');
     var str1 = $('#triggerResultOption'+'_' + resultNum +'_' + num + '_' + bulletNum + '_' + trailNum).children().children().children().children().children('select');
     var len = str.length;
     var len1 = str1.length;
     for(var i = 0;i < len ;++i){
+        //值为空
         if(str.eq(i).prop('value')){
             str.eq(i).prop('value','');
         }
+        //选择框为空
         if(str.eq(i).prop('checked')){
             str.eq(i).prop('checked',false);
         }   
     }
     for(var j = 0;j < len1; ++j){
+        //下拉菜单框为空
         str1.eq(j).children('option').eq(0).prop('selected',true);
     }
-
     $('#fileSpan'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).css('display','none');
+    var eff = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
+    eff.buffId = 0;
+    eff.damageType = 0;
+    eff.edgeTypes = 0;
+    eff.effectType = 0;
+    eff.effectValue = 0;
+    eff.range = 0;
+    eff.source = 0;
+    eff.target = 0;
+    proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectMode = 0;
+    show($('#triggerResultOptionBottom' +'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum),3);
+    $('#triggerResultSel'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).children().eq(0).prop('selected','selected');
+
 }
 
 /**
@@ -506,7 +529,7 @@ function  checkboxval(obj,num,bulletNum,trailNum,resultNum){
  */
 function checkboxBottomval(obj,num,bulletNum,trailNum,resultNum){
     var str = $('#triggerResultOption'+'_' + resultNum +'_' + num + '_' + bulletNum + '_' + trailNum).children().children().children().children().children('.chk');
-    var len = str.length;;
+    var len = str.length;
     var value = new Array();
     for(var i = 0;i < len; ++i){
         value.push(str.eq(i).prop('checked'))
@@ -518,6 +541,7 @@ function checkboxBottomval(obj,num,bulletNum,trailNum,resultNum){
     }else if(value[0] == true && value[1] == true){
         obj.target = 3;
     }
+
     if(value[2] == true && value[3] == false){
         obj.target = 1;
     }else if(value[2] == false && value[3] == true){
@@ -582,7 +606,7 @@ function addUniqueFlag(proto){
 function getBulletsVal(num,proto){
    var bulNum = num - 1;
    if(proto.bulletsData.bullets[bulNum]){
-
+        proto.bulletsData.bullets[bulNum].launchTime = parseFloat($('#bars_info_input_' + num).prop('value'));
         proto.bulletsData.bullets[bulNum].speed = parseFloat($('#speedModInp_' + num).prop('value'));
         proto.bulletsData.bullets[bulNum].width = parseFloat($('#sizeModWid_' + num).prop('value'));
         proto.bulletsData.bullets[bulNum].height = parseFloat($('#sizeModHei_' + num).prop('value'));
@@ -786,7 +810,6 @@ function loadResultVal(bulletNum,trailNum,num,resultNum,proto){
         var val = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
         var val1 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum];
         //所有结果的inp的值
-        
         loadResultInpVal(bulletNum,trailNum,num,resultNum,val,val1);
     }
    
@@ -875,29 +898,29 @@ function whichValueSel(bulletNum,trailNum,num,resultNum,proto){
     
     switch (val1) {
         case 1:
-            $('#effectOfValueSela' + str).children().eq(0).prop('selected','selected');
-            break;
-        case 2:
             $('#effectOfValueSela' + str).children().eq(1).prop('selected','selected');
             break;
-        case 3:
+        case 2:
             $('#effectOfValueSela' + str).children().eq(2).prop('selected','selected');
+            break;
+        case 3:
+            $('#effectOfValueSela' + str).children().eq(3).prop('selected','selected');
             break;
         default:
             break;
     }
     switch (val2) {
         case 1:
-            $('#effectOfValueSelb' + str).children().eq(0).prop('selected','selected');
-            break;
-        case 2:
             $('#effectOfValueSelb' + str).children().eq(1).prop('selected','selected');
             break;
-        case 3:
+        case 2:
             $('#effectOfValueSelb' + str).children().eq(2).prop('selected','selected');
             break;
-        case 4:
+        case 3:
             $('#effectOfValueSelb' + str).children().eq(3).prop('selected','selected');
+            break;
+        case 4:
+            $('#effectOfValueSelb' + str).children().eq(4).prop('selected','selected');
             break;
         default:
             break;

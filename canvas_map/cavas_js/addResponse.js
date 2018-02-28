@@ -2,11 +2,6 @@
   * 本文件用于对addEvent的点击事件的响应，只对addEvent.js负责
   */
  
-  function  changeDelTrailId(obj,bulletNum,trailNum){
-      var str = obj.children().eq(0).children().eq(1).prop('id').slice(0,-4);
-      var str1 = '_' + bulletNum + '_' + trailNum;
-      obj.children().eq(0).children().eq(1).prop('id',str + str1);
-  }
 
 /**
  * 改变运动轨迹中头部下拉选择框的id
@@ -258,58 +253,80 @@ function switchTriggerSel(obj,num,bulletNum,trailNum,proto){
 /**
  * 为触发条件Bottom的select框添加change事件,并存值
  */
+var resArr = new Array();
 function switchResultSel(obj,num,bulletNum,trailNum,resultNum,proto){
-    var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1;
     var bulNum = bulletNum -1;
     var traNum = trailNum -1;
     var nowNum = num -1;
     var resNum = resultNum - 1;
     var str1 = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectParams;
     var str2 = '_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum;
+    var len2;
     if(obj.length){
         obj.change(function(){
-            switch (this.value) {
+                var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1;
+                var len1 = $('#bulletOption'+ bulletNum).children().children('.trailNames').length-1;
+                var l = parseInt($('#bulletOption'+ bulletNum).children().children('.trailNames').eq(len1).html().replace(/[^0-9]/g,'')) + 1;
+                switch (this.value) {
                 case 'triggerResult1':
+                    resArr[len1] = l;
                     changeTrailP($('#triP' + str2),bulletNum);
                     show($('#triggerOfTrail'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    addTrail(bulletNum,$('#bulletOption'+bulletNum),$('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1,proto);
+                    addTrail(bulletNum,$('#bulletOption'+bulletNum),l,proto,num,trailNum,resultNum);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,1,proto);
                     break;
                 case 'triggerResult2':
+                    len2 = parseInt($('#triP' + str2).html().replace(/[^0-9]/g,''));
+                    var v =$('#bulletNamesOfP'+'_'+bulletNum+'_'+len2).attr('data');
                     show($('#triggerOfEffectOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
+                    deleteTrail(bulletNum,v,resultNum,trailNum,num,proto);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,2,proto);
                     switchValueType(str1,$('#effectOfValueSela' + str2));
                     switchDamageAttribute(str1,$('#effectOfValueSelb' + str2));
                     break;
                 case 'triggerResult3':
+                    len2 = parseInt($('#triP' + str2).html().replace(/[^0-9]/g,''));
+                    var v =$('#bulletNamesOfP'+'_'+bulletNum+'_'+len2).attr('data');
                     show($('#triggerOfAddBuff'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
+                    deleteTrail(bulletNum,v,resultNum,trailNum,num,proto);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,3,proto);
                     break;
                 case 'triggerResult4':
+                    len2 = parseInt($('#triP' + str2).html().replace(/[^0-9]/g,''));
+                    var v =$('#bulletNamesOfP'+'_'+bulletNum+'_'+len2).attr('data');
                     show($('#triggerOfTerrianOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
+                    deleteTrail(bulletNum,v,resultNum,trailNum,num,proto);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,4,proto);
                     break;
                 case 'triggerResult5':
+                    len2 = parseInt($('#triP' + str2).html().replace(/[^0-9]/g,''));
+                    var v =$('#bulletNamesOfP'+'_'+bulletNum+'_'+len2).attr('data');
                     show($('#triggerOfArtOfValue'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
+                    deleteTrail(bulletNum,v,resultNum,trailNum,num,proto);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,5,proto);
                     break;
                 case 'triggerResult6':
+                    len2 = parseInt($('#triP' + str2).html().replace(/[^0-9]/g,''));
+                    var v =$('#bulletNamesOfP'+'_'+bulletNum+'_'+len2).attr('data');
                     show($('#triggerOfAddBullet'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
+                    deleteTrail(bulletNum,v,resultNum,trailNum,num,proto);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,6,proto);
                     break;
                 case 'triggerResult7':
+                    len2 = parseInt($('#triP' + str2).html().replace(/[^0-9]/g,''));
+                    var v =$('#bulletNamesOfP'+'_'+bulletNum+'_'+len2).attr('data');
                     show($('#triggerOfEnd'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
-                    deleteTrail(bulletNum,len,proto);
+                    deleteTrail(bulletNum,v,resultNum,trailNum,num,proto);
                     getTriggerResultMode(num,bulletNum,trailNum,resultNum,7,proto);
                     break;
             
                 default:
-                    deleteTrail(bulletNum,len,proto);
+                    len2 = parseInt($('#triP' + str2).html().replace(/[^0-9]/g,''));
+                    var v =$('#bulletNamesOfP'+'_'+bulletNum+'_'+len2).attr('data');
+                    show($('#triggerResultOptionBottom'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum),3);
+                    deleteTrail(bulletNum,v,resultNum,trailNum,num,proto);
+                    getTriggerResultMode(num,bulletNum,trailNum,resultNum,0,proto);
+                    
                 break;
             }
         });
@@ -538,13 +555,14 @@ function changeResetId(obj,bulletNum,trailNum){
  * 改变触发结果中动态添加的轨迹阶段的描述语句
  */
 function changeTrailP(obj,bulletNum){
-    var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length + 1;
-    var str = "已成功添加 \"轨迹阶段" + len + "\""; 
+    var len = $('#bulletOption'+ bulletNum).children().children('.trailNames').length-1;
+    var l = parseInt($('#bulletOption'+ bulletNum).children().children('.trailNames').eq(len).html().replace(/[^0-9]/g,'')) + 1;
+    var str = "已成功添加 \"轨迹阶段" + l + "\""; 
     obj.html(str);
 }
 
 /**
- * 弹头框中判断是哪种形状
+ * 弹头框中判断是哪种形状 圆形还是方形
  * @param {*} bulNum 
  */
 function whichSize(bulNum,proto){
@@ -568,4 +586,104 @@ function whichSize(bulNum,proto){
             $('#cycle_' + bulNum).prop('value','');
         }
     });
+}
+function hiddParent(){
+    $('.parentHiddTag').css('display','none');
+}
+
+/**
+ * 判断该轨迹阶段是否为最大轨迹阶段
+ * @param {*} bulletNum 
+ * @param {*} trailNum 
+ * @param {*} resultNum 
+ */
+function isMax(bulletNum,trailNum,resultNum){
+    var len = $('.trailNames').length;
+    var res = {
+        flag : true,
+        bul : 0
+    };
+    var val = 'bulletNamesOfP_' + bulletNum + '_' + trailNum;
+    for(var i = 0;i < len;++i){
+        var val1 = 'bulletNamesOfP_'+ bulletNum + $('.trailNames').eq(i).prop('id').slice(-2);
+        var num1 = parseInt($('#' + val).attr('data'));
+        var num2 = parseInt($('#' + val1).attr('data'));
+        if(num1 < num2 ){
+            res.flag = false;
+            res.bul = parseInt($('#' + val1).prop('id').slice(-3).replace(/\_[0-9]/g,''));
+            return res;
+        }
+    }
+    return res;
+}
+
+/**
+ * 点击轨迹阶段显示是谁创建的他
+ * @param {*} bul 弹头
+ * @param {*} trailNum 轨迹阶段
+ * @param {*} proto 
+ * @param {*} trigger 创建者的触发条件
+ * @param {*} trail 创建者的轨迹阶段
+ * @param {*} result 创建者的触发结果
+ */
+function addTrailTrack(bul,trailNum,proto,trigger,trail,result){
+    
+    $('#bulletNamesOfP_' + bul + '_' + trailNum).click(function(){
+        var timer;
+        var str1 = result + '_' + trigger + '_' + bul + '_' + trail ;
+        var str2 =  '_' + trigger + '_' + bul + '_' + trail ;
+        $('#triggerConditon' + str2).addClass('activeTrigger');
+        $('#triggerResultLi' + str1).addClass('activeTrigger');
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            $('#triggerConditon' + str2).removeClass('activeTrigger');
+            $('#triggerResultLi' + str1).removeClass('activeTrigger');
+        },5000);
+    });
+}
+
+function addLoadTrailTrack (bul,trailNum,proto){
+    $('#bulletNamesOfP_' + bul + '_' + trailNum).click(function(){
+        var timer;
+        var num = 0;
+            var len0 = proto.bulletsData.bullets[(bul-1)].cycles.length;
+            for (var n = 0;n < len0; ++n){
+            var len1 = proto.bulletsData.bullets[(bul-1)].cycles[n].triggers.length;
+                for (var i = 0;i < len1; ++i){
+                    var len2 = proto.bulletsData.bullets[(bul-1)].cycles[n].triggers[i].effects.length;
+                        for (j = 0;j < len2 ; ++j){
+                            var eff = proto.bulletsData.bullets[(bul-1)].cycles[n].triggers[i].effects[j].effectMode;
+                            if(eff == 1){
+                                var str1 = (j + 1) + '_' + (i + 1) + '_' + bul + '_' + (n + 1);
+                                var str2 =  '_' + (i + 1) + '_' + bul + '_' + (n + 1) ;
+                                var str3 = parseInt($('#triP_' + str1).html().replace(/[^0-9]/g,''));
+                                var str4 = parseInt($(this).attr('data'));
+                                if(str3 == str4){
+                                    $('#triggerConditon' + str2).addClass('activeTrigger');
+                                    $('#triggerResultLi' + str1).addClass('activeTrigger');
+                                    clearTime(str2,str1,timer);
+                                }
+                               
+                            }
+                        }
+                    }
+
+                
+            }
+          
+    });
+}
+function clearTime(str2,str1,timer){
+    clearTimeout(timer);
+    timer = setTimeout(function(){
+        $('#triggerConditon' + str2).removeClass('activeTrigger');
+        $('#triggerResultLi' + str1).removeClass('activeTrigger');
+    },5000);
+}
+function clearTimer(bul,trial,trigger,result){
+    var str1 = result + '_' + trigger + '_' + bul + '_' + trial;
+    var str2 =  '_' + trigger + '_' + bul + '_' + trial ;
+    $('#triggerConditon' + str2).removeClass('activeTrigger');
+    $('#triggerResultLi' + str1).removeClass('activeTrigger');
+
 }

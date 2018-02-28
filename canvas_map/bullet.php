@@ -235,9 +235,6 @@
                                     <option value="trailMove3" >弹跳</option>
                                     <option value="trailMove4" >粘着</option>
                                 </select>
-                                <a id = 'deleteTrail_0_0' class="triggerResultA fr triggerResultAs">
-                                    <img src="../images/page1/u99.png" alt="">
-                                </a>
                             </div>
 
                             <form method="post" action="">                      <!-- 表单提交1 -->
@@ -449,6 +446,7 @@
                                                 <div id="effectOfValuec_1_0_0_0" class="effectOfValue">
                                                     <p class="triggerOfP">值类型</p>  
                                                     <select name="" id="effectOfValueSela_1_0_0_0" class="effectOfValue_sel">
+                                                        <option value="triggerValue0">请选择值类型</option>
                                                         <option value="triggerValue1">HP</option>
                                                         <option value="triggerValue2">护盾</option>
                                                         <option value="triggerValue3">电量</option>
@@ -461,6 +459,7 @@
                                                 <div id="effectOfValuee_1_0_0_0" class="effectOfValue">
                                                     <p class="triggerOfP">伤害属性</p>  
                                                     <select name="" id="effectOfValueSelb_1_0_0_0" class="effectOfValue_sel  effectOfValue_selExtra">
+                                                        <option value="triggerHurt0">请选择伤害属性</option>
                                                         <option value="triggerHurt1">动能</option>
                                                         <option value="triggerHurt2">热能</option>
                                                         <option value="triggerHurt3">电磁</option>
@@ -544,7 +543,7 @@
         <script src="../canvas_map/cavas_js/addMod.js"></script>
         <script src="../canvas_map/cavas_js/addEvent.js"></script>
         <script src="../canvas_map/cavas_js/mainScripts.js"></script>
-        <script src="../canvas_map/cavas_js/canvas_bullet.js"></script>
+        <script src="../canvas_map/cavas_js/bullet_proto.js"></script>
         <script src="../common/baseTools.js"></script>
         
 </html>

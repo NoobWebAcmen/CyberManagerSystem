@@ -79,7 +79,11 @@ $('#home').click(function(){
 	if(loadVal.saveFlag){
 		window.location.href='bullet_index.php';
 	}else{
-		alert("请先保存数据");
+		if(bulletInfo.Tip(4)){
+			window.location.href='bullet_index.php';
+		}else{
+			return false;
+		}
 	}
 	
 	loadVal.saveFlag = false;
@@ -99,6 +103,7 @@ $('#saveData').click(function(){
 			for(var k = 1;k <= loadVal.triggerNum; ++k ){
 				for(var l = 1;l <= loadVal.resultNum; ++l){
 					getTriggerResult(l,i,j,k,loadVal);
+					clearTimer(i,j,k,l);
 				}
 			}	
 		}
@@ -154,7 +159,8 @@ function postHtml(html,id){
 	});
 }
 
-$.getScript('cavas_js/canvas_bullet.js',function(){
+$.getScript('cavas_js/bullet_proto.js',function(){
+	hiddParent();
 	for(var i = 1;i <= firstNum - 1 ;++i){
 		if(loadVal.bulletsData.bullets[i-1]){
 			addBulletClick(i,loadVal);
@@ -165,6 +171,7 @@ $.getScript('cavas_js/canvas_bullet.js',function(){
 				if(loadVal.bulletsData.bullets[i-1].cycles[j-1]){
 					addDelLiClick('#BulletDel' + i,loadVal);
 					addTrialClick ('bulletOptionConditionInfo'+ '_' + i+'_'+j,i,j,loadVal);
+					addLoadTrailTrack(i,j,loadVal);
 					loadTrailMoveVal(i,j,loadVal);
 					addAImgCliCK('bulletOptionConditionA'+ '_' + i+'_'+j,'bulletOptionConditionInfo'+ '_' + i + '_' + j);
 					//运动轨迹
@@ -186,8 +193,10 @@ $.getScript('cavas_js/canvas_bullet.js',function(){
 										addTriggerBottomAClick($('#triggerResult'+'_'+n+'_'+m+'_'+i+'_'+j),m,i,j,n,loadVal)
 										switchResultSel($('#triggerResultSel'+'_'+n+'_'+m+'_'+i+'_'+j),m,i,j,n,loadVal);
 										switchValueType(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1].effects[n-1].effectParams,$('#effectOfValueSela' +'_'+n+'_'+m+'_'+i+'_'+j));
+										switchDamageAttribute(loadVal.bulletsData.bullets[i-1].cycles[j-1].triggers[m-1].effects[n-1].effectParams,$('#effectOfValueSelb' +'_'+n+'_'+m+'_'+i+'_'+j));
 										addTiggerAddClick(m,i,j,n,loadVal)
 										loadResultVal(i,j,m,n,loadVal);
+										// clearTimer(i,j,m,n);
 									}
 								}
 							}

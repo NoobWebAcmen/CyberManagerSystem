@@ -1,9 +1,3 @@
-/**
- * 战车发射周期点击事件，点击显示战车发射周期块,并添加子弹1
- */
-
-
-
 $('#ChariotInfoA').click(function(){
 	show($('#ChariotOptions'),1);
 });
@@ -75,7 +69,11 @@ $('#home').click(function(){
 	if(bulletInfo.saveFlag){
 		window.location.href='bullet_index.php';
 	}else{
-		alert("请先保存数据");
+		if(bulletInfo.Tip(4)){
+			window.location.href='bullet_index.php';
+		}else{
+			return false;
+		}
 	}
 	
 	bulletInfo.saveFlag = false;
@@ -190,6 +188,7 @@ $('#saveData').click(function(){
 			for(var k = 1;k <= bulletInfo.triggerNum; ++k ){
 				for(var l = 1;l <= bulletInfo.resultNum; ++l){
 					getTriggerResult(l,i,j,k,bulletInfo);
+					clearTimer(i,j,k,l);
 				}
 			}	
 		}
@@ -218,29 +217,31 @@ function postDataAjax(bulletData,id){
 		}
 	});
 }
-$('#createInp2').click(function(){
-	var arr = new Array();
-	var len = $('#bullet_info_list').children().length;
-	for(var i = 0; i < len ;++i){
-		arr[i] = $('#bullet_info_list').children('li').eq(i).prop('id');
-		if($('#createInp1').val() == arr[i]){
-			$('#createInp1').val('');
-			alert('已经有这个炮弹了,请重新输入或载入该炮弹!');
+	$('#createInp2').click(function(){
+		var arr = new Array();
+		var len = $('#bullet_info_list').children().length;
+		for(var i = 0; i < len ;++i){
+			arr[i] = $('#bullet_info_list').children('li').eq(i).prop('id');
+			if($('#createInp1').val() == arr[i]){
+				if(Tip(1)){
+				}else{
+					$('#createInp1').val('');
+					return false;
+				}
+			}
+		}
+		if($('#createInp1').val()==''){
+			alert('请输入一个值');
 			return false;
 		}
-	}
-	if($('#createInp1').val()==''){
-		alert('请输入一个值');
-		return false;
-	}
-});
+	});
+	
 $('#loadInp2').click(function(){
 	var arr1 = new Array();
 	var len = $('#bullet_info_list').children().length;
 	var flag = false;
 	for(var i = 0; i < len ;++i){
 		arr1[i] = $('#bullet_info_list').children('li').eq(i).prop('id');
-		console.log(arr1[i]);
 		if($('#loadInp1').val() == arr1[i]){
 			flag = true;
 			break;
@@ -254,4 +255,18 @@ $('#loadInp2').click(function(){
 	}
 	
 });
+
+function Tip(flag){
+	if(flag == 1){
+		var msg = "确认覆盖已有的炮弹吗? \n\n请确认!";
+	}else if(flag ==2){
+		var msg = "确认删除此炮弹吗? \n\n请确认!";
+	}
+	
+	if (confirm(msg)==true){ 
+		return true; 
+	}else{ 
+		return false; 
+	} 
+}
 

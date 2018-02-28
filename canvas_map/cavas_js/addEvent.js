@@ -1,8 +1,6 @@
 /**
  * 本文件用于所有的函数点击事件
  */
-
-
 /**
 * 给轨迹阶段前的a标签添加下拉隐藏事件
 */
@@ -19,15 +17,6 @@ function addBulletAImgClick(aId,divId,num){
     $(aId+ num).click(function(){   
         $(this).toggleClass("changePicMode");
         $(divId+num).children('div').toggle("normal");
-    });
-}
-function adddeleteTrailClick(num,trailNum,proto){
-    $('#deleteTrail_' + num + '_' + trailNum).click(function(){
-        if(bulletInfo.Tip(1)){
-            $('#triP')
-            // deleteTrail(num,trailNum,proto);
-            // $('#trailOfMove_' + num + '_' + trailNum).remove();
-        }
     });
 }
 /**
@@ -52,7 +41,6 @@ function addTrialClick (obj,bulletNum,trailNum,proto){
     //运动轨迹点击事件
     $('#' + obj).children().eq(0).one('click',function(){
         addTrailOfMove($('#trailOfMove_0_0'),bulletNum,trailNum);
-        changeDelTrailId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
         changeFlySelId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
         changeResetId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
         changeFlyTrailId($('#trailOfMove'+'_' + bulletNum + '_' + trailNum),bulletNum,trailNum);
@@ -72,11 +60,6 @@ function addTrialClick (obj,bulletNum,trailNum,proto){
         });
         
         switchFlySel($('#trailSelect'+'_' + bulletNum + '_' + trailNum),preNum,nexNum,proto);
-        if(trailNum != 1){
-            adddeleteTrailClick(bulletNum,trailNum,proto);
-        }
-        
-
     });
     //触发条件点击事件
     
@@ -214,7 +197,7 @@ function addTriggerBottomClick(obj,num,bulletNum,trailNum,proto){
                 addTiggerAddClick(num,bulletNum,trailNum,resultNum,proto);
                 addArtClick(num,bulletNum,trailNum,resultNum,proto);
             }
-            addTriggerResetClick(num,bulletNum,trailNum,resultNum);
+            addTriggerResetClick(num,bulletNum,trailNum,resultNum,proto);
             
             
         }
@@ -223,10 +206,10 @@ function addTriggerBottomClick(obj,num,bulletNum,trailNum,proto){
 }
 
 
-function addTriggerResetClick(num,bulletNum,trailNum,resultNum){
+function addTriggerResetClick(num,bulletNum,trailNum,resultNum,proto){
     //重置按钮点击事件
     $('#triggerResBtn'+'_' + resultNum + '_' + num + '_' + bulletNum + '_' + trailNum).click(function(){
-        resetTriggerResult(num,bulletNum,trailNum,resultNum);
+        resetTriggerResult(num,bulletNum,trailNum,resultNum,proto);
     });
 }
 
@@ -357,7 +340,7 @@ function addTriggerBottomClick1(obj,num,bulletNum,trailNum,proto){
                 addTiggerAddClick(num,bulletNum,trailNum,resultNum,proto);
                 addArtClick(num,bulletNum,trailNum,resultNum,proto);
             }
-            addTriggerResetClick(num,bulletNum,trailNum,resultNum);
+            addTriggerResetClick(num,bulletNum,trailNum,resultNum,proto);
         }
         
     });
@@ -376,8 +359,9 @@ function addResultListClick(bulletNum,trailNum,num,resultNum,proto){
     var nowNum = num - 1;
     var resNum = resultNum - 1;
     var str = resultNum + '_' + num + '_' + bulletNum + '_' + trailNum;
-    var val = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectMode;
+    
         $('#triggerResultLi' + str).click(function(){
+            var val = proto.bulletsData.bullets[bulNum].cycles[traNum].triggers[nowNum].effects[resNum].effectMode;
             switch (val) {
                 case 1:
                     show($('#triggerOfTrail_' + str),3);
@@ -408,6 +392,8 @@ function addResultListClick(bulletNum,trailNum,num,resultNum,proto){
                     $('#triggerResultSel_'+ str).children().eq(7).prop('selected','selected');
                     break;
                 default:
+                    show($('#triggerResultOptionBottom' + str),3);
+                    $('#triggerResultSel_'+ str).children().eq(0).prop('selected','selected');
                     break;
             }
         });

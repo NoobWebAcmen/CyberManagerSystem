@@ -22,7 +22,7 @@ function addModList(bars_num,parentObj,tag,proto){
     labelName.id = "Bullet" + bars_num;
     inputName.className = "bars_info_input fl";
     inputName.setAttribute('type','text');
-    inputName.setAttribute('id','bars_info_input_' + 'bars_num');
+    inputName.setAttribute('id','bars_info_input_' + bars_num);
     inputName.setAttribute('tag',bars_num-1);
     if(tag == 1){
         inputName.setAttribute('value',scale.title.innerHTML);
@@ -61,12 +61,12 @@ function addModList(bars_num,parentObj,tag,proto){
     elm_a.setAttribute('id','bulletOptionA' + num);
     elm_a.setAttribute('class','showPicMode fl');
     elm_p.setAttribute('id','bulletName' + num);
-    elm_p.setAttribute('class','trailNames fl');
+    elm_p.setAttribute('class','trailNames1 fl');
     
     $('#topBar').append(elm_div);
     elm_div.appendChild(elm_a);
     elm_div.appendChild(elm_p);
-    addTrail(num,$(elm_div),1,proto);
+    addTrail(num,$(elm_div),1,proto,0,0,0);
     addBulletAImgClick('#bulletOptionA','#bulletOption',num);
     addBulletClick(num,proto);
 }
@@ -76,7 +76,7 @@ function addModList(bars_num,parentObj,tag,proto){
  * @param num 控制弹头数的数字
  * @param trailNum 控制轨迹阶段的数字
  */
-function addTrail(num,parentObj,trailNum,proto){
+function addTrail(num,parentObj,trailNum,proto,trigger,trail,result){
         
     var elm_div = document.createElement('div');
         var elm_a = document.createElement('a');
@@ -104,6 +104,7 @@ function addTrail(num,parentObj,trailNum,proto){
     elm_a.setAttribute('class','showPicMode fl');
     elm_p.setAttribute('class','trailNames fl');
     elm_p.setAttribute('id','bulletNamesOfP' + '_' + num +'_'+trailNum);
+    elm_p.setAttribute('data',trailNum);
     elm_bullet_a1.setAttribute('id','pathTrail1'+'_'+num+'_'+trailNum);
     elm_bullet_a2.setAttribute('id','triggerConditon'+'_1'+'_'+num+'_'+trailNum);
     elm_bullet_a3.setAttribute('id','triggerConditon'+'_2'+'_'+num+'_'+trailNum);
@@ -125,8 +126,8 @@ function addTrail(num,parentObj,trailNum,proto){
     addAImgCliCK(elm_a.id,elm_bullet.id);
     addTrialClick(elm_bullet.id,num,trailNum,proto);   //轨迹阶段事件
     if(trailNum != 1){
-        
         addTrailVal(num,trailNum,proto);
+        addTrailTrack(num,trailNum,proto,trigger,trail,result);
     }
 }
 
@@ -232,19 +233,27 @@ function deleteLi(obj,proto){
  * @param {*} bulletNum 
  * @param {*} trailNum 
  */
-function deleteTrail(bulletNum,trailNum,proto){
-    if($('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).length){
-        $('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).remove();
-        deleteTrailVal(bulletNum,trailNum,proto);
-        if(proto.traNum ==1){
-            return false;
+function deleteTrail(bulletNum,trailNum,resultNum,trail,num,proto){
+    var res = isMax(bulletNum,trailNum,resultNum);
+    if(res.flag){
+        if($('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).length){
+            $('#bulletOptionCondition'+'_'+bulletNum + '_' + trailNum).remove();
+            deleteTrailVal(bulletNum,trailNum,proto);
+            if(proto.traNum ==1){
+                return false;
+            }else{
+                proto.traNum -=1;
+            }
+            
         }else{
-            proto.traNum -=1;
+            return false;
         }
-        
     }else{
-        return false;
+        $('#triggerResultSel'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trail).children().eq(1).prop('selected','selected');
+        show($('#triggerOfTrail'+'_'+resultNum+'_'+num+'_'+bulletNum+'_'+trail),3);
+        alert('请先删除  弹头 ' + res.bul +' 中的 ' + '轨迹阶段' + trailNum + '   之后的轨迹阶段' );
     }
+    
 }
 
 
@@ -254,14 +263,19 @@ function deleteTrail(bulletNum,trailNum,proto){
  */
 function  addTriggerBottomAClick(obj,num,bulletNum,trailNum,resultNum,proto) {
     obj.click(function(){
-        //删除视图
-        // obj.parent().parent().css('display','none');
-        obj.parent().parent().remove();
-        $('#triggerResultLi'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum).remove();
-            
+        var val = proto.bulletsData.bullets[(bulletNum-1)].cycles[(trailNum-1)].triggers[(num-1)].effects[(resultNum-1)].effectMode;
+        if(val == 1){
+            alert('请先删除此触发结果引起的轨迹阶段');
+           
+        }else{
+             //删除视图
+            obj.parent().parent().remove();
+            $('#triggerResultLi'+resultNum+'_'+num+'_'+bulletNum+'_'+trailNum).remove();
+            //删除数据
+            deleteTrailResult(num,bulletNum,trailNum,resultNum,proto);
+             
+        }
         
-        //删除数据
-        deleteTrailResult(num,bulletNum,trailNum,resultNum,proto);
     });
     
 }
@@ -280,12 +294,54 @@ function addBulletMod(num,obj){
  */
 function addList(idName){
     var elm_li = document.createElement('li');
+    var elm_a = document.createElement('a');
+    var elm_span = document.createElement('span');
         elm_li.id = idName;
-        elm_li.setAttribute('class','bullet_infoLi');
+        elm_a.id = 'del' + idName;
+        elm_li.setAttribute('class','bullet_infoLi ');
+        elm_a.setAttribute('class','deleteA fr');
+        elm_span.setAttribute('class','fa fa-times');
         elm_li.innerHTML = '炮弹id : ' + idName;
+        elm_a.appendChild(elm_span);
+        elm_li.appendChild(elm_a);
         $('#bullet_info_list').append(elm_li);  
+        addDelClick(elm_a.id);
 
 }
+function addDelClick(id){
+    $('#' + id).click(function(){
+        if(Tip(2)){
+            $('#' + id).parent().remove();
+            var Num = id.replace(/[^0-9]/g,'');
+            rmFileFromPhp(Num);
+        }else{
+            return false;
+        }
+    });
+}
+/**
+ * 在服务器上删除文件
+ */
+
+function rmFileFromPhp(num){
+    $.ajax({
+       type : 'POST',
+       url : '../common/uploadFile.php',
+       data : {
+           'id' : num,
+           'flag' : 3
+       },
+       dataType : 'text',
+       success : function(data){
+       },
+       error : function(data){
+           console.log('error',data.responseText);
+       }
+
+    });
+
+}
+
 
     
 

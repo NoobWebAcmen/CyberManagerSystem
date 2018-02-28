@@ -1,56 +1,55 @@
   {
         
-        "plot": {
-                "0": "plot_img_0.jpg",
-                "1": "plot_img_1.jpg",
-                "2": "plot_img_2.jpg",
-                "3": "plot_img_3.jpg",
-                "4": "plot_img_4.jpg",
-                "5": "plot_img_5.jpg",
-                "6": "plot_img_6.jpg",
-                "7": "plot_img_7.jpg",
-                "8": "plot_img_8.jpg",
-                "9": "plot_img_9.jpg",
-                "10": "plot_img_10.jpg",
-                "11": "plot_img_11.jpg",
-                "12": "plot_img_12.jpg",
-                "13": "plot_img_13.jpg",
-                "14": "plot_img_14.jpg",
-                "15": "plot_img_15.jpg"
-                
-            },
+"plot": {
+        "0": "plot_img_0.jpg",
+        "1": "plot_img_1.jpg",
+        "2": "plot_img_2.jpg",
+        "3": "plot_img_3.jpg",
+        "4": "plot_img_4.jpg",
+        "5": "plot_img_5.jpg",
+        "6": "plot_img_6.jpg",
+        "7": "plot_img_7.jpg",
+        "8": "plot_img_8.jpg",
+        "9": "plot_img_9.jpg",
+        "10": "plot_img_10.jpg",
+        "11": "plot_img_11.jpg",
+        "12": "plot_img_12.jpg",
+        "13": "plot_img_13.jpg",
+        "14": "plot_img_14.jpg",
+        "15": "plot_img_15.jpg"
+        
+    },
+"trim":{
+        "0": "trim0.jpg",
+        "1": "trim1.jpg",
+        "2": "trim2.jpg",
+        "3": "trim3.jpg",
+        "4": "trim4.jpg",
+        "5": "trim5.jpg",
+        "6": "trim6.jpg",
+        "7": "trim7.jpg",
+        "8": "trim8.jpg",
+        "9": "trim9.jpg",
+        "10": "trim10.jpg"
+    },
+"background" : {
+    "0": "0e104b6e5118f0b06e1bfb0f0180e219.jpeg",
+    "1": "2c5de80e6cc7f194b31b1c4b0e77944a.jpeg",
+    "2": "5f69b2bcb3ef4400e1b38f2911a0f8f6.jpeg",
+    "3": "7bef62a4e6109c6d56c877243b3fc9e7 .jpg",
+    "4": "73ae465de8befb0b1e44f3042f39f428.jpg",
+    "5": "712e8def5bcd74b2d75fab869898b2a2.jpeg",
+    "6": "a33715800c6845175ff5f04b03d4c767.jpg",
+    "7": "af7a8a71527717eac79673ca69304838.jpeg",
+    "8": "b4f298e6b86bc48b819c8baee9968ad0.jpg",
+    "9": "baaf848a110359c422bd2b681c8dbf31.jpeg",
+    "10": "d349ee2fbae9a502bf673d3e14181eb1.jpg",
+    "11": "f714c47faea467d91b522e4a63bb38c0.jpeg",
+    "12": "fbfe739eef4ced2629875e82ed180a4e.jpeg",
+    "13": "切图.png",
+    "14": "切图1.png",
+    "15": "透明底切图.png"
+}
 
-        "trim":{
-                "0": "trim0.jpg",
-                "1": "trim1.jpg",
-                "2": "trim2.jpg",
-                "3": "trim3.jpg",
-                "4": "trim4.jpg",
-                "5": "trim5.jpg",
-                "6": "trim6.jpg",
-                "7": "trim7.jpg",
-                "8": "trim8.jpg",
-                "9": "trim9.jpg",
-                "10": "trim10.jpg"
-            },
-        "background" : {
-            "0": "0e104b6e5118f0b06e1bfb0f0180e219.jpeg",
-            "1": "2c5de80e6cc7f194b31b1c4b0e77944a.jpeg",
-            "2": "5f69b2bcb3ef4400e1b38f2911a0f8f6.jpeg",
-            "3": "7bef62a4e6109c6d56c877243b3fc9e7 .jpg",
-            "4": "73ae465de8befb0b1e44f3042f39f428.jpg",
-            "5": "712e8def5bcd74b2d75fab869898b2a2.jpeg",
-            "6": "a33715800c6845175ff5f04b03d4c767.jpg",
-            "7": "af7a8a71527717eac79673ca69304838.jpeg",
-            "8": "b4f298e6b86bc48b819c8baee9968ad0.jpg",
-            "9": "baaf848a110359c422bd2b681c8dbf31.jpeg",
-            "10": "d349ee2fbae9a502bf673d3e14181eb1.jpg",
-            "11": "f714c47faea467d91b522e4a63bb38c0.jpeg",
-            "12": "fbfe739eef4ced2629875e82ed180a4e.jpeg",
-            "13": "切图.png",
-            "14": "切图1.png",
-            "15": "透明底切图.png"
-        }
-
-    }
+}
 

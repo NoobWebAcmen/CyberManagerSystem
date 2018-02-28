@@ -69,7 +69,7 @@ function ajaxload(strStoreHtml,local){
     var oScript6 = document.createElement('script');
     var oScript7 = document.createElement('script');
 
-    oScript2.src = '../canvas_map/cavas_js/canvas_bullet.js';
+    oScript2.src = '../canvas_map/cavas_js/bullet_proto.js';
     oScript1.src = '../canvas_map/cavas_js/load.js';
     oScript3.src = '../canvas_map/cavas_js/getVal.js';
     oScript4.src = '../canvas_map/cavas_js/addResponse.js';

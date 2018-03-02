@@ -125,13 +125,7 @@ npm         ^8.9.3
 五 、 登录账号及密码
 
 ```
-phpMyAdmin 
-登录账号 : test
-登录密码 : 123456
 
-GameTool登录密码
-账号 : Wu Jun        Long Yao      Yang Lei
-密码 : wujun1234     longyao1234   yanglei1234
 
 
 ```
